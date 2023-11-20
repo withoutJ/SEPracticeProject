@@ -1,5 +1,5 @@
 public interface Member {
 
-	double calculate();
+	double calculate(int loyaltyPoints, int bookingCount);
 
 }
