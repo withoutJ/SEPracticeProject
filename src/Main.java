@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import sportfacility.*;
+import user.Customer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,7 +12,14 @@ public class Main {
     private static String password;
     private static Scanner scanner = new Scanner(System.in); // Single scanner for entire application
     private static Customer customer = null;
+    private static List<SportFacility> facilities = new ArrayList<>();
+    
     public static void main(String args[]){
+        
+        facilities.add(new SwimmingPool(9, 23, 10));
+        facilities.add(new BadmintonCourt(9, 23, 20));
+        facilities.add(new BasketballCourt(9, 23, 120));
+        facilities.add(new TennisCourt(9, 23, 50));
         isRunning = true;
         while (isRunning){
             int response = openScreen();
