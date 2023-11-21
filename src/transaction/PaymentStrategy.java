@@ -1,3 +1,4 @@
+package transaction;
 public interface PaymentStrategy {
 
 	/**

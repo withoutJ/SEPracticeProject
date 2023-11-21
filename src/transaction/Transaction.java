@@ -1,8 +1,10 @@
+package transaction;
 public class Transaction {
 
 	private PaymentStrategy paymentStrategy;
 	private RefundStrategy refundStrategy;
 	private double amount;
+	private boolean paymentProcessed;
 
 	/**
 	 * 
@@ -10,22 +12,25 @@ public class Transaction {
 	 * @param RefundStrategy
 	 * @param amount
 	 */
-	public Transaction(PaymentStrategy paymentStrategy, RefundStrategy refundStrategy, int amount) {
+	public Transaction(PaymentStrategy paymentStrategy, RefundStrategy refundStrategy, double amount) {
 		this.amount = amount;
 		this.paymentStrategy = paymentStrategy;
 		this.refundStrategy = refundStrategy;
+		this.paymentProcessed = false;
 	}
 
-	/**
-	 * 
-	 * @param amount
-	 */
-	public void processPayment(double amount) {
+	public void processPayment() {
 		paymentStrategy.processPayment(amount);
+		paymentProcessed = true;
 	}
 
 	public void processRefund() {
-		refundStrategy.processRefund(amount);
+		if(paymentProcessed) {
+			refundStrategy.processRefund(amount);
+		} 
+		else {
+			System.out.println("Payment is not processed.");
+		}
 	}
 
 }
