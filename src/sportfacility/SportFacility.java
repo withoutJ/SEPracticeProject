@@ -22,18 +22,26 @@ public class SportFacility {
 
 	public void book(String dateHour) {
 		//13-02-2000 13
+		//13-15 
 		String[] parts = dateHour.split(" ");
 		int hour = Integer.parseInt(parts[1]);
-
-
+	
+		if (hour < 0 || hour > 23) {
+			System.out.print("Please put time in hours only (0-23).\n");
+			return;
+		}
+	
 		if (hour >= openingHours) {
 			if (hour < closingHours) {
 				if (timeTable.containsKey(dateHour) && timeTable.get(dateHour)) {
 					System.out.print("Sorry, this time slot is already booked.\n");
 					return;
 				}
+				else{
 				timeTable.put(dateHour, true);
-				System.out.print("Booking Successful for facility " + dateHour +"\n");
+				System.out.print("Booking Successful for facility " + dateHour + "\n");
+				}
+
 			} else {
 				System.out.print("Sorry, the facility is closed during this time\n");
 			}
@@ -42,6 +50,7 @@ public class SportFacility {
 		}
 		
 	}
+	
 
 
 	public void cancelBooking(String dateHour) {
@@ -69,5 +78,24 @@ public class SportFacility {
 
 	public int getBookingFee(){
 		return this.bookingFee;
+	}
+
+	public void writeReview(Review review){
+		this.addReview(review);
+	}
+
+	public boolean isBooked(String dateHour){
+		String[] parts = dateHour.split(" ");
+		int hour = Integer.parseInt(parts[1]);
+	
+		if (hour < 0 || hour > 23) {
+			System.out.print("Please put time in hours only (0-23).\n");
+			return false;
+		}
+		if (timeTable.containsKey(dateHour) && timeTable.get(dateHour)) {
+					return true;
+		}
+		return false;
+	
 	}
 }
