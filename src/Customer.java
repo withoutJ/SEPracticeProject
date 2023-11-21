@@ -1,7 +1,9 @@
+import java.util.List;
+
 public class Customer extends User {
 
-	private List bookingList;
-	private date joinDate;
+	private List<Bookings> bookingList;
+	private String joinDate;
 	private Member memberType;
 	private int loyaltyPoints;
 	private Account account;
@@ -12,7 +14,7 @@ public class Customer extends User {
 	 * @param bookingID
 	 * @param bookingDate
 	 */
-	public void createBooking(Facility facility, long bookingID, date bookingDate) {
+	public void createBooking(SportFacility facility, long bookingID, String bookingDate) {
 		// TODO - implement Customer.createBooking
 		throw new UnsupportedOperationException();
 	}
@@ -55,7 +57,7 @@ public class Customer extends User {
 	 * @param account
 	 * @param joinDate
 	 */
-	public void Member(Account account, date joinDate) {
+	public void Member(Account account, String joinDate) {
 		// TODO - implement Customer.Member
 		throw new UnsupportedOperationException();
 	}
