@@ -1,15 +1,19 @@
+import java.util.Random;
 public class User {
+	private String username;
+	private String password;
 
 	private long userID;
-
+	//generating random userID (should we check if the ID already exists?)
 	public long generateUserID() {
-		// TODO - implement User.generateUserID
-		throw new UnsupportedOperationException();
+		Random random = new Random();
+		return random.nextLong();
 	}
-
-	public User() {
-		// TODO - implement User.User
-		throw new UnsupportedOperationException();
+	//constructor
+	public User(String userN, String passW) {
+		userID=generateUserID();
+		this.username=userN;
+		this.password=passW;
 	}
 
 }

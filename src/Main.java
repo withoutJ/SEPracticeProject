@@ -7,11 +7,10 @@ public class Main {
     private static String username;
     private static String password;
     private static Scanner scanner = new Scanner(System.in); // Single scanner for entire application
-
+    private static Customer customer = null;
     public static void main(String args[]){
         isRunning = true;
         while (isRunning){
-            Customer customer = null;
             int response = openScreen();
             if (response == 1){
                 customer = AuthenticationService_Stub.register(username, password);
@@ -71,7 +70,8 @@ public class Main {
             userInput = scanner.nextInt();
             switch(userInput){
                 case 1:
-                    
+                    customer.createBooking(null, dateNtime, userInput);
+                    // createBooking()
                     break;
                 case 2:
                     // Manage booking

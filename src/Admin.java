@@ -1,41 +1,40 @@
+import java.util.ArrayList;
+import java.util.List;
+import sportfacility.*;
 public class Admin extends User {
 
 	private Account Account;
+	private List<Bookings> cancelRequests = new ArrayList<>();
 
-	/**
-	 * 
-	 * @param facility
-	 */
-	public void addFacility(Facility facility) {
-		// TODO - implement Admin.addFacility
-		throw new UnsupportedOperationException();
+	public Admin(String username, String password, Account account) {
+		super(username, password);
 	}
 
-	/**
-	 * 
-	 * @param facility
-	 */
-	public VOID removeFacility(Facility facility) {
-		// TODO - implement Admin.removeFacility
-		throw new UnsupportedOperationException();
+	// where do i add facility )):
+	public void addFacility(SportFacility facility) {
+		
 	}
 
-	/**
-	 * 
-	 * @param db
-	 */
-	public boolean STATICconfirmBooking(DBStub db) {
-		// TODO - implement Admin.STATICconfirmBooking
-		throw new UnsupportedOperationException();
+	public void removeFacility(SportFacility facility) {
+
 	}
 
-	/**
-	 * 
-	 * @param account
-	 */
-	public Admin(Account account) {
-		// TODO - implement Admin.Admin
-		throw new UnsupportedOperationException();
+	public static boolean confirmBooking(Bookings booking) {
+		// check for conflicting schedules
+		Main.addBooking(booking);
+
+	}
+
+	public void receiveCancelRequest(Bookings booking) {
+
+	}
+
+	public void showCancelRequests() {
+
+	}
+
+	public void approveRequest(int requestID) {
+
 	}
 
 }

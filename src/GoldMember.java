@@ -1,8 +1,7 @@
 public class GoldMember implements Member {
 
-	public double calculate() {
-		// TODO - implement GoldMember.calculate
-		throw new UnsupportedOperationException();
+	public double calculate(int loyaltyPoints, int bookingCount) {
+		return (loyaltyPoints*0.5) + bookingCount;
 	}
 
 }
