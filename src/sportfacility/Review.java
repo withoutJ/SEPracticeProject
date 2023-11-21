@@ -13,8 +13,12 @@ public class Review {
     public void setRate(int rate) {
         if (rate < 1 || rate > 5) {
             System.out.println("Rating must be between 1 and 5.");
+            return;
         }
-        this.rate = rate;
+        else{
+            this.rate = rate;
+        }
+        
     }
 
     public String getComment() {
