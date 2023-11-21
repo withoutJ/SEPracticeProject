@@ -11,17 +11,17 @@ import sportfacility.SportFacility;
 public class testSportFacility {
 
     @Test
-    public void testBookingWithinOperatingHours() throws Exception {
+    public void testSportFacility_01() throws Exception {
         setOutput();
-        SportFacility facility = new SportFacility(9, 23);
+        SportFacility facility = new SportFacility(9, 23,13);
         facility.book("13-02-2000 10");
         assertEquals("Booking Successful for facility 13-02-2000 10\n", getOutput());
     }
 
     @Test
-    public void testBookingOnAlreadyBookedSlot() throws Exception {
+    public void testSportFacility_02() throws Exception {
         setOutput();
-        SportFacility facility = new SportFacility(9, 23);
+        SportFacility facility = new SportFacility(9, 23,12);
         facility.book("13-02-2000 10"); // First booking attempt
         getOutput(); // Discard the output of the first booking attempt
         setOutput(); // Reset output for capturing the second attempt
@@ -30,17 +30,17 @@ public class testSportFacility {
     }
 
     @Test
-    public void testBookingBeforeOpeningHours() throws Exception {
+    public void testSportFacility_03() throws Exception {
         setOutput();
-        SportFacility facility = new SportFacility(9, 23);
+        SportFacility facility = new SportFacility(9, 23,11);
         facility.book("13-02-2000 8");
         assertEquals("Sorry, the facility is not open at this time\n", getOutput());
     }
 
     @Test
-    public void testBookingAfterClosingHours() throws Exception {
+    public void testSportFacility_04() throws Exception {
         setOutput();
-        SportFacility facility = new SportFacility(9, 23);
+        SportFacility facility = new SportFacility(9, 23,10);
         facility.book("13-02-2000 23");
         assertEquals("Sorry, the facility is closed during this time\n", getOutput());
     }

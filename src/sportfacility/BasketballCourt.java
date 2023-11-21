@@ -1,6 +1,6 @@
 package sportfacility;
 public class BasketballCourt extends SportFacility {
-    public BasketballCourt() {
-        super(9, 23,70); // Opening time 9:00, closing time 23:00
+    public BasketballCourt(int openingTime, int closingTime, int bookingFee) {
+        super(openingTime, closingTime, bookingFee); // Opening time 9:00, closing time 23:00
     }
 }
