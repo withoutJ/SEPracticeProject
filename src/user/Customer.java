@@ -69,6 +69,7 @@ public class Customer extends User {
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId()).equals(bookingId)) {
 				bookingsList.remove(booking);
+				//remove the booking from the facility hashmap as well AND fetch the transaction object from inside the booking to call processRefund
 				break;
 			}
 
