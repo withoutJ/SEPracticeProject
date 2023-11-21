@@ -8,7 +8,7 @@ public class Admin extends User {
 	private Account Account;
 	private List<Bookings> cancelRequests = new ArrayList<>();
 
-	public Admin(String username, String password, Account account) {
+	public Admin(String username, String password) {
 		super(username, password);
 	}
 

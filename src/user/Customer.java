@@ -7,7 +7,7 @@ public class Customer extends User {
 	private Member memberType;
 	private int loyaltyPoints;
 
-	public Customer(String username, String password, Account account) {
+	public Customer(String username, String password) {
 		super(username, password);
 		this.loyaltyPoints = 0;
 		this.memberType = new StandardMember();
@@ -19,16 +19,23 @@ public class Customer extends User {
         return str + number;
     }
 
-	public void createBooking(SportFacility facility, String bookingDate, int startTime) {
+	public boolean createBooking(SportFacility facility, String bookingDate, int startTime) {
 		
 		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
+			return false;
 		}
 		else{
+			facility.book(concatenateStringAndInt(bookingDate, startTime));
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
 			bookingsList.add(NewBooking);
 			setMemberType();
 			loyaltyPoints += 10;
+			System.out.println("Your booking has been made. Redirecting you to transaction...");
+			NewBooking.calculatePrice(this);
+			
+			return true;
+
 		}
 		
 

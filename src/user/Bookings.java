@@ -30,7 +30,7 @@ public class Bookings {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
 		double amount = (SportFacility.getBookingFee()) * payWithDiscount;
-
+		System.out.println("Your total is: "+amount+"\nProcessing transaction...");
 		// call transaction class instance and call the processPayment method
 		// transaction = new Transaction(endTime, startTime, endTime);
 	}
