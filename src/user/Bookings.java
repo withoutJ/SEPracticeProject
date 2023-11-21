@@ -27,7 +27,7 @@ public class Bookings {
 		return bookingId;
 	}
 	//payment start needed here
-	public void calculatePrice(Customer customer) {
+	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy ) {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
 		double amount = (SportFacility.getBookingFee()) * payWithDiscount;
