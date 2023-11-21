@@ -20,11 +20,15 @@ public class Customer extends User {
     }
 
 	public void createBooking(SportFacility facility, String bookingDate, int startTime) {
+		
 		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
 		}
 		else{
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
+			bookingsList.add(NewBooking);
+			setMemberType();
+			loyaltyPoints += 10;
 		}
 		
 
@@ -33,10 +37,9 @@ public class Customer extends User {
 		 * we add the new booking to the bookingsList.
 		 */
 
-		bookingsList.add(NewBooking);
+		
 		// check and change state of customer
-		setMemberType();
-		loyaltyPoints += 10;
+		
 	}
 
 	public void viewBookings() {
