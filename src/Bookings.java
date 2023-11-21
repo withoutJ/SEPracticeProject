@@ -28,7 +28,7 @@ public class Bookings {
 	public void calculatePrice(Customer customer) {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
-		double amount = (facility.getPrice()) * payWithDiscount;
+		double amount = (facility.getBookingFee()) * payWithDiscount;
 
 		// call transaction class instance and call the processPayment method
 		// transaction = new Transaction(endTime, startTime, endTime);
