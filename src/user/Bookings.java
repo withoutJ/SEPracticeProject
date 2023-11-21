@@ -25,7 +25,7 @@ public class Bookings {
 		String bookingId = randomUUID.toString().replaceAll("-", "");
 		return bookingId;
 	}
-
+	//payment start needed here
 	public void calculatePrice(Customer customer) {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
