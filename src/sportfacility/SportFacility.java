@@ -29,16 +29,16 @@ public class SportFacility {
 		if (hour >= openingHours) {
 			if (hour < closingHours) {
 				if (timeTable.containsKey(dateHour) && timeTable.get(dateHour)) {
-					System.out.println("Sorry, this time slot is already booked.");
+					System.out.print("Sorry, this time slot is already booked.\n");
 					return;
 				}
 				timeTable.put(dateHour, true);
-				System.out.println("Booking Successful for facility " + dateHour);
+				System.out.print("Booking Successful for facility " + dateHour +"\n");
 			} else {
-				System.out.println("Sorry, the facility is closed during this time");
+				System.out.print("Sorry, the facility is closed during this time\n");
 			}
 		} else {
-			System.out.println("Sorry, the facility is not open at this time");
+			System.out.print("Sorry, the facility is not open at this time\n");
 		}
 		
 	}
@@ -46,17 +46,17 @@ public class SportFacility {
 
 	public void cancelBooking(String dateHour) {
 		if (!timeTable.containsKey(dateHour)) {
-			System.out.println("No booking found for " + dateHour + ". Unable to cancel.");
+			System.out.print("No booking found for " + dateHour + ". Unable to cancel.\n");
 			return;
 		}
 	
 		if (!timeTable.get(dateHour)) {
-			System.out.println("The time slot for " + dateHour + " is already free.");
+			System.out.print("The time slot for " + dateHour + " is already free.\n");
 			return;
 		}
 	
 		timeTable.put(dateHour, false);
-		System.out.println("Booking cancelled for " + dateHour);
+		System.out.print("Booking cancelled for \n" + dateHour);
 	}
 
 	public void addReview(Review review) {
