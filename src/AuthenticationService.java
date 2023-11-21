@@ -2,17 +2,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthenticationService{
-    private SessionManager sessionManager;
-    private AdminStub admin;
+    //private SessionManager sessionManager;
+    //private AdminStub admin;
     private static List<UserStub> users;
 
-    public AuthenticationService(SessionManager sessionManager,AdminStub admin){
-        this.sessionManager=sessionManager;
-        this.admin=admin;
+    public AuthenticationService(){
+        //this.sessionManager=sessionManager;
+        //this.admin=admin;
         AuthenticationService.users = new ArrayList<UserStub>();
     }
 
-    private UserStub findUser(String userName, String password){
+    private static UserStub findUser(String userName, String password){
         for (UserStub user : users) {
             if(user.getUserName()==userName && user.getPassword()==password){
                 return user;
@@ -21,7 +21,7 @@ public class AuthenticationService{
         return null;
     }
 
-    public static boolean validatePassword(String password) {
+    private static boolean validatePassword(String password) {
 
         if (password.length() < 8) {
             return false;
@@ -48,7 +48,7 @@ public class AuthenticationService{
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public UserStub login(String userName, String password){
+    public static UserStub login(String userName, String password, AdminStub admin){
         UserStub result=null;
         if(admin.getUserName()==userName && admin.getPassword()==password){
             result = admin;
@@ -56,13 +56,16 @@ public class AuthenticationService{
         
         if(result==null)result=findUser(userName, password);
 
-        if(result!=null)sessionManager.createSession(result);
+        if(result!=null){
+            SessionManager sessionManager = SessionManager.getInstance();
+            sessionManager.createSession(result);
+        }
         
         return result;
     }
 
-    public Boolean logout(UserStub user){
-        return sessionManager.removeSession(user);
+    public static Boolean logout(UserStub user){
+        return SessionManager.getInstance().removeSession(user);
     }
 
     public UserStub register(String userName, String password){
