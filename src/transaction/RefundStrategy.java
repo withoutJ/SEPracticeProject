@@ -1,9 +1,10 @@
+package transaction;
 public interface RefundStrategy {
 
 	/**
 	 * 
 	 * @param amount
 	 */
-	void processRefund(double amount);
+	public void processRefund(double amount);
 
 }
