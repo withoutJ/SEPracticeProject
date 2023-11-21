@@ -1,6 +1,6 @@
 public class Transaction {
 
-	private PaymentStragey paymentStrategy;
+	private PaymentStrategy paymentStrategy;
 	private RefundStrategy refundStrategy;
 	private double amount;
 
@@ -10,9 +10,10 @@ public class Transaction {
 	 * @param RefundStrategy
 	 * @param amount
 	 */
-	public Transaction(int PaymentStrategy, int RefundStrategy, int amount) {
-		// TODO - implement Transaction.Transaction
-		throw new UnsupportedOperationException();
+	public Transaction(PaymentStrategy paymentStrategy, RefundStrategy refundStrategy, int amount) {
+		this.amount = amount;
+		this.paymentStrategy = paymentStrategy;
+		this.refundStrategy = refundStrategy;
 	}
 
 	/**
@@ -20,13 +21,11 @@ public class Transaction {
 	 * @param amount
 	 */
 	public void processPayment(double amount) {
-		// TODO - implement Transaction.processPayment
-		throw new UnsupportedOperationException();
+		paymentStrategy.processPayment(amount);
 	}
 
 	public void processRefund() {
-		// TODO - implement Transaction.processRefund
-		throw new UnsupportedOperationException();
+		refundStrategy.processRefund(amount);
 	}
 
 }
