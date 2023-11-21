@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.*;
 import sportfacility.*;
+import transaction.PaymentStrategy;
 public class Customer extends User {
 
 	private List<Bookings> bookingsList = new ArrayList<>();
@@ -19,7 +20,7 @@ public class Customer extends User {
         return str + number;
     }
 
-	public boolean createBooking(SportFacility facility, String bookingDate, int startTime) {
+	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, PaymentStrategy paymentStrategy) {
 		
 		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
@@ -33,7 +34,7 @@ public class Customer extends User {
 			setMemberType();
 			loyaltyPoints += 10;
 			System.out.println("Your booking has been made. Redirecting you to transaction...");
-			NewBooking.calculatePrice(this,paymentStrategy);
+			NewBooking.calculatePrice(this, paymentStrategy);
 			
 			return true;
 
