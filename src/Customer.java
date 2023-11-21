@@ -1,5 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.*;
-
+import sportfacility.*;
 public class Customer extends User {
 
 	private List<Bookings> bookingsList = new ArrayList<>();
@@ -7,15 +8,25 @@ public class Customer extends User {
 	private int loyaltyPoints;
 
 	public Customer(String username, String password, Account account) {
-		super(username, password, account);
+		super(username, password);
 		this.loyaltyPoints = 0;
 		this.memberType = new StandardMember();
 
 	}
 
-	public void createBooking(Facility facility, Date bookingDate, int startTime) {
+	//convert date and time to string
+	public static String concatenateStringAndInt(String str, int number) {
+        return str + number;
+    }
 
-		Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
+	public void createBooking(SportFacility facility, String bookingDate, int startTime) {
+		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
+			facility.book(concatenateStringAndInt(bookingDate, startTime));
+		}
+		else{
+			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
+		}
+		
 
 		/*
 		 * call the approve booking request static method over here. If it is approved,
