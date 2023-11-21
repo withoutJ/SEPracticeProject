@@ -1,39 +1,31 @@
+import java.util.UUID;
+
 public class Session {
+    UserStub user;
+    UUID sessionId;
+    Boolean isValid;
 
-	private long expirationTime;
-	private User user;
-	private int sessionId;
-	private boolean isValid;
+    public Session(UserStub user){
+        this.user=user;
+        this.isValid=true;
+        this.sessionId=generateSessionId();
+    }
 
-	/**
-	 * 
-	 * @param expirationTime
-	 * @param user
-	 * @param sessionId
-	 */
-	public Session(string expirationTime, User user, int sessionId) {
-		// TODO - implement Session.Session
-		throw new UnsupportedOperationException();
-	}
+    private UUID generateSessionId(){
+        return UUID.randomUUID();
+    }
 
-	public int getSessionId() {
-		return this.sessionId;
-	}
+    public Boolean getIsValid(){
+        return this.isValid;
+    }
 
-	public boolean getIsValid() {
-		return this.isValid;
-	}
+    public void setIsValid(Boolean bool){
+        this.isValid=bool;
+    }
 
-	/**
-	 * 
-	 * @param isValid
-	 */
-	public void setIsValid(boolean isValid) {
-		this.isValid = isValid;
-	}
-
-	public long getExpirationTime() {
-		return this.expirationTime;
-	}
-
+    public UserStub getUser(){
+        return this.user;
+    }
 }
+
+
