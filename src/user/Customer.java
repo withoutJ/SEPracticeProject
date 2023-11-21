@@ -33,7 +33,7 @@ public class Customer extends User {
 			setMemberType();
 			loyaltyPoints += 10;
 			System.out.println("Your booking has been made. Redirecting you to transaction...");
-			NewBooking.calculatePrice(this);
+			NewBooking.calculatePrice(this,paymentStrategy);
 			
 			return true;
 
