@@ -5,19 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 public class SportFacility {
-	
-
+	private int bookingFee;
 	private Map<String, Boolean> timeTable;
 	private int closingHours;
 	private int openingHours;
 	// private DatabaseController DBController;
 	private List<Review> allReviews;
 
-	public SportFacility(int openingHours, int closingHours){
+	public SportFacility(int openingHours, int closingHours, int bookingFee){
 		this.openingHours = openingHours;
 		this.closingHours = closingHours;
 		this.timeTable = new HashMap<>();
 		this.allReviews = new ArrayList<>();
+		this.bookingFee = bookingFee;
 	}
 
 	public void book(String dateHour) {
@@ -67,4 +67,7 @@ public class SportFacility {
         return new ArrayList<>(allReviews); // Return a copy to prevent external modification
     }
 
+	public int getBookingFee(){
+		return this.bookingFee;
+	}
 }
