@@ -1,5 +1,7 @@
+package user;
 import java.util.*;
 import sportfacility.*;
+import transaction.PaymentStrategy;
 public class Bookings {
 
 	private SportFacility SportFacility;
@@ -24,14 +26,15 @@ public class Bookings {
 		String bookingId = randomUUID.toString().replaceAll("-", "");
 		return bookingId;
 	}
-
-	public void calculatePrice(Customer customer) {
+	//payment start needed here
+	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy ) {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
 		double amount = (SportFacility.getBookingFee()) * payWithDiscount;
-
+		System.out.println("Your total is: "+amount+"\nProcessing transaction...");
 		// call transaction class instance and call the processPayment method
-		// transaction = new Transaction(endTime, startTime, endTime);
+		transaction = new Transaction(paymentStrategy, amount);
+		
 	}
 
 	public String getBookingId() {

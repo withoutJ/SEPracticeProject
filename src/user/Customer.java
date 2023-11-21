@@ -1,21 +1,14 @@
-<<<<<<< HEAD
+package user;
 import java.util.List;
 
 public class Customer extends User {
 
 	private List<Bookings> bookingList;
 	private String joinDate;
-=======
-import java.text.SimpleDateFormat;
-import java.util.*;
-import sportfacility.*;
-public class Customer extends User {
-
-	private List<Bookings> bookingsList = new ArrayList<>();
->>>>>>> user-branch
 	private Member memberType;
 	private int loyaltyPoints;
 
+<<<<<<< HEAD:src/Customer.java
 <<<<<<< HEAD
 	/**
 	 * 
@@ -28,6 +21,9 @@ public class Customer extends User {
 		throw new UnsupportedOperationException();
 =======
 	public Customer(String username, String password, Account account) {
+=======
+	public Customer(String username, String password) {
+>>>>>>> a5c18235e7b5ba0d9c092099c65fe9b41f2473ee:src/user/Customer.java
 		super(username, password);
 		this.loyaltyPoints = 0;
 		this.memberType = new StandardMember();
@@ -40,12 +36,24 @@ public class Customer extends User {
         return str + number;
     }
 
-	public void createBooking(SportFacility facility, String bookingDate, int startTime) {
+	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, PaymentStrategy paymentStrategy) {
+		
 		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
+			return false;
 		}
 		else{
+			//Booking is added, even though transaction might fail later on
+			facility.book(concatenateStringAndInt(bookingDate, startTime));
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
+			bookingsList.add(NewBooking);
+			setMemberType();
+			loyaltyPoints += 10;
+			System.out.println("Your booking has been made. Redirecting you to transaction...");
+			NewBooking.calculatePrice(this, paymentStrategy);
+			
+			return true;
+
 		}
 		
 
@@ -54,10 +62,9 @@ public class Customer extends User {
 		 * we add the new booking to the bookingsList.
 		 */
 
-		bookingsList.add(NewBooking);
+		
 		// check and change state of customer
-		setMemberType();
-		loyaltyPoints += 10;
+		
 	}
 
 	public void viewBookings() {
@@ -78,6 +85,7 @@ public class Customer extends User {
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId()).equals(bookingId)) {
 				bookingsList.remove(booking);
+				//remove the booking from the facility hashmap as well AND fetch the transaction object from inside the booking to call processRefund
 				break;
 			}
 
