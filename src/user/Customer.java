@@ -26,6 +26,7 @@ public class Customer extends User {
 			return false;
 		}
 		else{
+			//Booking is added, even though transaction might fail later on
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
 			bookingsList.add(NewBooking);
