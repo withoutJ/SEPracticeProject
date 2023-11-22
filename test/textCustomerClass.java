@@ -8,7 +8,6 @@ import sportfacility.*;
 import user.*;
 import org.junit.After;
 import org.junit.Before;
-import sportfacility.*;
 import transaction.*;
 
 public class textCustomerClass {
