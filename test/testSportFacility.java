@@ -70,6 +70,43 @@ public class testSportFacility {
 
         assertEquals(expected, getOutput());
     }
+    @Test
+    public void testSportFacility_06() throws Exception {
+        setOutput();
+        SportFacility facility = new SportFacility(9, 23,13);
+        facility.book("13-02-2000 -1");
+        assertEquals("Please put time in hours only (0-23).\n", getOutput());
+    }
+    
+    @Test
+    public void testSportFacility_07() throws Exception {
+        setOutput();
+        SportFacility facility = new SportFacility(9, 23, 10);
+        facility.cancelBooking("13-02-2000 10");
+        assertEquals("No booking found for 13-02-2000 10. Unable to cancel.\n", getOutput());
+    }
+
+    @Test
+    public void testSportFacility_08() throws Exception {
+        setOutput();
+        SportFacility facility = new SportFacility(9, 23, 10);
+        facility.book("13-02-2000 11"); // Make a booking
+        facility.cancelBooking("13-02-2000 11"); // Cancel the booking
+        setOutput(); // Reset output
+        facility.cancelBooking("13-02-2000 11"); // Try to cancel again
+        assertEquals("The time slot for 13-02-2000 11 is already free.\n", getOutput());
+    }
+
+    @Test
+    public void testSportFacility_09() throws Exception {
+        setOutput();
+        SportFacility facility = new SportFacility(9, 23, 10);
+        facility.book("13-02-2000 12"); // Make a booking
+        getOutput();
+        setOutput();
+        facility.cancelBooking("13-02-2000 12"); // Cancel the booking
+        assertEquals("Booking cancelled for \n13-02-2000 12", getOutput());
+    }
 
     /**************************************
      * Helper methods for output capture
