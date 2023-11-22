@@ -1,3 +1,4 @@
+package user;
 public class StandardMember implements Member {
 
 	public double calculate(int loyaltyPoints, int bookingCount) {

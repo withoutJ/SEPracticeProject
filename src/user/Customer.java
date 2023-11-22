@@ -1,7 +1,8 @@
+package user;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import sportfacility.*;
-import transaction.PaymentStrategy;
+import transaction.*;
 public class Customer extends User {
 
 	private List<Bookings> bookingsList = new ArrayList<>();
@@ -18,10 +19,19 @@ public class Customer extends User {
 	//convert date and time to string
 	public static String concatenateStringAndInt(String str, int number) {
         return str +" "+ number;
-    }
+    } 
+	private PaymentStrategy paymentStrat(String strat){
+		if(strat.equals("CC")){
+			return new CreditCardPayment();
+		}
+		else {
+			return new PayPalPayment();
+		}
+	}
 
-	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, PaymentStrategy paymentStrategy) {
-		
+	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, String paymentString) {
+
+		PaymentStrategy paymentStrategy = paymentStrat(paymentString);
 		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
 			return false;
@@ -35,7 +45,6 @@ public class Customer extends User {
 			loyaltyPoints += 10;
 			System.out.println("Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy);
-			
 			return true;
 
 		}
@@ -72,10 +81,11 @@ public class Customer extends User {
 				bookingsList.remove(booking); //will remove booking from own bookinglist
 				break;
 			}
-
 		}
 		// throw exception if bookingid invalid inside else block
 	}
+	public List<Bookings> getList(){return bookingsList;}
+	
 
 	public double getMemberOffer() {
 		// return a number from 0-1 depending on the state. Multiply this number with
@@ -89,24 +99,24 @@ public class Customer extends User {
 	}
 
 	public void setMemberType() {
-		if (loyaltyPoints > 10) {
+		if (loyaltyPoints >= 10) {
 			memberType = new GoldMember();
 		}
 	}
 
 	public void giveRating(String comment, int rate) {
 		Review review = new Review(comment, rate);
-		SportFacility.writeReview(review);
+		//SportFacility.writeReview(review);
 
 	}
-	public int getBookingStartTime(String bookingID){
+	public int getBookingStartTime(String bookingId){
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId()).equals(bookingId)) {
 				return booking.getStartTime();
-				break;
 			}
 
 		}
+		return 0;
 	}
 
 }

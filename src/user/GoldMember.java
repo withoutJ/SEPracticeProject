@@ -1,3 +1,4 @@
+package user;
 public class GoldMember implements Member {
 
 	public double calculate(int loyaltyPoints, int bookingCount) {
