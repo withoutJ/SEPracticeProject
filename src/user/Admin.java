@@ -32,8 +32,13 @@ public class Admin extends User {
         if (hoursBetween >= 6) {
             customer.cancelBooking(bookingId);
         } else {
+<<<<<<< HEAD
             System.out.println("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
                                "A booking can only be cancelled 6 hours or more in advance.");
+=======
+            System.out.print("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
+                               "A booking can only be cancelled 6 hours or more in advance.\n");
+>>>>>>> e7814b9c858e39ac69109e107276cdde03ea7df8
         }
     }
 	
