@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import sportfacility.*;
+import transaction.PayPalPayment;
 import user.Customer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,11 +16,10 @@ public class Main {
     private static List<SportFacility> facilities = new ArrayList<>();
     
     public static void main(String args[]){
-        
-        facilities.add(new SwimmingPool(9, 23, 10));
+        facilities.add(new SwimmingPool(9, 20, 10));
         facilities.add(new BadmintonCourt(9, 23, 20));
-        facilities.add(new BasketballCourt(9, 23, 120));
-        facilities.add(new TennisCourt(9, 23, 50));
+        facilities.add(new BasketballCourt(9, 22, 120));
+        facilities.add(new TennisCourt(9, 22, 50));
         isRunning = true;
         while (isRunning){
             int response = openScreen();
@@ -84,11 +84,16 @@ public class Main {
                     System.out.println("Choose a facility.");
                     System.out.println("Enter: 1 for Swimming, 2 for Badminton, 3 for Basketball, 4 for Tennis");
                     int facility = scanner.nextInt();
-                    System.err.println("Enter date of booking (DD-MM-YYYY): ");
+                    System.out.println("Enter date of booking (DD-MM-YYYY): ");
                     String date = scanner.next();
-                    System.err.println("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
-                    int time = scanner.nextInt(); // need some method to display available time slots            
-                    customer.createBooking(facilities.get(userInput - 1), dateNtime, userInput);
+                    SportFacility chosenFacility = facilities.get(facility - 1);
+                    chosenFacility.showAvailableSlots(date);
+                    System.out.println("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
+                    int time = scanner.nextInt(); // need some method to display available time slots
+                    System.out.println("Select a payment method:");
+                    System.out.println("1) Credit Card\n2) PayPal");
+                    int payment = scanner.nextInt();
+                    customer.createBooking(facilities.get(facility - 1), date, userInput, new PayPalPayment());
                     // createBooking()
                     break;
                 case 2:
