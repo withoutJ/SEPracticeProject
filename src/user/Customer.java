@@ -17,7 +17,7 @@ public class Customer extends User {
 
 	//convert date and time to string
 	public static String concatenateStringAndInt(String str, int number) {
-        return str + number;
+        return str +" "+ number;
     }
 
 	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, PaymentStrategy paymentStrategy) {
@@ -33,7 +33,7 @@ public class Customer extends User {
 			bookingsList.add(NewBooking);
 			setMemberType();
 			loyaltyPoints += 10;
-			System.out.println("Your booking has been made. Redirecting you to transaction...");
+			System.out.println("Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy);
 			
 			return true;

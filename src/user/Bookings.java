@@ -54,6 +54,6 @@ public class Bookings {
 		transaction.processRefund();
 	}
 	public static String concatenateStringAndInt(String str, int number) {
-        return str + number;
+        return str +" "+ number;
     }
 }
