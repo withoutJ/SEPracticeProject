@@ -8,6 +8,7 @@ import sportfacility.*;
 import user.*;
 import org.junit.After;
 import org.junit.Before;
+import sportfacility.*;
 import transaction.*;
 
 public class textCustomerClass {
@@ -32,7 +33,7 @@ public class textCustomerClass {
 //		    assertEquals( ".",getOutput()); //we can test if the booking prints but bookingID is random, consult labiba
 //			
 //		}
-		@Test
+	    @Test
 		public void testReview_04() throws Exception { //Cancel booking successful
 		    //check for cancel successful message
 		    
@@ -40,11 +41,27 @@ public class textCustomerClass {
 		    Admin admin= new Admin("labiba","labiba");
 		    SportFacility facility = new TennisCourt(9,23,40);
 		    PaymentStrategy payStrat = new CreditCardPayment();
-		    customer.createBooking(facility,"22-11-2023", 10, "CC");
+		    customer.createBooking(facility,"22-11-2023", 16, "CC");
 		    String bookingID = customer.getList().get(0).getBookingId();
 		    setOutput();
 		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
-		    assertEquals("Booking cancelled for \n 22-11-2023 10", getOutput());
+		    assertEquals("Booking cancelled for \n22-11-2023 16", getOutput());
+		}
+		
+	    @Test
+		public void testReview_07() throws Exception { //Cancel booking successful
+		    //check for cancel successful message
+		    
+		    Customer customer = new Customer("username", "password");
+		    Admin admin= new Admin("labiba","labiba");
+		    SportFacility facility = new TennisCourt(9,23,40);
+		    PaymentStrategy payStrat = new CreditCardPayment();
+		    customer.createBooking(facility,"22-11-2023", 18, "CC");
+		    String bookingID = customer.getList().get(0).getBookingId();
+		    setOutput();
+		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
+		    assertEquals("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
+                    "A booking can only be cancelled 6 hours or more in advance.\n", getOutput());
 		}
 		
 		@Test

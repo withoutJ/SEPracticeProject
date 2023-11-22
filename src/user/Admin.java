@@ -1,6 +1,9 @@
 package user;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +20,22 @@ public class Admin extends User {
 	//consider editing facility(booking fee change)
 
 	public void receiveCancelRequest(Customer customer, String bookingId) {
-		
-		LocalTime currentTime = LocalTime.now();
-        // Convert the system time to an integer representation
-        int systemTimeAsInteger = currentTime.getHour() * 100 + currentTime.getMinute();
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
 
-		if(((customer.getBookingStartTime(bookingId))*100)-systemTimeAsInteger>=600){
-			customer.cancelBooking(bookingId);
-		}
-		//if booking is cancellable, delete the booking from user list (the user is inside booking object)
-		//else print Booking is not refundable as startime too soon with system time.
-		else{
-			System.out.println("Sorry, this booking cannot be cancelled and is therefore is non-refundable. '\n' A booking can only be cancelled 6 hours or more in advanced");
-		}
-	}
+        // Parsing booking start time to LocalDateTime
+        String bookingStartTimeString = customer.getBookingStartTime(bookingId);
+        LocalDateTime bookingStartTime = LocalDateTime.parse(bookingStartTimeString, formatter);
+
+        long hoursBetween = ChronoUnit.HOURS.between(bookingStartTime,currentTime);
+
+        if (hoursBetween >= 6) {
+            customer.cancelBooking(bookingId);
+        } else {
+            System.out.print("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
+                               "A booking can only be cancelled 6 hours or more in advance.\n");
+        }
+    }
 	
 	
 	
