@@ -2,7 +2,7 @@ package user;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import sportfacility.*;
-import transaction.*;
+import transaction.PaymentStrategy;
 public class Customer extends User {
 
 	private List<Bookings> bookingsList = new ArrayList<>();
@@ -18,20 +18,11 @@ public class Customer extends User {
 
 	//convert date and time to string
 	public static String concatenateStringAndInt(String str, int number) {
-        return str +" "+ number;
-    } 
-	private PaymentStrategy paymentStrat(String strat){
-		if(strat.equals("CC")){
-			return new CreditCardPayment();
-		}
-		else {
-			return new PayPalPayment();
-		}
-	}
+        return str + number;
+    }
 
-	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, String paymentString) {
-
-		PaymentStrategy paymentStrategy = paymentStrat(paymentString);
+	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, PaymentStrategy paymentStrategy) {
+		
 		if(facility.isBooked(concatenateStringAndInt(bookingDate, startTime))){
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
 			return false;
@@ -43,8 +34,9 @@ public class Customer extends User {
 			bookingsList.add(NewBooking);
 			setMemberType();
 			loyaltyPoints += 10;
-			System.out.println("Redirecting you to transaction...");
+			System.out.println("Your booking has been made. Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy);
+			
 			return true;
 
 		}
@@ -77,15 +69,14 @@ public class Customer extends User {
 		// Remove from the ArrayList of AllBookings stored in main
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId()).equals(bookingId)) {
-				booking.cancel(); //will remove booking from the facility hashmap and transaction object called to process refund
-				bookingsList.remove(booking); //will remove booking from own bookinglist
+				bookingsList.remove(booking);
+				//remove the booking from the facility hashmap as well AND fetch the transaction object from inside the booking to call processRefund
 				break;
 			}
+
 		}
 		// throw exception if bookingid invalid inside else block
 	}
-	public List<Bookings> getList(){return bookingsList;}
-	
 
 	public double getMemberOffer() {
 		// return a number from 0-1 depending on the state. Multiply this number with
@@ -99,7 +90,7 @@ public class Customer extends User {
 	}
 
 	public void setMemberType() {
-		if (loyaltyPoints >= 10) {
+		if (loyaltyPoints > 10) {
 			memberType = new GoldMember();
 		}
 	}
@@ -108,15 +99,6 @@ public class Customer extends User {
 		Review review = new Review(comment, rate);
 		//SportFacility.writeReview(review);
 
-	}
-	public String getBookingStartTime(String bookingId){
-		for (Bookings booking : bookingsList) {
-			if ((booking.getBookingId()).equals(bookingId)) {
-				return booking.getBookingInfo();
-			}
-
-		}
-		return "";
 	}
 
 }
