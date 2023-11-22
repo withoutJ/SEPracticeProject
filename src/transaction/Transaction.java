@@ -29,7 +29,7 @@ public class Transaction {
 			refundStrategy.processRefund(amount);
 		} 
 		else {
-			System.out.println("Payment is not processed.");
+			System.out.print("Payment is not processed.\n");
 		}
 	}
 

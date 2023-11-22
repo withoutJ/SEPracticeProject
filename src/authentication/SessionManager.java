@@ -1,3 +1,5 @@
+package authentication;
+import user.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +18,11 @@ public class SessionManager {
         return instance;
     }
 
-    public void createSession(UserStub user){
+    public void createSession(User user){
         sessionMappingList.add(new Session(user));
     }
 
-    public boolean removeSession(UserStub user){
+    public boolean removeSession(User user){
         for (Session session : sessionMappingList) {
             if (session.getUser().equals(user)) {
                 session.setIsValid(false);

@@ -11,7 +11,7 @@ import transaction.*;
 public class TestTransaction {
 
     @Test
-    void testPayPal(){
+    public void testPayPal(){
         PaymentStrategy paymentStrategy = new PayPalPayment();
         RefundStrategy refundStrategy = new PayPalRefund();
         double amount = 10;
@@ -35,7 +35,7 @@ public class TestTransaction {
     }
 
     @Test
-    void testRefundPaymentNotProcessed(){
+    public void testRefundPaymentNotProcessed(){
         PaymentStrategy paymentStrategy = new PayPalPayment();
         RefundStrategy refundStrategy = new PayPalRefund();
         double amount = 10;
@@ -50,13 +50,13 @@ public class TestTransaction {
 
         System.setOut(System.out);
 
-        String result = "Payment is not processed.";
+        String result = "Payment is not processed.\n";
 
         assertEquals(result, consoleOutput);
     }
 
     @Test
-    void testCreditCardPayment(){
+    public void testCreditCardPayment(){
         PaymentStrategy paymentStrategy = new CreditCardPayment();
         RefundStrategy refundStrategy = new CreditCardRefund();
         double amount = 10;

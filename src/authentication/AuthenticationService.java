@@ -1,19 +1,21 @@
+package authentication;
 import java.util.ArrayList;
 import java.util.List;
+import user.*;
 
 public class AuthenticationService{
     //private SessionManager sessionManager;
     //private AdminStub admin;
-    private static List<UserStub> users;
+    private static List<User> users;
 
     public AuthenticationService(){
         //this.sessionManager=sessionManager;
         //this.admin=admin;
-        AuthenticationService.users = new ArrayList<UserStub>();
+        AuthenticationService.users = new ArrayList<User>();
     }
 
-    private static UserStub findUser(String userName, String password){
-        for (UserStub user : users) {
+    private static User findUser(String userName, String password){
+        for (User user : users) {
             if(user.getUserName()==userName && user.getPassword()==password){
                 return user;
             }
@@ -48,9 +50,9 @@ public class AuthenticationService{
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public static UserStub login(String userName, String password, AdminStub admin){
-        UserStub result=null;
-        if(admin.getUserName()==userName && admin.getPassword()==password){
+    public static User login(String userName, String password, Admin admin){
+        User result=null;
+        if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
             result = admin;
         }
         
@@ -64,19 +66,19 @@ public class AuthenticationService{
         return result;
     }
 
-    public static Boolean logout(UserStub user){
+    public static Boolean logout(User user){
         return SessionManager.getInstance().removeSession(user);
     }
 
-    public UserStub register(String userName, String password){
+    public User register(String userName, String password){
 
-        UserStub user = findUser(userName,password);
+        User user = findUser(userName,password);
         if(user!=null)return null;
 
         Boolean goodPassword = validatePassword(password);
 
         if(goodPassword){
-            UserStub newUser = new UserStub(userName, password);
+            User newUser = new User(userName, password);
             users.add(newUser);
             return user;
         }

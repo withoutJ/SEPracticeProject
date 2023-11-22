@@ -1,11 +1,13 @@
+package authentication;
 import java.util.UUID;
+import user.*;
 
 public class Session {
-    UserStub user;
+    User user;
     UUID sessionId;
     Boolean isValid;
 
-    public Session(UserStub user){
+    public Session(User user){
         this.user=user;
         this.isValid=true;
         this.sessionId=generateSessionId();
@@ -23,7 +25,7 @@ public class Session {
         this.isValid=bool;
     }
 
-    public UserStub getUser(){
+    public User getUser(){
         return this.user;
     }
 }

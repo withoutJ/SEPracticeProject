@@ -53,11 +53,11 @@ public class textCustomerClass {
 		    Admin admin= new Admin("labiba","labiba");
 		    SportFacility facility = new TennisCourt(9,23,40);
 		    PaymentStrategy payStrat = new CreditCardPayment();
-		    customer.createBooking(facility,"22-11-2023", 18, "CC");
+		    customer.createBooking(facility,"21-11-2023", 18, "CC");
 		    String bookingID = customer.getList().get(0).getBookingId();
 		    setOutput();
 		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
-		    assertEquals("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
+		    assertEquals("Sorry, this booking cannot be cancelled and is therefore non-refundable\n" +
                     "A booking can only be cancelled 6 hours or more in advance.\n", getOutput());
 		}
 		
