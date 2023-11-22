@@ -13,7 +13,7 @@ public class Account {
 	 * @param username
 	 * @param password
 	 */
-	public Account(string username, string password) {
+	public Account(String username, String password) {
 		// TODO - implement Account.Account
 		throw new UnsupportedOperationException();
 	}

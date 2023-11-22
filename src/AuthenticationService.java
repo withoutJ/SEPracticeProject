@@ -1,64 +1,92 @@
-public class AuthenticationService {
+import java.util.ArrayList;
+import java.util.List;
+import user.*;
 
-	private UserDatabase dbContext;
-	private SessionManager sessionManager;
+public class AuthenticationService{
+    //private SessionManager sessionManager;
+    //private AdminStub admin;
+    private static List<User> users;
 
-	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 */
-	public User login(string userName, string password) {
-		// TODO - implement AuthenticationService.login
-		throw new UnsupportedOperationException();
-	}
+    public AuthenticationService(){
+        //this.sessionManager=sessionManager;
+        //this.admin=admin;
+        AuthenticationService.users = new ArrayList<User>();
+    }
 
-	/**
-	 * 
-	 * @param sessionId
-	 */
-	public sessionId logout(integer sessionId) {
-		// TODO - implement AuthenticationService.logout
-		throw new UnsupportedOperationException();
-	}
+    private static User findUser(String userName, String password){
+        for (User user : users) {
+            if(user.getUserName()==userName && user.getPassword()==password){
+                return user;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 */
-	public User register(string userName, string password) {
-		// TODO - implement AuthenticationService.register
-		throw new UnsupportedOperationException();
-	}
+    private static boolean validatePassword(String password) {
 
-	/**
-	 * 
-	 * @param userName
-	 */
-	public User findUser(string userName) {
-		// TODO - implement AuthenticationService.findUser
-		throw new UnsupportedOperationException();
-	}
+        if (password.length() < 8) {
+            return false;
+        }
+    
+        boolean hasNumber = false;
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+    
+        for (char c : password.toCharArray()) {
+            if (Character.isDigit(c)) {
+                hasNumber = true;
+            } else if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            }
+    
+            if (hasNumber && hasUpperCase && hasLowerCase) {
+                break;
+            }
+        }
+    
+        return hasNumber && hasUpperCase && hasLowerCase;
+    }
 
-	/**
-	 * 
-	 * @param user
-	 * @param givenPassword
-	 */
-	public boolean validatePassword(User user, string givenPassword) {
-		// TODO - implement AuthenticationService.validatePassword
-		throw new UnsupportedOperationException();
-	}
+    public static UserStub login(String userName, String password, AdminStub admin){
+        UserStub result=null;
+        if(admin.getUserName()==userName && admin.getPassword()==password){
+            result = admin;
+        }
+        
+        if(result==null)result=findUser(userName, password);
 
-	/**
-	 * 
-	 * @param dbContext
-	 * @param sessionManager
-	 */
-	public AuthenticationService(UserDatabase dbContext, SessionManager sessionManager) {
-		// TODO - implement AuthenticationService.AuthenticationService
-		throw new UnsupportedOperationException();
-	}
+        if(result!=null){
+            SessionManager sessionManager = SessionManager.getInstance();
+            sessionManager.createSession(result);
+        }
+        
+        return result;
+    }
+
+    public static Boolean logout(UserStub user){
+        return SessionManager.getInstance().removeSession(user);
+    }
+
+    public UserStub register(String userName, String password){
+
+        UserStub user = findUser(userName,password);
+        if(user!=null)return null;
+
+        Boolean goodPassword = validatePassword(password);
+
+        if(goodPassword){
+            UserStub newUser = new UserStub(userName, password);
+            users.add(newUser);
+            return user;
+        }
+
+        return null;
+    }
+
+
+
+
 
 }
