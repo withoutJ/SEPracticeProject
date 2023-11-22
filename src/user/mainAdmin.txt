@@ -1,0 +1,48 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Admin admin = new Admin("admin", "password");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome, Admin!");
+
+        while (true) {
+            System.out.println("Enter a command (e.g., 'Create new Basketball Court with opening hour 00:00, closing hour 23:00 and booking fee 69 hkd', 'Remove Facility Basketball Court', 'Exit'):");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("Exit")) {
+                System.out.println("Exiting...");
+                break;
+            } else if (input.toLowerCase().startsWith("create new")) {
+                // Parse the input to retrieve the facility type, opening hours, closing hours, and booking fee
+                String[] parts = input.split("with opening hour|, closing hour|and booking fee");
+                if (parts.length == 5) {
+                    String facilityType = parts[1].trim();
+                    int openingHours = Integer.parseInt(parts[2].trim());
+                    int closingHours = Integer.parseInt(parts[3].trim());
+                    int bookingFee = Integer.parseInt(parts[4].trim());
+
+                    admin.createFacility(facilityType, openingHours, closingHours, bookingFee);
+                } else {
+                    System.out.println("Invalid command format.");
+                }
+            } else if (input.toLowerCase().startsWith("remove facility")) {
+                // Parse the input to retrieve the facility type
+                String[] parts = input.split(" ");
+                if (parts.length == 3) {
+                    String facilityType = parts[2].trim();
+
+                    admin.removeFacility(facilityType);
+                } else {
+                    System.out.println("Invalid command format.");
+                }
+            } else {
+                System.out.println("Invalid command.");
+            }
+        }
+
+        scanner.close();
+    }
+}
