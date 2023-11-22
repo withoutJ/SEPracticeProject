@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 import sportfacility.*;
 import transaction.PayPalPayment;
-import user.Customer;
+import user.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,6 +20,7 @@ public class Main {
         facilities.add(new BadmintonCourt(9, 23, 20));
         facilities.add(new BasketballCourt(9, 22, 120));
         facilities.add(new TennisCourt(9, 22, 50));
+        System.out.println(facilities.size());
         isRunning = true;
         while (isRunning){
             int response = openScreen();
@@ -81,20 +82,7 @@ public class Main {
             userInput = scanner.nextInt();
             switch(userInput){
                 case 1:
-                    System.out.println("Choose a facility.");
-                    System.out.println("Enter: 1 for Swimming, 2 for Badminton, 3 for Basketball, 4 for Tennis");
-                    int facility = scanner.nextInt();
-                    System.out.println("Enter date of booking (DD-MM-YYYY): ");
-                    String date = scanner.next();
-                    SportFacility chosenFacility = facilities.get(facility - 1);
-                    chosenFacility.showAvailableSlots(date);
-                    System.out.println("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
-                    int time = scanner.nextInt(); // need some method to display available time slots
-                    System.out.println("Select a payment method:");
-                    System.out.println("1) Credit Card\n2) PayPal");
-                    int payment = scanner.nextInt();
-                    customer.createBooking(facilities.get(facility - 1), date, userInput, new PayPalPayment());
-                    // createBooking()
+                    makeBooking(userInput);
                     break;
                 case 2:
                     // Manage booking
@@ -110,5 +98,21 @@ public class Main {
 
             }
         }
+    }
+
+    private static void makeBooking(int userInput){
+        System.out.println("Choose a facility.");
+        System.out.println("1. Swimming\n 2. Badminton\n 3. Basketball\n 4. Tennis");
+        int facility = scanner.nextInt();
+        System.out.println("Enter date of booking (DD-MM-YYYY): ");
+        String date = scanner.next();
+        SportFacility chosenFacility = facilities.get(facility - 1);
+        chosenFacility.showAvailableSlots(date);
+        System.out.println("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
+        int time = scanner.nextInt(); // need some method to display available time slots
+        System.out.println("Select a payment method:");
+        System.out.println("1) Credit Card\n2) PayPal");
+        int payment = scanner.nextInt();
+        customer.createBooking(facilities.get(facility - 1), date, userInput, new PayPalPayment());
     }
 }

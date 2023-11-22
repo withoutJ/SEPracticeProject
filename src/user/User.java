@@ -1,3 +1,4 @@
+package user;
 import java.util.Random;
 public class User {
 	private String username;
