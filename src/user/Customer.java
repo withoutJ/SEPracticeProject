@@ -109,14 +109,14 @@ public class Customer extends User {
 		//SportFacility.writeReview(review);
 
 	}
-	public int getBookingStartTime(String bookingId){
+	public String getBookingStartTime(String bookingId){
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId()).equals(bookingId)) {
-				return booking.getStartTime();
+				return booking.getBookingInfo();
 			}
 
 		}
-		return 0;
+		return "";
 	}
 
 }

@@ -59,4 +59,5 @@ public class Bookings {
 	public static String concatenateStringAndInt(String str, int number) {
         return str +" "+ number;
     }
+	public String getBookingInfo() {return concatenateStringAndInt(bookingDate,startTime);}
 }
