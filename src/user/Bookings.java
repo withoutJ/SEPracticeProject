@@ -4,7 +4,7 @@ import sportfacility.*;
 import transaction.PaymentStrategy;
 public class Bookings {
 
-	private SportFacility SportFacility;
+	private SportFacility facility;
 	private String bookingID;
 	private String bookingDate;
 	private int startTime;
@@ -13,8 +13,8 @@ public class Bookings {
 	private Transaction transaction;
 
 	// starttime = 1400 end time 1500 end = start + 100
-	public Bookings(SportFacility SportFacility, String bookingDate, int startTime) {
-		this.SportFacility = SportFacility;
+	public Bookings(SportFacility spFacility, String bookingDate, int startTime) {
+		this.facility = spFacility;
 		this.bookingDate = bookingDate;
 		this.startTime = startTime;
 		this.endTime = startTime + 100;
@@ -48,5 +48,12 @@ public class Bookings {
 	public int getStartTime() {
 		return startTime;
 	}
-
+	public void cancel(){
+		String dateHour= concatenateStringAndInt(bookingDate,startime);
+		facility.cancelBooking(dateHour);
+		transaction.processRefund();
+	}
+	public static String concatenateStringAndInt(String str, int number) {
+        return str + number;
+    }
 }

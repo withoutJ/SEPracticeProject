@@ -68,8 +68,8 @@ public class Customer extends User {
 		// Remove from the ArrayList of AllBookings stored in main
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId()).equals(bookingId)) {
-				bookingsList.remove(booking);
-				//remove the booking from the facility hashmap as well AND fetch the transaction object from inside the booking to call processRefund
+				booking.cancel(); //will remove booking from the facility hashmap and transaction object called to process refund
+				bookingsList.remove(booking); //will remove booking from own bookinglist
 				break;
 			}
 
@@ -98,6 +98,15 @@ public class Customer extends User {
 		Review review = new Review(comment, rate);
 		SportFacility.writeReview(review);
 
+	}
+	public int getBookingStartTime(String bookingID){
+		for (Bookings booking : bookingsList) {
+			if ((booking.getBookingId()).equals(bookingId)) {
+				return booking.getStartTime();
+				break;
+			}
+
+		}
 	}
 
 }

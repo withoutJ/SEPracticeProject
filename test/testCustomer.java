@@ -5,22 +5,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.Test;
 import sportfacility.*;
+import user.*
 
 public class testCustomer {
 
     @Test
-    public void testReview_01() {
-        String expectedComment = "Great facility!";
-        int expectedRate = 5;
+    public void testReview_01() { //take test case from Afzal for createBooking valid
+        User customer = new Customer("username", "password");
+        SportFacility facility = new TennisCourt();
+        PaymentStrategy payStrat = new PaymentStrategy();
 
-        Review review = new Review(expectedComment, expectedRate);
 
         assertEquals( "Great facility!",review.getComment());
     }
 
 
 @Test
-public void testReview_02() {
+public void testReview_02() { //same test case but createBooking invalid
     String expectedComment = "Great facility!";
     int expectedRate = 4;
 
@@ -30,7 +31,7 @@ public void testReview_02() {
 	}
 
 @Test
-public void testReview_03() {
+public void testReview_03() { //how to test the view booking in junit?
     Review review = new Review("Test comment", 3); // Initialize with a valid rate
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -45,5 +46,10 @@ public void testReview_03() {
 
     assertEquals(expectedOutput, consoleOutput);
 }
+//cancelBooking() working?
+//getMemberOffer() working? 
+//setMemberType() check
+
+
 }
 
