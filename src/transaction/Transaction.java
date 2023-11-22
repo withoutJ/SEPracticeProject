@@ -33,4 +33,8 @@ public class Transaction {
 		}
 	}
 
+	public boolean getPaymentProcessed(){
+		return this.paymentProcessed;
+	}
+
 }
