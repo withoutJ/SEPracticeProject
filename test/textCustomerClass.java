@@ -40,11 +40,11 @@ public class textCustomerClass {
 		    Admin admin= new Admin("labiba","labiba");
 		    SportFacility facility = new TennisCourt(9,23,40);
 		    PaymentStrategy payStrat = new CreditCardPayment();
-		    customer.createBooking(facility,"22-11-2023", 10, "CC");
+		    customer.createBooking(facility,"22-11-2023", 16, "CC");
 		    String bookingID = customer.getList().get(0).getBookingId();
 		    setOutput();
 		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
-		    assertEquals("Booking cancelled for \n 22-11-2023 10", getOutput());
+		    assertEquals("Booking cancelled for \n22-11-2023 16", getOutput());
 		}
 		
 		@Test

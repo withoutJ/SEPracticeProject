@@ -54,7 +54,7 @@ public class Bookings {
 	public void cancel(){
 		String dateHour= concatenateStringAndInt(bookingDate,startTime);
 		facility.cancelBooking(dateHour);
-		transaction.processRefund();
+		// transaction.processRefund();
 	}
 	public static String concatenateStringAndInt(String str, int number) {
         return str +" "+ number;
