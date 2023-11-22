@@ -43,8 +43,6 @@ public class textCustomerClass {
 		    setOutput();
 		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
 		    assertEquals("Booking cancelled for \n22-11-2023 16", getOutput());
-<<<<<<< HEAD
-=======
 		}
 		
 	    @Test
@@ -61,7 +59,6 @@ public class textCustomerClass {
 		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
 		    assertEquals("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
                     "A booking can only be cancelled 6 hours or more in advance.\n", getOutput());
->>>>>>> e7814b9c858e39ac69109e107276cdde03ea7df8
 		}
 		
 		@Test
