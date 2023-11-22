@@ -1,19 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
+import user.*;
 
 public class AuthenticationService{
     //private SessionManager sessionManager;
     //private AdminStub admin;
-    private static List<UserStub> users;
+    private static List<User> users;
 
     public AuthenticationService(){
         //this.sessionManager=sessionManager;
         //this.admin=admin;
-        AuthenticationService.users = new ArrayList<UserStub>();
+        AuthenticationService.users = new ArrayList<User>();
     }
 
-    private static UserStub findUser(String userName, String password){
-        for (UserStub user : users) {
+    private static User findUser(String userName, String password){
+        for (User user : users) {
             if(user.getUserName()==userName && user.getPassword()==password){
                 return user;
             }

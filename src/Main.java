@@ -81,7 +81,14 @@ public class Main {
             userInput = scanner.nextInt();
             switch(userInput){
                 case 1:
-                    customer.createBooking(null, dateNtime, userInput);
+                    System.out.println("Choose a facility.");
+                    System.out.println("Enter: 1 for Swimming, 2 for Badminton, 3 for Basketball, 4 for Tennis");
+                    int facility = scanner.nextInt();
+                    System.err.println("Enter date of booking (DD-MM-YYYY): ");
+                    String date = scanner.next();
+                    System.err.println("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
+                    int time = scanner.nextInt(); // need some method to display available time slots            
+                    customer.createBooking(facilities.get(userInput - 1), dateNtime, userInput);
                     // createBooking()
                     break;
                 case 2:
