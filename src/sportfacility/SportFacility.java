@@ -85,17 +85,22 @@ public class SportFacility {
 	}
 
 	public boolean isBooked(String dateHour){
-		String[] parts = dateHour.split(" ");
-		int hour = Integer.parseInt(parts[1]);
-	
-		if (hour < 0 || hour > 23) {
-			System.out.print("Please put time in hours only (0-23).\n");
-			return false;
-		}
-		if (timeTable.containsKey(dateHour) && timeTable.get(dateHour)) {
-					return true;
+		if (timeTable.containsKey(dateHour)) {
+			return true;
 		}
 		return false;
-	
 	}
+
+	public void showAvailableSlots(String date) {
+		System.out.print("Available time slots for " + date + ":\n");
+	
+		for (int hour = openingHours; hour < closingHours; hour++) {
+			String dateHour = date + " " + hour;
+			if (!timeTable.containsKey(dateHour) || !timeTable.get(dateHour)) {
+				System.out.print("Time slot " + hour + ":00 is available.\n");
+			}
+		}
+	}
+	
+	
 }
