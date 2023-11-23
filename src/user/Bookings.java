@@ -5,12 +5,13 @@ import sportfacility.*;
 public class Bookings {
 
 	private SportFacility facility;
-	private String bookingID;
+	private int bookingID;
 	private String bookingDate;
 	private int startTime;
 	private int endTime;
 	private User user;
 	private Transaction transaction;
+	private static int bookingIDcount=1;
 
 	// starttime = 1400 end time 1500 end = start + 100
 	public Bookings(SportFacility spFacility, String bookingDate, int startTime) {
@@ -18,14 +19,20 @@ public class Bookings {
 		this.bookingDate = bookingDate;
 		this.startTime = startTime;
 		this.endTime = startTime + 100;
-		bookingID = generateBookingId(); // check this
+		//bookingID = generateBookingId(); // check this
+		setbookingId();
+	}
+	public void setbookingId(){
+		bookingID=bookingIDcount;
+		bookingIDcount++;
 	}
 
-	private String generateBookingId() {
-		UUID randomUUID = UUID.randomUUID();
-		String bookingId = randomUUID.toString().replaceAll("-", "");
-		return bookingId;
-	}
+	// private String generateBookingId() {
+	// 	UUID randomUUID = UUID.randomUUID();
+	// 	String bookingId = randomUUID.toString().replaceAll("-", "");
+	// 	return bookingId;
+	// }
+	
 	//payment start needed here
 	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy ) {
 		// check customer state, assign 0.9 price if gold
@@ -43,7 +50,7 @@ public class Bookings {
 	
 
 
-	public String getBookingId() {
+	public int getBookingId() {
 		return bookingID;
 	}
 

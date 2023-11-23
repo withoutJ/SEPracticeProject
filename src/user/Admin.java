@@ -19,7 +19,7 @@ public class Admin extends User {
 	// where do i add facility )):
 	//consider editing facility(booking fee change)
 
-	public void receiveCancelRequest(Customer customer, String bookingId) {
+	public void receiveCancelRequest(Customer customer, int bookingId) {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
 

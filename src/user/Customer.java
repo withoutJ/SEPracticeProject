@@ -69,17 +69,17 @@ public class Customer extends User {
 		System.out.println("Membership Type: " + memberType.toString());
 		for (Bookings booking : bookingsList) {
 
-			System.out.println("Booking ID: " + booking.getBookingId());
-			System.out.println("Booking Date: " + booking.getBookingDate());
-			System.out.println("Booking Start Time: " + booking.getStartTime());
-			System.out.println();
+			System.out.print("Booking ID: " + booking.getBookingId()+"\n");
+			System.out.print("Booking Date: " + booking.getBookingDate()+ "\n");
+			System.out.print("Booking Start Time: " + booking.getStartTime()+"\n");
+			System.out.print("\n");
 		}
 	}
 
-	public void cancelBooking(String bookingId) {
+	public void cancelBooking(int bookingId) {
 		// Remove from the ArrayList of AllBookings stored in main
 		for (Bookings booking : bookingsList) {
-			if ((booking.getBookingId()).equals(bookingId)) {
+			if ((booking.getBookingId() == bookingId)) {
 				booking.cancel(); //will remove booking from the facility hashmap and transaction object called to process refund
 				bookingsList.remove(booking); //will remove booking from own bookinglist
 				break;
@@ -112,9 +112,9 @@ public class Customer extends User {
 		//SportFacility.writeReview(review);
 
 	}
-	public String getBookingStartTime(String bookingId){
+	public String getBookingStartTime(int bookingId){
 		for (Bookings booking : bookingsList) {
-			if ((booking.getBookingId()).equals(bookingId)) {
+			if ((booking.getBookingId() == bookingId)) {
 				return booking.getBookingInfo();
 			}
 

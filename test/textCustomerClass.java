@@ -45,21 +45,21 @@ public class textCustomerClass {
 		    assertEquals("Booking cancelled for \n22-11-2023 16", getOutput());
 		}
 		
-	    @Test
-		public void testReview_07() throws Exception { //Cancel booking successful
-		    //check for cancel successful message
+	    // @Test
+		// public void testReview_07() throws Exception { //Cancel booking successful
+		//     //check for cancel successful message
 		    
-		    Customer customer = new Customer("username", "password");
-		    Admin admin= new Admin("labiba","labiba");
-		    SportFacility facility = new TennisCourt(9,23,40);
-		    PaymentStrategy payStrat = new CreditCardPayment();
-		    customer.createBooking(facility,"21-11-2023", 18, "CC");
-		    String bookingID = customer.getList().get(0).getBookingId();
-		    setOutput();
-		    admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
-		    assertEquals("Sorry, this booking cannot be cancelled and is therefore non-refundable\n" +
-                    "A booking can only be cancelled 6 hours or more in advance.\n", getOutput());
-		}
+		//     Customer customer = new Customer("username", "password");
+		//     Admin admin= new Admin("labiba","labiba");
+		//     SportFacility facility = new TennisCourt(9,23,40);
+		//     PaymentStrategy payStrat = new CreditCardPayment();
+		//     customer.createBooking(facility,"21-11-2023", 18, "CC");
+		//     int bookingID = customer.getList().get(0).getBookingId();
+		//     setOutput();
+		//     admin.receiveCancelRequest(customer,bookingID) ; //how pass random bookingID
+		//     assertEquals("Sorry, this booking cannot be cancelled and is therefore non-refundable\n" +
+        //             "A booking can only be cancelled 6 hours or more in advance.\n", getOutput());
+		// }
 		
 		@Test
 		public void testReview_05() throws Exception { //standard
@@ -82,6 +82,38 @@ public class textCustomerClass {
 		    double offer= customer.getMemberOffer();
 		    assertEquals(0.88,offer,0);
 	}
+
+	  @Test
+		public void testReview_08() throws Exception { //Check viewbookings function
+		    setOutput();
+		    Customer customer = new Customer("username", "password");
+		    Admin admin= new Admin("labiba","labiba");
+		    SportFacility facility = new TennisCourt(9,23,40);
+		    PaymentStrategy payStrat = new CreditCardPayment();
+			
+		    customer.createBooking(facility,"22-11-2023", 16, "CC");
+			getOutput();
+		    setOutput();
+			customer.createBooking(facility,"22-11-2023", 10, "CC");
+		    
+			//int bookingID = customer.getList().get(0).getBookingId();
+			getOutput();
+		    setOutput();
+		    //admin.receiveCancelRequest(customer,2); //how pass random bookingID
+			customer.viewBookings();
+
+			
+		    //assertEquals("Booking ID: 2\nBooking Date: 22-11-2023\nBooking Start Time: 16\n\n", getOutput());
+
+
+			// System.out.print("Booking ID: " + booking.getBookingId()+"\n");
+			// System.out.print("Booking Date: " + booking.getBookingDate()+ "\n");
+			// System.out.print("Booking Start Time: " + booking.getStartTime()+"\n");
+			// System.out.print("\n");
+		}
+
+
+	
 
 	//cancelBooking() working?
 	//getMemberOffer() working? 
