@@ -1,3 +1,6 @@
+package authentication;
+
+import main.*;
 import user.Customer;
 
 public class AuthenticationService_Stub {

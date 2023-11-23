@@ -1,6 +1,9 @@
+package main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import authentication.AuthenticationService_Stub;
 import sportfacility.*;
 import transaction.PayPalPayment;
 import user.*;
@@ -20,7 +23,6 @@ public class Main {
         facilities.add(new BadmintonCourt(9, 23, 20));
         facilities.add(new BasketballCourt(9, 22, 120));
         facilities.add(new TennisCourt(9, 22, 50));
-        System.out.println(facilities.size());
         isRunning = true;
         while (isRunning){
             int response = openScreen(scanner);
@@ -38,13 +40,14 @@ public class Main {
 
     private static int openScreen(Scanner scanner){
         customer = null;
-        System.out.println("Shahbagh Sports Complex");
-        System.out.println("---------------------------------------------------------");
-        System.out.println("Press 1 to Sign-Up | Press 2 to Sign-In | Press 0 to exit");
+        System.out.print("Shahbagh Sports Complex\n");
+        System.out.print("---------------------------------------------------------\n");
+        System.out.print("Press 1 to Sign-Up | Press 2 to Sign-In | Press 0 to exit\n");
         System.out.print("Input: ");
         int response = -1;
         while (response != 1 && response != 2 && response != 0){
-            response = scanner.nextInt();
+            String strResponse = scanner.next();
+            response = Integer.parseInt(strResponse);
             if (response == 1){
                 System.out.print("Set a username: ");
                 username = scanner.next();
@@ -58,11 +61,12 @@ public class Main {
                 password = scanner.next();
             }
             else if (response == 0){
-                System.out.println("Thank you for using our system.");
+                System.out.print("Thank you for using our system.\n");
                 isRunning = false;
             }
             else{
-                System.out.println("Invalid Token. Try again.");
+                System.out.print("Invalid Token. Try again.\n");
+                System.out.print("Input: ");
             }
         }
         return response;
@@ -73,26 +77,29 @@ public class Main {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String dateNtime = now.format(formatter);
-        System.err.println(dateNtime);
+        System.out.print(dateNtime + "\n");
         while (userInput != 0){
-            System.out.println("Press 1 to make a booking.");
-            System.out.println("Press 2 to view bookings.");
-            System.out.println("Press 3 to cancel bookings.");
-            System.out.println("Press 4 to show available facilities.");
-            System.out.println("Press 0 to log out.");
+            System.out.print("Press 1 to make a booking.\n");
+            System.out.print("Press 2 to view bookings.\n");
+            System.out.print("Press 3 to cancel bookings.\n");
+            System.out.print("Press 4 to show available facilities.\n");
+            System.out.print("Press 0 to log out.\n");
             System.out.print("Input: ");
-            userInput = scanner.nextInt();
+            String strUserInput = scanner.next(); // handle exception where input is not a number
+            userInput = Integer.parseInt(strUserInput);
             switch(userInput){
                 case 1:
                     makeBooking(scanner);
                     break;
                 case 2:
                     viewBooking(scanner);
-                    int input = scanner.nextInt();
+                    String strInput = scanner.next();
+                    int input = Integer.parseInt(strInput);
                     while (input != 0){
                         if (input != 0){
-                            System.out.println("Invalid token. Try again.");
-                            input = scanner.nextInt();
+                            System.out.print("Invalid token. Try again.\n");
+                            strInput = scanner.next();
+                            input = Integer.parseInt(strInput);
                         }
                     }
                     break;
@@ -106,20 +113,21 @@ public class Main {
                     // log out
                     break;
                 default:
-                    System.out.println("Invalid token. Try again.");
+                    System.out.print("Invalid token. Try again.\n");
 
             }
         }
     }
 
     private static void makeBooking(Scanner scanner){
-        System.out.println("Choose a facility (Enter 0 to go to the main menu).");
-        System.out.println("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis");
+        System.out.print("Choose a facility (Enter 0 to go to the main menu).\n");
+        System.out.print("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis\n");
         System.out.print("Input: ");
         int facility = -1;
         boolean bookSuccessful = false;
         while (facility != 0 && !bookSuccessful){
-            facility = scanner.nextInt();
+            String strFacility = scanner.next();
+            facility = Integer.parseInt(strFacility);
             switch (facility){
                 case 1: case 2: case 3: case 4:
                 System.out.print("Enter date of booking (DD-MM-YYYY): ");
@@ -128,20 +136,21 @@ public class Main {
                 chosenFacility.showAvailableSlots(date);
                 System.out.print("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
                 int time = scanner.nextInt(); // need some method to display available time slots
-                System.out.println("Select a payment method:");
-                System.out.println("1. Credit Card\n2. PayPal");
+                System.out.print("Select a payment method:\n");
+                System.out.print("1. Credit Card\n2. PayPal\n");
                 System.out.print("Input: ");
-                int payment = scanner.nextInt();
+                String strPay = scanner.next();
+                int payment = Integer.parseInt(strPay);
                  // parameter will be changed such that PaymentStrategy is passed as strings of CC/Pl instead of an object
                 bookSuccessful = customer.createBooking(facilities.get(facility - 1), date, time, new PayPalPayment());
                 if (bookSuccessful){
-                    System.out.println("Booking successfully create for " + date + " from " + 
-                    Integer.toString(time) + ":00 to " + Integer.toString(time+1) + ":00. Go to main menu to manage your bookings.");
-                    System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.print("Booking successfully create for " + date + " from " + 
+                    Integer.toString(time) + ":00 to " + Integer.toString(time+1) + ":00. Go to main menu to manage your bookings.\n");
+                    System.out.print("------------------------------------------------------------------------------------------------------------------------------------------\n");
                 }
                 break;
                 default:
-                    System.out.println("Invalid token. Try again.");
+                    System.out.print("Invalid token. Try again.\n");
             }
             
         }
@@ -149,18 +158,18 @@ public class Main {
 
     private static void viewBooking(Scanner scanner){
         customer.viewBookings();
-        System.out.println("Enter 0 to go to the main menu.");
+        System.out.print("Enter 0 to go to the main menu.\n");
     }
 
     private static void cancelBooking(Scanner scanner){
         boolean cancelled = true;
-        System.out.println("Enter Booking ID to cancel a booking.");
+        System.out.print("Enter Booking ID to cancel a booking.\n");
         customer.viewBookings();
         String bookID = scanner.next();
         customer.cancelBooking(bookID);
         if (cancelled)
-            System.out.println("Booking cancelled successfully.");
+            System.out.print("Booking cancelled successfully.\n");
         else
-            System.out.println("Booking does not exist, try again.");
+            System.out.print("Booking does not exist, try again.\n");
     }
 }

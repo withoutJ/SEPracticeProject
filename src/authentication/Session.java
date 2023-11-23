@@ -1,3 +1,4 @@
+package authentication;
 public class Session {
 
 	private long expirationTime;

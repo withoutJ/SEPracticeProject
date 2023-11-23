@@ -1,3 +1,4 @@
+package authentication;
 public class SessionManager {
 
 	private long sessionTimeout;

@@ -1,3 +1,4 @@
+package main;
 import sportfacility.SportFacility;
 import transaction.PaymentStrategy;
 import user.Customer;
