@@ -1,16 +1,19 @@
 package user;
+
 import transaction.*;
 import java.util.*;
 import sportfacility.*;
+
 public class Bookings {
 
 	private SportFacility facility;
-	private String bookingID;
+	private int bookingID;
 	private String bookingDate;
 	private int startTime;
 	private int endTime;
 	private User user;
 	private Transaction transaction;
+	private static int bookingIDcount = 1;
 
 	// starttime = 1400 end time 1500 end = start + 100
 	public Bookings(SportFacility spFacility, String bookingDate, int startTime) {
@@ -18,32 +21,37 @@ public class Bookings {
 		this.bookingDate = bookingDate;
 		this.startTime = startTime;
 		this.endTime = startTime + 100;
-		bookingID = generateBookingId(); // check this
+		// bookingID = generateBookingId(); // check this
+		setbookingId();
 	}
 
-	private String generateBookingId() {
-		UUID randomUUID = UUID.randomUUID();
-		String bookingId = randomUUID.toString().replaceAll("-", "");
-		return bookingId;
+	public void setbookingId() {
+		bookingID = bookingIDcount;
+		bookingIDcount++;
 	}
-	//payment start needed here
-	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy ) {
+
+	// private String generateBookingId() {
+	// UUID randomUUID = UUID.randomUUID();
+	// String bookingId = randomUUID.toString().replaceAll("-", "");
+	// return bookingId;
+	// }
+
+	// payment start needed here
+	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy) {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
 		double amount = (facility.getBookingFee()) * payWithDiscount;
-		System.out.println("Your total is: "+amount+"\nProcessing transaction...");
+		System.out.println("Your total is: " + amount + "\nProcessing transaction...");
 
-		//for testing purpose only
-		RefundStrategy refund=new CreditCardRefund();
+		// for testing purpose only
+		RefundStrategy refund = new CreditCardRefund();
 
 		transaction = new Transaction(paymentStrategy, refund, amount);
 		transaction.processPayment();
-		
+
 	}
-	
 
-
-	public String getBookingId() {
+	public int getBookingId() {
 		return bookingID;
 	}
 
@@ -54,14 +62,26 @@ public class Bookings {
 	public int getStartTime() {
 		return startTime;
 	}
-	public void cancel(){
-		String dateHour= concatenateStringAndInt(bookingDate,startTime);
+
+	public void cancel() {
+		String dateHour = concatenateStringAndInt(bookingDate, startTime);
 		facility.cancelBooking(dateHour);
 		// transaction.processRefund();
 	}
+
 	public static String concatenateStringAndInt(String str, int number) {
-        return str +" "+ number;
-    }
-	public String getBookingInfo() {return concatenateStringAndInt(bookingDate,startTime);}
-	public boolean paymentProcessFlag(){return transaction.getPaymentProcessed();}
+		return str + " " + number;
+	}
+
+	public String getBookingInfo() {
+		return concatenateStringAndInt(bookingDate, startTime);
+	}
+
+	public boolean paymentProcessFlag() {
+		return transaction.getPaymentProcessed();
+	}
+
+	public static void resetBookingID() {
+		bookingIDcount = 0;
+	}
 }

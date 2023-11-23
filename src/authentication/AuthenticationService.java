@@ -16,7 +16,7 @@ public class AuthenticationService{
 
     private static User findUser(String userName, String password){
         for (User user : users) {
-            if(user.getUserName()==userName && user.getPassword()==password){
+            if((user.getUserName()).equals(userName) && (user.getPassword()).equals(password)){
                 return user;
             }
         }
