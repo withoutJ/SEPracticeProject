@@ -8,18 +8,19 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import sportfacility.*;
+
 public class Admin extends User {
 
-	private List<Bookings> cancelRequests = new ArrayList<>();
+    private List<Bookings> cancelRequests = new ArrayList<>();
 
-	public Admin(String username, String password) {
-		super(username, password);
-	}
+    public Admin(String username, String password) {
+        super(username, password);
+    }
 
-	// where do i add facility )):
-	//consider editing facility(booking fee change)
+    // where do i add facility )):
+    // consider editing facility(booking fee change)
 
-	public void receiveCancelRequest(Customer customer, int bookingId) {
+    public boolean receiveCancelRequest(Customer customer, int bookingId) {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
 
@@ -27,17 +28,16 @@ public class Admin extends User {
         String bookingStartTimeString = customer.getBookingStartTime(bookingId);
         LocalDateTime bookingStartTime = LocalDateTime.parse(bookingStartTimeString, formatter);
 
-        long hoursBetween = ChronoUnit.HOURS.between(bookingStartTime,currentTime);
+        long hoursBetween = ChronoUnit.HOURS.between(bookingStartTime, currentTime);
 
         if (hoursBetween >= 6) {
             customer.cancelBooking(bookingId);
+            return true;
         } else {
             System.out.print("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
-                               "A booking can only be cancelled 6 hours or more in advance.\n");
+                    "A booking can only be cancelled 6 hours or more in advance.\n");
+            return false;
         }
     }
-	
-	
-	
-	
+
 }
