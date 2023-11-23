@@ -11,11 +11,11 @@ public class Main {
     private static boolean isRunning;
     private static String username;
     private static String password;
-    private static Scanner scanner = new Scanner(System.in); // Single scanner for entire application
     private static Customer customer;
     private static List<SportFacility> facilities = new ArrayList<>();
     
     public static void main(String args[]){
+        Scanner scanner = new Scanner(System.in);
         facilities.add(new SwimmingPool(9, 20, 10));
         facilities.add(new BadmintonCourt(9, 23, 20));
         facilities.add(new BasketballCourt(9, 22, 120));
@@ -23,7 +23,7 @@ public class Main {
         System.out.println(facilities.size());
         isRunning = true;
         while (isRunning){
-            int response = openScreen();
+            int response = openScreen(scanner);
             if (response == 1){
                 customer = AuthenticationService_Stub.register(username, password);
             }
@@ -31,12 +31,12 @@ public class Main {
                 customer = AuthenticationService_Stub.login(username, password); // guessing login will use FindUser()
             }
             if (customer != null)
-                mainMenu();
+                mainMenu(scanner);
         }
         scanner.close(); // Close the scanner only once here
     }
 
-    private static int openScreen(){
+    private static int openScreen(Scanner scanner){
         customer = null;
         System.out.println("Shahbagh Sports Complex");
         System.out.println("---------------------------------------------------------");
@@ -68,7 +68,7 @@ public class Main {
         return response;
     }
 
-    private static void mainMenu() {
+    private static void mainMenu(Scanner scanner) {
         int userInput = -1;
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -84,10 +84,10 @@ public class Main {
             userInput = scanner.nextInt();
             switch(userInput){
                 case 1:
-                    makeBooking();
+                    makeBooking(scanner);
                     break;
                 case 2:
-                    viewBooking();
+                    viewBooking(scanner);
                     int input = scanner.nextInt();
                     while (input != 0){
                         if (input != 0){
@@ -97,7 +97,7 @@ public class Main {
                     }
                     break;
                 case 3:
-                    cancelBooking();
+                    cancelBooking(scanner);
                     break;
                 case 4:
                     // some logic to print the facilities available
@@ -112,7 +112,7 @@ public class Main {
         }
     }
 
-    private static void makeBooking(){
+    private static void makeBooking(Scanner scanner){
         System.out.println("Choose a facility (Enter 0 to go to the main menu).");
         System.out.println("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis");
         System.out.print("Input: ");
@@ -129,7 +129,7 @@ public class Main {
                 System.out.print("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
                 int time = scanner.nextInt(); // need some method to display available time slots
                 System.out.println("Select a payment method:");
-                System.out.println("1) Credit Card\n2) PayPal");
+                System.out.println("1. Credit Card\n2. PayPal");
                 System.out.print("Input: ");
                 int payment = scanner.nextInt();
                  // parameter will be changed such that PaymentStrategy is passed as strings of CC/Pl instead of an object
@@ -147,12 +147,12 @@ public class Main {
         }
     }
 
-    private static void viewBooking(){
+    private static void viewBooking(Scanner scanner){
         customer.viewBookings();
         System.out.println("Enter 0 to go to the main menu.");
     }
 
-    private static void cancelBooking(){
+    private static void cancelBooking(Scanner scanner){
         boolean cancelled = true;
         System.out.println("Enter Booking ID to cancel a booking.");
         customer.viewBookings();
