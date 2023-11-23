@@ -9,5 +9,5 @@ public class StandardMember implements Member {
 	public String toString() {
 		return "Standard Member";
 	}
-
+	
 }

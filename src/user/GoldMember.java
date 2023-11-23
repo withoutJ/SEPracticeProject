@@ -5,7 +5,6 @@ public class GoldMember implements Member {
 		return (loyaltyPoints*0.5) + bookingCount;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Gold Member";
