@@ -38,16 +38,19 @@ public class Customer extends User {
 		}
 		else{
 			//Booking is added, even though transaction might fail later on
-			facility.book(concatenateStringAndInt(bookingDate, startTime));
+			
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
-			bookingsList.add(NewBooking);
-			setMemberType();
-			loyaltyPoints += 10;
-			System.out.println("Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy);
-			return true;
-
+			if(NewBooking.paymentProcessFlag()){
+				facility.book(concatenateStringAndInt(bookingDate, startTime));
+				bookingsList.add(NewBooking);
+				setMemberType();
+				loyaltyPoints += 10;
+				System.out.println("Redirecting you to transaction...");	
+				return true;
+			}
 		}
+		return false;
 		
 
 		/*

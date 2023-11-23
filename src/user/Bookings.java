@@ -2,7 +2,6 @@ package user;
 import transaction.*;
 import java.util.*;
 import sportfacility.*;
-import transaction.PaymentStrategy;
 public class Bookings {
 
 	private SportFacility facility;
@@ -33,8 +32,12 @@ public class Bookings {
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
 		double amount = (facility.getBookingFee()) * payWithDiscount;
 		System.out.println("Your total is: "+amount+"\nProcessing transaction...");
-		// call transaction class instance and call the processPayment method
-		//transaction = new Transaction(paymentStrategy, amount);
+
+		//for testing purpose only
+		RefundStrategy refund=new CreditCardRefund();
+
+		transaction = new Transaction(paymentStrategy, refund, amount);
+		transaction.processPayment();
 		
 	}
 	
@@ -60,4 +63,5 @@ public class Bookings {
         return str +" "+ number;
     }
 	public String getBookingInfo() {return concatenateStringAndInt(bookingDate,startTime);}
+	public boolean paymentProcessFlag(){return transaction.getPaymentProcessed();}
 }
