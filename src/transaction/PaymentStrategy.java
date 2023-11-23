@@ -5,6 +5,6 @@ public interface PaymentStrategy {
 	 * 
 	 * @param amount
 	 */
-	void processPayment(double amount);
+	boolean processPayment(double amount);
 
 }

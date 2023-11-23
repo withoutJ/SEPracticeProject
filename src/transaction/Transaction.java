@@ -5,6 +5,7 @@ public class Transaction {
 	private RefundStrategy refundStrategy;
 	private double amount;
 	private boolean paymentProcessed;
+	private boolean refundProcessed;
 
 	/**
 	 * 
@@ -26,11 +27,19 @@ public class Transaction {
 
 	public void processRefund() {
 		if(paymentProcessed) {
-			refundStrategy.processRefund(amount);
+			refundProcessed = refundStrategy.processRefund(amount);
 		} 
 		else {
 			System.out.println("Payment is not processed.");
 		}
+	}
+
+	public boolean isPaymentProcessed(){
+		return paymentProcessed;
+	}
+
+	public boolean isRefundProcessed(){
+		return refundProcessed;
 	}
 
 }

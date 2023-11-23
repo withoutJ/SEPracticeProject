@@ -1,6 +1,20 @@
 package transaction;
+
+import java.util.Random;
+
 public class CreditCardRefund implements RefundStrategy {
-    public void processRefund(double amount) {
-        System.out.printf("Visa processed the refund with amount of %.2f.\n", amount);
+    public boolean sendToVisa() {
+		Random rand = new Random();
+		return rand.nextInt() % 2 == 0;
+	}
+
+    public boolean processRefund(double amount){
+        boolean processed = sendToVisa();
+        if(processed) {
+            System.out.printf("Visa processed the refund with amount of %.2f.\n", amount);
+        } else {
+            System.out.println("Refund failed.");
+        }
+        return processed;
     }
 }

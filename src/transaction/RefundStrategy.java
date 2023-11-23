@@ -5,6 +5,6 @@ public interface RefundStrategy {
 	 * 
 	 * @param amount
 	 */
-	public void processRefund(double amount);
+	public boolean processRefund(double amount);
 
 }
