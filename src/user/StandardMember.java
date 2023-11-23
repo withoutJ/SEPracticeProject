@@ -5,4 +5,9 @@ public class StandardMember implements Member {
 		return (loyaltyPoints*0.1);
 	}
 
+	@Override
+	public String toString() {
+		return "Standard Member";
+	}
+
 }
