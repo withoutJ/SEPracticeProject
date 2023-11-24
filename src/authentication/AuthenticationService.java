@@ -1,33 +1,30 @@
 package authentication;
+
 import java.util.ArrayList;
 import java.util.List;
 import user.*;
 
-public class AuthenticationService{
-    //private SessionManager sessionManager;
-    //private AdminStub admin;
-    private static List<Customer> users;
-    private static Admin admin;
+public class AuthenticationService {
+    // Assuming Customer and SessionManager are defined in the user package or appropriately imported.
+    private static List<Customer> users = new ArrayList<>();
+    // private static Admin admin; // This line can be removed if Admin is not used.
 
-    public AuthenticationService(){
-        //this.sessionManager=sessionManager;
-        //this.admin=admin;
-        AuthenticationService.users = new ArrayList<>();
+    public AuthenticationService() {
+        // Constructor initialization if needed
     }
 
-    private static Customer findUser(String userName, String password){
-        if (users != null)
+    private static Customer findUser(String userName, String password) {
+        if (users != null) {
             for (Customer user : users) {
-                if((user.getUserName()).equals(userName) && (user.getPassword()).equals(password)){
+                if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                     return user;
                 }
             }
         }
-        return null;
+        return null; // This line was outside the method due to an extra brace.
     }
 
     private static boolean validatePassword(String password) {
-
         if (password.length() < 8) {
             return false;
         }
@@ -53,15 +50,10 @@ public class AuthenticationService{
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public static Customer login(String userName, String password){
-        Customer result=null;
-        // if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
-        //     result = admin;
-        // }
-        
-        if(result==null)result=findUser(userName, password);
+    public static Customer login(String userName, String password) {
+        Customer result = findUser(userName, password);
 
-        if(result!=null){
+        if (result != null) {
             SessionManager sessionManager = SessionManager.getInstance();
             sessionManager.createSession(result);
         }
@@ -69,31 +61,25 @@ public class AuthenticationService{
         return result;
     }
 
-    public static Boolean logout(Customer user){
+    public static boolean logout(Customer user) {
         return SessionManager.getInstance().removeSession(user);
     }
 
-    public static Customer register(String userName, String password){
+    public static Customer register(String userName, String password) {
+        Customer user = findUser(userName, password);
+        if (user != null) return null; // User already exists
 
-        Customer user = findUser(userName,password);
-        if(user!=null)
-            return null;
+        boolean goodPassword = validatePassword(password);
 
-        Boolean goodPassword = validatePassword(password);
-
-        if(goodPassword){
-            Customer newUser = new Customer(userName, password);
+        if (goodPassword) {
+            Customer newUser = new Customer(userName, password); // Assuming Customer constructor is defined.
             users.add(newUser);
-            return user;
+            return newUser; // Return the new user instead of null
         }
 
         return null;
     }
 
-    // public static Admin registerAdmin(String username, String password){
-
-    // }
-
-
-
+    // Additional admin-related methods can be added if needed
 }
+
