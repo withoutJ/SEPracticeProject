@@ -9,11 +9,13 @@ public class AuthenticationService {
     private List<Customer> users = new ArrayList<>();
     private SessionManager sessMgr;
     // private static Admin admin; // This line can be removed if Admin is not used.
-    private AuthenticationService instance = new AuthenticationService();
+    private static AuthenticationService instance = new AuthenticationService();
 
     private AuthenticationService() {
         sessMgr = new SessionManager();
     }
+
+    public static AuthenticationService getInstance(){return instance;}
 
     private Customer findUser(String userName, String password) {
         if (users != null) {
