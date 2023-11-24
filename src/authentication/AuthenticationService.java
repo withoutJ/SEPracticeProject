@@ -4,23 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import user.*;
 
-public class AuthenticationService{
-    //private SessionManager sessionManager;
-    //private AdminStub admin;
-    private List<Customer> users;
-    private SessionManager sessionManager;
-    //private static Admin admin;
+public class AuthenticationService {
+    // Assuming Customer and SessionManager are defined in the user package or appropriately imported.
+    private static List<Customer> users = new ArrayList<>();
+    // private static Admin admin; // This line can be removed if Admin is not used.
 
-
-    public AuthenticationService(){
-        //this.sessionManager=sessionManager;
-        //this.admin=admin;
-        users = new ArrayList<>();
-        sessionManager = new SessionManager();
+    public AuthenticationService() {
+        // Constructor initialization if needed
     }
 
-    private Customer findUser(String userName, String password){
-        if (users != null)
+    private static Customer findUser(String userName, String password) {
+        if (users != null) {
             for (Customer user : users) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
                     return user;
@@ -30,8 +24,7 @@ public class AuthenticationService{
         return null;
     }
 
-    private boolean validatePassword(String password) {
-
+    private static boolean validatePassword(String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -57,31 +50,24 @@ public class AuthenticationService{
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public Customer login(String userName, String password){
-        Customer result=null;
-        // if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
-        //     result = admin;
-        // }
-        
-        if(result==null)result=findUser(userName, password);
+    public static Customer login(String userName, String password) {
+        Customer result = findUser(userName, password);
 
-        if(result!=null){
-            //SessionManager sessionManager = SessionManager.getInstance();
+        if (result != null) {
+            SessionManager sessionManager = SessionManager.getInstance();
             sessionManager.createSession(result);
         }
         
         return result;
     }
 
-    public Boolean logout(Customer user){
-        return sessionManager.removeSession(user);
+    public static boolean logout(Customer user) {
+        return SessionManager.getInstance().removeSession(user);
     }
 
-    public Customer register(String userName, String password){
-
-        Customer user = findUser(userName,password);
-        if(user!=null)
-            return null;
+    public static Customer register(String userName, String password) {
+        Customer user = findUser(userName, password);
+        if (user != null) return null; // User already exists
 
         boolean goodPassword = validatePassword(password);
 
