@@ -3,20 +3,20 @@ import user.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionManager {
-    private static SessionManager instance;
+class SessionManager {
+    //private static SessionManager instance;
     private List<Session> sessionMappingList;
 
-    private SessionManager() {
+    SessionManager() {
         sessionMappingList = new ArrayList<Session>();
     }
 
-    public static SessionManager getInstance() {
-        if (instance == null) {
-           instance = new SessionManager();
-        }
-        return instance;
-    }
+    // public static SessionManager getInstance() {
+    //     if (instance == null) {
+    //        instance = new SessionManager();
+    //     }
+    //     return instance;
+    // }
 
     public void createSession(User user){
         sessionMappingList.add(new Session(user));
