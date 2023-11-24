@@ -7,8 +7,6 @@ import java.io.PrintStream;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import sportfacility.*;
 
