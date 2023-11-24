@@ -1,10 +1,6 @@
 package authentication;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Intiser
 import user.*;
 
 public class AuthenticationService{

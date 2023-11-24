@@ -142,7 +142,7 @@ public class Main {
                 String strPay = scanner.next();
                 int payment = Integer.parseInt(strPay);
                  // parameter will be changed such that PaymentStrategy is passed as strings of CC/Pl instead of an object
-                bookSuccessful = customer.createBooking(facilities.get(facility - 1), date, time, new PayPalPayment());
+                bookSuccessful = customer.createBooking(facilities.get(facility - 1), date, time, "PL");
                 if (bookSuccessful){
                     System.out.print("Booking successfully create for " + date + " from " + 
                     Integer.toString(time) + ":00 to " + Integer.toString(time+1) + ":00. Go to main menu to manage your bookings.\n");
@@ -166,7 +166,7 @@ public class Main {
         System.out.print("Enter Booking ID to cancel a booking.\n");
         customer.viewBookings();
         String bookID = scanner.next();
-        customer.cancelBooking(bookID);
+        customer.cancelBooking(Integer.parseInt(bookID));
         if (cancelled)
             System.out.print("Booking cancelled successfully.\n");
         else
