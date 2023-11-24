@@ -84,6 +84,7 @@ public class Customer extends User {
 				bookingsList.remove(booking); // will remove booking from own bookinglist
 				break;
 			}
+
 		}
 		// throw exception if bookingid invalid inside else block
 	}
@@ -104,7 +105,7 @@ public class Customer extends User {
 	}
 
 	public void setMemberType() {
-		if (loyaltyPoints >= 10) {
+		if (loyaltyPoints > 10) {
 			memberType = new GoldMember();
 		}
 	}

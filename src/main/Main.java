@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import authentication.*;
+import authentication.AuthenticationService_Stub;
 import sportfacility.*;
 import transaction.PayPalPayment;
 import user.*;
@@ -14,7 +14,7 @@ public class Main {
     private static boolean isRunning;
     private static String username;
     private static String password;
-    private static User customer;
+    private static Customer customer;
     private static List<SportFacility> facilities = new ArrayList<>();
     
     public static void main(String args[]){
@@ -27,10 +27,10 @@ public class Main {
         while (isRunning){
             int response = openScreen(scanner);
             if (response == 1){
-                customer = AuthenticationService.register(username, password);
+                customer = AuthenticationService_Stub.register(username, password);
             }
             else if (response == 2){
-                customer = AuthenticationService.login(username, password); // guessing login will use FindUser()
+                customer = AuthenticationService_Stub.login(username, password); // guessing login will use FindUser()
             }
             if (customer != null)
                 mainMenu(scanner);
@@ -142,7 +142,7 @@ public class Main {
                 String strPay = scanner.next();
                 int payment = Integer.parseInt(strPay);
                  // parameter will be changed such that PaymentStrategy is passed as strings of CC/Pl instead of an object
-                bookSuccessful = customer.createBooking(facilities.get(facility - 1), date, time, "new PayPalPayment()");
+                bookSuccessful = customer.createBooking(facilities.get(facility - 1), date, time, new PayPalPayment());
                 if (bookSuccessful){
                     System.out.print("Booking successfully create for " + date + " from " + 
                     Integer.toString(time) + ":00 to " + Integer.toString(time+1) + ":00. Go to main menu to manage your bookings.\n");
