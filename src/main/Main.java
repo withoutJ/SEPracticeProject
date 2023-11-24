@@ -1,4 +1,5 @@
 package main;
+import authentication.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class Main {
     private static List<SportFacility> facilities = new ArrayList<>();
     
     public static void main(String args[]){
+        // AS.registerAdmin(cred, cred);
         Scanner scanner = new Scanner(System.in);
         facilities.add(new SwimmingPool(9, 20, 10));
         facilities.add(new BadmintonCourt(9, 23, 20));
@@ -30,7 +32,7 @@ public class Main {
                 customer = AuthenticationService.register(username, password);
             }
             else if (response == 2){
-                customer = AuthenticationService_Stub.login(username, password); // guessing login will use FindUser()
+                customer = AuthenticationService.login(username, password); // guessing login will use FindUser()
             }
             if (customer != null)
                 mainMenu(scanner);

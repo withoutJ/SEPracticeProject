@@ -16,9 +16,11 @@ public class AuthenticationService{
     }
 
     private static Customer findUser(String userName, String password){
-        for (Customer user : users) {
-            if((user.getUserName()).equals(userName) && (user.getPassword()).equals(password)){
-                return user;
+        if (users != null)
+            for (Customer user : users) {
+                if((user.getUserName()).equals(userName) && (user.getPassword()).equals(password)){
+                    return user;
+                }
             }
         }
         return null;
@@ -51,7 +53,7 @@ public class AuthenticationService{
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public static Customer login(String userName, String password, Admin admin){
+    public static Customer login(String userName, String password){
         Customer result=null;
         // if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
         //     result = admin;
