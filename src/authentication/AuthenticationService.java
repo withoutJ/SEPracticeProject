@@ -6,14 +6,16 @@ import user.*;
 
 public class AuthenticationService {
     // Assuming Customer and SessionManager are defined in the user package or appropriately imported.
-    private static List<Customer> users = new ArrayList<>();
+    private List<Customer> users = new ArrayList<>();
+    private SessionManager sessMgr;
     // private static Admin admin; // This line can be removed if Admin is not used.
+    private AuthenticationService instance = new AuthenticationService();
 
-    public AuthenticationService() {
-        // Constructor initialization if needed
+    private AuthenticationService() {
+        sessMgr = new SessionManager();
     }
 
-    private static Customer findUser(String userName, String password) {
+    private Customer findUser(String userName, String password) {
         if (users != null) {
             for (Customer user : users) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
@@ -24,7 +26,7 @@ public class AuthenticationService {
         return null; // This line was outside the method due to an extra brace.
     }
 
-    private static boolean validatePassword(String password) {
+    private boolean validatePassword(String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -50,22 +52,21 @@ public class AuthenticationService {
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public static Customer login(String userName, String password) {
+    public Customer login(String userName, String password) {
         Customer result = findUser(userName, password);
 
         if (result != null) {
-            SessionManager sessionManager = SessionManager.getInstance();
-            sessionManager.createSession(result);
+            sessMgr.createSession(result);
         }
         
         return result;
     }
 
-    public static boolean logout(Customer user) {
-        return SessionManager.getInstance().removeSession(user);
+    public boolean logout(Customer user) {
+        return sessMgr.removeSession(user);
     }
 
-    public static Customer register(String userName, String password) {
+    public Customer register(String userName, String password) {
         Customer user = findUser(userName, password);
         if (user != null) return null; // User already exists
 
