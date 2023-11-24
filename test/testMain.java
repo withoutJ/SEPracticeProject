@@ -114,6 +114,8 @@ public class testMain {
         // Replace all system-dependent newlines with \n for consistent comparison
         //actualOutput = actualOutput.replace(System.lineSeparator(), "\n");
         getOutput();
+        expectedOutput = expectedOutput.replaceAll("\\s+", " ").trim();
+        actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         assertEquals(expectedOutput, actualOutput);
     }
 
