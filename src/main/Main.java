@@ -27,7 +27,7 @@ public class Main {
         while (isRunning){
             int response = openScreen(scanner);
             if (response == 1){
-                customer = AuthenticationService_Stub.register(username, password);
+                customer = AuthenticationService.register(username, password);
             }
             else if (response == 2){
                 customer = AuthenticationService_Stub.login(username, password); // guessing login will use FindUser()

@@ -6,16 +6,17 @@ import user.*;
 public class AuthenticationService{
     //private SessionManager sessionManager;
     //private AdminStub admin;
-    private static List<User> users;
+    private static List<Customer> users;
+    private static Admin admin;
 
     public AuthenticationService(){
         //this.sessionManager=sessionManager;
         //this.admin=admin;
-        AuthenticationService.users = new ArrayList<User>();
+        AuthenticationService.users = new ArrayList<>();
     }
 
-    private static User findUser(String userName, String password){
-        for (User user : users) {
+    private static Customer findUser(String userName, String password){
+        for (Customer user : users) {
             if((user.getUserName()).equals(userName) && (user.getPassword()).equals(password)){
                 return user;
             }
@@ -50,11 +51,11 @@ public class AuthenticationService{
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public static User login(String userName, String password, Admin admin){
-        User result=null;
-        if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
-            result = admin;
-        }
+    public static Customer login(String userName, String password, Admin admin){
+        Customer result=null;
+        // if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
+        //     result = admin;
+        // }
         
         if(result==null)result=findUser(userName, password);
 
@@ -66,19 +67,20 @@ public class AuthenticationService{
         return result;
     }
 
-    public static Boolean logout(User user){
+    public static Boolean logout(Customer user){
         return SessionManager.getInstance().removeSession(user);
     }
 
-    public User register(String userName, String password){
+    public static Customer register(String userName, String password){
 
-        User user = findUser(userName,password);
-        if(user!=null)return null;
+        Customer user = findUser(userName,password);
+        if(user!=null)
+            return null;
 
         Boolean goodPassword = validatePassword(password);
 
         if(goodPassword){
-            User newUser = new User(userName, password);
+            Customer newUser = new Customer(userName, password);
             users.add(newUser);
             return user;
         }
@@ -86,7 +88,9 @@ public class AuthenticationService{
         return null;
     }
 
+    // public static Admin registerAdmin(String username, String password){
 
+    // }
 
 
 
