@@ -4,9 +4,9 @@ import authentication.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import sportfacility.*;
 import transaction.PayPalPayment;
+import exceptions.*;
 import user.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,41 +51,62 @@ public class Main {
         System.out.print("Input: ");
         int response = -1;
         while (response != 1 && response != 2 && response != 0) {
-            String strResponse = scanner.next();
-            response = Integer.parseInt(strResponse);
-            if (response == 1) {
-                while (!authInstance.validatePassword(password)) {
-                    System.out.print("Set a username: ");
-                    username = scanner.next();
-                    if (!authInstance.findUsername(username)) {
-                        System.out.print("Set a password: ");
-                        password = scanner.next();
+            try{
+                String strResponse = scanner.next();
+                response = Integer.parseInt(strResponse);
+                if (response == 1) {
+                    while (!authInstance.validatePassword(password)) {
+                        try {
+                            System.out.print("Set a username: ");
+                            username = scanner.next();
+                            if (username.equals("/"))
+                                break;
+                            if (!authInstance.findUsername(username)) {
+                                System.out.print("Set a password: ");
+                                password = scanner.next();
 
-                        if (!authInstance.validatePassword(password))
-                            System.out.print(
-                                    "Password must not contain any spaces, and must contain at least one upper case letter, one lower case letter and a number.\n");
-                    } else
-                        System.out.print("Account already exists!\n");
-                }
-            } else if (response == 2) {
-                while (authInstance.findUser(username, password) == null) {
-                    System.out.print("Input your username: ");
-                    username = scanner.next();
-                    if (username.equals("/"))
-                        break;
-                    System.out.print("Input your password: ");
-                    password = scanner.next();
-                    Customer result = authInstance.findUser(username, password);
-                    if (result == null) {
-                        System.out.print("Account does not exist.\n");
+                                if (!authInstance.validatePassword(password))
+                                    throw new ExPasswordInvalid();
+                            } else
+                                throw new ExAccountExists();
+                        }
+                        catch (ExAccountExists e){
+                            System.out.print(e.getMessage());
+                        }
+                        catch (ExPasswordInvalid e){
+                            System.out.print(e.getMessage());
+                        }
                     }
+                } else if (response == 2) {
+                    while (authInstance.findUser(username, password) == null) {
+                        try{
+                            System.out.print("Input your username: ");
+                            username = scanner.next();
+                            if (username.equals("/"))
+                                break;
+                            System.out.print("Input your password: ");
+                            password = scanner.next();
+                            Customer result = authInstance.findUser(username, password);
+                            if (result == null) {
+                                throw new ExNoAccount();
+                            }
+                        }
+                        catch (ExNoAccount e){
+                            System.out.print(e.getMessage());
+                        }
+                    }
+                } else if (response == 0) {
+                    System.out.print("Thank you for using our system.\n");
+                    isRunning = false;
+                } else {
+                    throw new ExInvalidToken();
                 }
-            } else if (response == 0) {
-                System.out.print("Thank you for using our system.\n");
-                isRunning = false;
-            } else {
-                System.out.print("Invalid Token. Try again.\n");
-                System.out.print("Input: ");
+            }
+            catch (ExInvalidToken e){
+                System.out.print(e.getMessage());
+            }
+            catch (NumberFormatException e){
+                System.out.print("Input is not a number. Try again.\nInput: ");
             }
         }
         return response;
@@ -98,42 +119,47 @@ public class Main {
         String dateNtime = now.format(formatter);
         System.out.print(dateNtime + "\n");
         while (userInput != 0) {
-            System.out.print("Press 1 to make a booking.\n");
-            System.out.print("Press 2 to view bookings.\n");
-            System.out.print("Press 3 to cancel bookings.\n");
-            System.out.print("Press 4 to show available facilities.\n");
-            System.out.print("Press 0 to log out.\n");
-            System.out.print("Input: ");
-            String strUserInput = scanner.next(); // handle exception where input is not a number
-            userInput = Integer.parseInt(strUserInput);
-            switch (userInput) {
-                case 1:
-                    makeBooking(scanner);
-                    break;
-                case 2:
-                    viewBooking(scanner);
-                    String strInput = scanner.next();
-                    int input = Integer.parseInt(strInput);
-                    while (input != 0) {
-                        if (input != 0) {
-                            System.out.print("Invalid token. Try again.\n");
-                            strInput = scanner.next();
-                            input = Integer.parseInt(strInput);
+            try{
+                System.out.print("Press 1 to make a booking.\n");
+                System.out.print("Press 2 to view bookings.\n");
+                System.out.print("Press 3 to cancel bookings.\n");
+                System.out.print("Press 4 to show available facilities.\n");
+                System.out.print("Press 0 to log out.\n");
+                System.out.print("Input: ");
+                String strUserInput = scanner.next(); // handle exception where input is not a number
+                userInput = Integer.parseInt(strUserInput);
+                switch (userInput) {
+                    case 1:
+                        makeBooking(scanner);
+                        break;
+                    case 2:
+                        viewBooking(scanner);
+                        String strInput = scanner.next();
+                        int input = Integer.parseInt(strInput);
+                        while (input != 0) {
+                            if (input != 0) {
+                                System.out.print("Invalid token. Try again.\n");
+                                strInput = scanner.next();
+                                input = Integer.parseInt(strInput);
+                            }
                         }
-                    }
-                    break;
-                case 3:
-                    cancelBooking(scanner);
-                    break;
-                case 4:
-                    // some logic to print the facilities available
-                    break;
-                case 0:
-                    // log out
-                    break;
-                default:
-                    System.out.print("Invalid token. Try again.\n");
+                        break;
+                    case 3:
+                        cancelBooking(scanner);
+                        break;
+                    case 4:
+                        // some logic to print the facilities available
+                        break;
+                    case 0:
+                        // log out
+                        break;
+                    default:
+                        System.out.print("Invalid token. Try again.\n");
 
+                }
+            }
+            catch (NumberFormatException e){
+                System.out.print("Input is not a number. Try again.\nInput: ");
             }
         }
     }
