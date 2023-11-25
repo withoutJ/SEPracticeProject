@@ -134,15 +134,6 @@ public class Main {
                         break;
                     case 2:
                         viewBooking(scanner);
-                        String strInput = scanner.next();
-                        int input = Integer.parseInt(strInput);
-                        while (input != 0) {
-                            if (input != 0) {
-                                System.out.print("Invalid token. Try again.\n");
-                                strInput = scanner.next();
-                                input = Integer.parseInt(strInput);
-                            }
-                        }
                         break;
                     case 3:
                         cancelBooking(scanner);
@@ -151,20 +142,26 @@ public class Main {
                         // some logic to print the facilities available
                         break;
                     case 0:
-                        // log out
+                        authInstance.logout(customer);
                         break;
                     default:
-                        System.out.print("Invalid token. Try again.\n");
+                        throw new ExInvalidToken();
 
                 }
             }
             catch (NumberFormatException e){
                 System.out.print("Input is not a number. Try again.\nInput: ");
             }
+            catch (ExInvalidToken e){
+                System.out.print(e.getMessage());
+            }
+            catch (ExWrongPayMethod e){
+                System.out.print(e.getMessage());
+            }
         }
     }
 
-    private static void makeBooking(Scanner scanner) {
+    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod{
         int facility = -1;
         boolean bookSuccessful = false;
         while (facility != 0 && !bookSuccessful) {
@@ -188,8 +185,8 @@ public class Main {
                     System.out.print("1. Credit Card (Enter CC)\n2. PayPal (Enter PL)\n");
                     System.out.print("Input: ");
                     String payment = scanner.next();
-                    // parameter will be changed such that PaymentStrategy is passed as strings of
-                    // CC/Pl instead of an object
+                    if (!payment.equals("CC") && !payment.equals("PL"))
+                        throw new ExWrongPayMethod();
                     bookSuccessful = customer.createBooking(chosenFacility, date, time, payment);
                     if (bookSuccessful) {
                         System.out.print("Booking successfully created for " + date + " from " +
@@ -200,21 +197,30 @@ public class Main {
                     }
                     break;
                 default:
-                    System.out.print("Invalid token. Try again.\n");
+                    throw new ExInvalidToken();
             }
 
         }
     }
 
-    private static void viewBooking(Scanner scanner) {
+    private static void viewBooking(Scanner scanner) throws ExInvalidToken{
         customer.viewBookings();
         System.out.print("Enter 0 to go to the main menu.\n");
+        int input = -1;
+        while (input != 0) {
+            String strInput = scanner.next();
+            input = Integer.parseInt(strInput);
+            if (input != 0) {
+                throw new ExInvalidToken();
+            }
+        }
     }
 
     private static void cancelBooking(Scanner scanner) {
         boolean cancelled = true;
         System.out.print("Enter Booking ID to cancel a booking.\n");
         customer.viewBookings();
+        System.out.print("Input: ");
         String bookID = scanner.next();
         customer.cancelBooking(Integer.parseInt(bookID));
         if (cancelled)
