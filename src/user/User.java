@@ -25,4 +25,16 @@ public class User {
 		return this.password;
 	}
 
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Customer other = (Customer) obj;
+        return username.equals(other.getUserName()) && password.equals(other.getPassword());
+    }
+
 }
