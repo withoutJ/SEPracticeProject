@@ -6,29 +6,28 @@ import user.*;
 
 public class AuthenticationService {
     // Assuming Customer and SessionManager are defined in the user package or appropriately imported.
-    private List<Customer> users = new ArrayList<>();
+    private List<Customer> users;
     private SessionManager sessMgr;
     // private static Admin admin; // This line can be removed if Admin is not used.
-    private static AuthenticationService instance = new AuthenticationService();
+    private static AuthenticationService instance;
 
     private AuthenticationService() {
         sessMgr = new SessionManager();
+        users = new ArrayList<>();
     }
 
-    public static AuthenticationService getInstance(){return instance;}
+    public void addUsers(Customer customer){
+        users.add(customer);
+    }
 
-    public boolean findUsername(String userName) {
-        if (users != null) {
-            for (Customer user : users) {
-                if (user.getUserName().equals(userName)) {
-                    return true;
-                }
-            }
+    public static AuthenticationService getInstance(){
+        if(instance==null){
+            instance = new AuthenticationService();
         }
-        return false; // This line was outside the method due to an extra brace.
+        return instance;
     }
 
-    public Customer findUser(String userName, String password) {
+    private Customer findUser(String userName, String password) {
         if (users != null) {
             for (Customer user : users) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
@@ -36,10 +35,10 @@ public class AuthenticationService {
                 }
             }
         }
-        return null; // This line was outside the method due to an extra brace.
+        return null;
     }
 
-    public boolean validatePassword(String password) {
+    private boolean validatePassword(String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -61,41 +60,42 @@ public class AuthenticationService {
                 break;
             }
         }
-
+    
         return hasNumber && hasUpperCase && hasLowerCase;
     }
 
-    public Customer login(String userName, String password) {
-        Customer result = findUser(userName, password);
-
-        sessMgr.createSession(result);
+    public Customer login(String userName, String password){
+        Customer result=null;
+        // if(admin.getUserName().equals(userName) && admin.getPassword().equals(password)){
+        result = findUser(userName, password);
+        if(result!=null)sessMgr.createSession(result);
+        
         return result;
-    }
+        }
 
     public boolean logout(Customer user) {
         return sessMgr.removeSession(user);
     }
 
     public Customer register(String userName, String password) {
-        // Customer user = findUser(userName, password);
-        // if (user != null) {
-        //     System.out.print("Account already exists!\n");
-        //     return null; // User already exists
-        // }
+        Customer user = findUser(userName, password);
+        if (user != null) return null; // User already exists
+
         boolean goodPassword = validatePassword(password);
 
         if (goodPassword) {
             Customer newUser = new Customer(userName, password); // Assuming Customer constructor is defined.
             users.add(newUser);
-            
             return newUser; // Return the new user instead of null
         }
-        
+
         return null;
-        
-        
     }
 
-    // Additional admin-related methods can be added if needed
-}
+    // public static Admin registerAdmin(String username, String password){
 
+    // }
+
+
+
+}

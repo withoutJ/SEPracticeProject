@@ -3,22 +3,33 @@ import user.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class SessionManager {
+public class SessionManager {
     private List<Session> sessionMappingList;
 
-    SessionManager() {
+    public SessionManager() {
         sessionMappingList = new ArrayList<Session>();
     }
+    
+    public void addSession(Session session) {
+    	sessionMappingList.add(session);
+    	}
 
-    void createSession(User user){
+    public int getSessionCount(){
+        return sessionMappingList.size();
+    }
+
+    public void createSession(User user){
         sessionMappingList.add(new Session(user));
     }
 
-    boolean removeSession(User user){
+    public boolean removeSession(User user){
         for (Session session : sessionMappingList) {
             if (session.getUser().equals(user)) {
-                session.setIsValid(false);
-                return true;
+                if(session.getIsValid()==true){
+                    session.setIsValid(false);
+                    return true;
+                }
+                
             }
         }
         return false;
