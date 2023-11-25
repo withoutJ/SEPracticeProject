@@ -2,7 +2,7 @@ package authentication;
 import java.util.UUID;
 import user.*;
 
-class Session {
+public class Session {
     User user;
     UUID sessionId;
     Boolean isValid;

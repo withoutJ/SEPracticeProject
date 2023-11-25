@@ -6,7 +6,7 @@ import java.util.List;
 public class SessionManager {
     private List<Session> sessionMappingList;
 
-    SessionManager() {
+    public SessionManager() {
         sessionMappingList = new ArrayList<Session>();
     }
     
@@ -22,7 +22,7 @@ public class SessionManager {
         sessionMappingList.add(new Session(user));
     }
 
-    boolean removeSession(User user){
+    public boolean removeSession(User user){
         for (Session session : sessionMappingList) {
             if (session.getUser().equals(user)) {
                 if(session.getIsValid()==true){
