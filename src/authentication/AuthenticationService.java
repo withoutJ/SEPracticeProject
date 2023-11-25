@@ -27,7 +27,7 @@ public class AuthenticationService {
         return instance;
     }
 
-    private Customer findUser(String userName, String password) {
+    public Customer findUser(String userName, String password) {
         if (users != null) {
             for (Customer user : users) {
                 if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
@@ -38,7 +38,7 @@ public class AuthenticationService {
         return null;
     }
 
-    private boolean validatePassword(String password) {
+    public boolean validatePassword(String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -90,6 +90,17 @@ public class AuthenticationService {
         }
 
         return null;
+    }
+
+    public boolean findUsername(String userName) {
+        if (users != null) {
+            for (Customer user : users) {
+                if (user.getUserName().equals(userName)) {
+                    return true;
+                }
+            }
+        }
+        return false; // This line was outside the method due to an extra brace.
     }
 
     // public static Admin registerAdmin(String username, String password){

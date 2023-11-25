@@ -30,10 +30,18 @@ public class Customer extends User {
 			return new PayPalPayment();
 		}
 	}
+	private RefundStrategy refundStrat(String strat) {
+		if (strat.equals("CC")) {
+			return new CreditCardRefund();
+		} else {
+			return new PayPalRefund();
+		}
+	}
 
 	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, String paymentString) {
 
 		PaymentStrategy paymentStrategy = paymentStrat(paymentString);
+		RefundStrategy refundStrategy=refundStrat(paymentString);
 		if (facility.isBooked(concatenateStringAndInt(bookingDate, startTime))) {
 			facility.book(concatenateStringAndInt(bookingDate, startTime));
 			return false;
@@ -42,7 +50,7 @@ public class Customer extends User {
 
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
 			System.out.println("Redirecting you to transaction...");
-			NewBooking.calculatePrice(this, paymentStrategy);
+			NewBooking.calculatePrice(this, paymentStrategy, refundStrategy);
 			if (NewBooking.paymentProcessFlag()) {
 				facility.book(concatenateStringAndInt(bookingDate, startTime));
 				bookingsList.add(NewBooking);

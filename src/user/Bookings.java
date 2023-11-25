@@ -34,16 +34,14 @@ public class Bookings {
 	// }
 	
 	//payment start needed here
-	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy ) {
+	public void calculatePrice(Customer customer, PaymentStrategy paymentStrategy, RefundStrategy refundStrategy) {
 		// check customer state, assign 0.9 price if gold
 		double payWithDiscount = customer.getMemberOffer(); // discount returns a number from 0-1
 		double amount = (facility.getBookingFee()) * payWithDiscount;
 		System.out.println("Your total is: "+amount+"\nProcessing transaction...");
 
-		//for testing purpose only
-		RefundStrategy refund=new CreditCardRefund();
-
-		transaction = new Transaction(paymentStrategy, refund, amount);
+		
+		transaction = new Transaction(paymentStrategy, refundStrategy, amount);
 		transaction.processPayment();
 		
 	}
