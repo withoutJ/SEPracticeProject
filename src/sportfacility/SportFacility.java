@@ -65,7 +65,7 @@ public class SportFacility {
 		}
 	
 		timeTable.put(dateHour, false);
-		System.out.print("Booking cancelled for \n" + dateHour);
+		System.out.print("Booking cancelled for " + dateHour +"\n");
 	}
 
 	public void addReview(Review review) {
