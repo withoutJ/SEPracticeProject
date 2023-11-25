@@ -71,9 +71,12 @@ public class Customer extends User {
 	}
 
 	public void viewBookings() {
-
 		// Show Customer's Name(membershipttpe)
 		System.out.print("Membership Type: " + memberType.toString() + "\n");
+		if(bookingsList.size()==0){
+			System.out.print("You have no bookings currently. \n");
+			return;
+		}
 		for (Bookings booking : bookingsList) {
 
 			System.out.print("Booking ID: " + booking.getBookingId() + "\n");

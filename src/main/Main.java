@@ -82,16 +82,22 @@ public class Main {
                         try{
                             System.out.print("Input your username: ");
                             username = scanner.next();
+
+                            if (!authInstance.findUsername(username)) {
+                                throw new ExNoAccount();
+                            }
                             if (username.equals("/"))
                                 break;
                             System.out.print("Input your password: ");
                             password = scanner.next();
-                            Customer result = authInstance.findUser(username, password);
-                            if (result == null) {
-                                throw new ExNoAccount();
+                            if (authInstance.findUser(username, password)==null) {
+                                throw new ExPasswordIncorrect();
                             }
                         }
                         catch (ExNoAccount e){
+                            System.out.print(e.getMessage());
+                        }
+                        catch (ExPasswordIncorrect e){
                             System.out.print(e.getMessage());
                         }
                     }
