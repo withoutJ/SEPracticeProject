@@ -85,7 +85,12 @@ public class SportFacility {
 	}
 
 	public boolean isBooked(String dateHour){
-		if (timeTable.containsKey(dateHour)) {
+		//changes made by taswar
+		String[] parts = dateHour.split(" ");
+		int hour = Integer.parseInt(parts[1]);
+
+
+		if (timeTable.containsKey(dateHour) || hour >= closingHours ||hour < openingHours) {
 			return true;
 		}
 		return false;
