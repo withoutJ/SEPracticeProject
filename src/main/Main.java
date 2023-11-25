@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import authentication.AuthenticationService_Stub;
 import sportfacility.*;
 import transaction.PayPalPayment;
 import user.*;
@@ -16,6 +15,7 @@ public class Main {
     private static String username;
     private static String password;
     private static Customer customer;
+    private static AuthenticationService authInstance = AuthenticationService.getInstance();
     private static List<SportFacility> facilities = new ArrayList<>();
     
     public static void main(String args[]){
@@ -26,13 +26,14 @@ public class Main {
         facilities.add(new BasketballCourt(9, 22, 120));
         facilities.add(new TennisCourt(9, 22, 50));
         isRunning = true;
+
         while (isRunning){
             int response = openScreen(scanner);
             if (response == 1){
-                customer = AuthenticationService.register(username, password);
+                customer = authInstance.register(username, password);
             }
             else if (response == 2){
-                customer = AuthenticationService.login(username, password); // guessing login will use FindUser()
+                customer = authInstance.login(username, password); // guessing login will use FindUser()
             }
             if (customer != null)
                 mainMenu(scanner);
@@ -42,6 +43,8 @@ public class Main {
 
     private static int openScreen(Scanner scanner){
         customer = null;
+        username = "";
+        password = "";
         System.out.print("Shahbagh Sports Complex\n");
         System.out.print("---------------------------------------------------------\n");
         System.out.print("Press 1 to Sign-Up | Press 2 to Sign-In | Press 0 to exit\n");
@@ -51,16 +54,33 @@ public class Main {
             String strResponse = scanner.next();
             response = Integer.parseInt(strResponse);
             if (response == 1){
-                System.out.print("Set a username: ");
-                username = scanner.next();
-                System.out.print("Set a password: ");
-                password = scanner.next();
+                while (!authInstance.validatePassword(password)){
+                    System.out.print("Set a username: ");
+                    username = scanner.next();
+                    if (!authInstance.findUsername(username)){
+                        System.out.print("Set a password: ");
+                        password = scanner.next();
+                            
+                        if (!authInstance.validatePassword(password))
+                            System.out.print("Password must not contain any spaces, and must contain at least one upper case letter, one lower case letter and a number.\n");
+                    }
+                    else 
+                        System.out.print("Account already exists!\n");
+                }
             }
             else if (response == 2){
-                System.out.print("Input your username: ");
-                username = scanner.next();
-                System.out.print("Input your password: ");
-                password = scanner.next();
+                while (authInstance.findUser(username, password) == null){
+                    System.out.print("Input your username: ");
+                    username = scanner.next();
+                    if (username.equals("/"))
+                        break;
+                    System.out.print("Input your password: ");
+                    password = scanner.next();
+                    Customer result = authInstance.findUser(username, password);
+                    if (result == null) {
+                        System.out.print("Account does not exist.\n");
+                    }
+                }
             }
             else if (response == 0){
                 System.out.print("Thank you for using our system.\n");
@@ -139,14 +159,13 @@ public class Main {
                 System.out.print("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
                 int time = scanner.nextInt(); // need some method to display available time slots
                 System.out.print("Select a payment method:\n");
-                System.out.print("1. Credit Card\n2. PayPal\n");
+                System.out.print("1. Credit Card (Enter CC)\n2. PayPal (Enter PL)\n");
                 System.out.print("Input: ");
-                String strPay = scanner.next();
-                int payment = Integer.parseInt(strPay);
+                String payment = scanner.next();
                  // parameter will be changed such that PaymentStrategy is passed as strings of CC/Pl instead of an object
-                bookSuccessful = customer.createBooking(facilities.get(facility - 1), date, time, "PL");
+                bookSuccessful = customer.createBooking(chosenFacility, date, time, payment);
                 if (bookSuccessful){
-                    System.out.print("Booking successfully create for " + date + " from " + 
+                    System.out.print("Booking successfully created for " + date + " from " + 
                     Integer.toString(time) + ":00 to " + Integer.toString(time+1) + ":00. Go to main menu to manage your bookings.\n");
                     System.out.print("------------------------------------------------------------------------------------------------------------------------------------------\n");
                 }
