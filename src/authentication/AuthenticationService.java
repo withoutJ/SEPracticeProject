@@ -17,6 +17,17 @@ public class AuthenticationService {
 
     public static AuthenticationService getInstance(){return instance;}
 
+    public boolean findUsername(String userName) {
+        if (users != null) {
+            for (Customer user : users) {
+                if (user.getUserName().equals(userName)) {
+                    return true;
+                }
+            }
+        }
+        return false; // This line was outside the method due to an extra brace.
+    }
+
     public Customer findUser(String userName, String password) {
         if (users != null) {
             for (Customer user : users) {
@@ -57,10 +68,6 @@ public class AuthenticationService {
     public Customer login(String userName, String password) {
         Customer result = findUser(userName, password);
 
-        if (result == null) {
-            System.out.print("Account does not exist.\n");
-            return null;
-        }
         sessMgr.createSession(result);
         return result;
     }

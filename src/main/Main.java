@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import authentication.AuthenticationService_Stub;
 import sportfacility.*;
 import transaction.PayPalPayment;
 import user.*;
@@ -55,20 +54,33 @@ public class Main {
             String strResponse = scanner.next();
             response = Integer.parseInt(strResponse);
             if (response == 1){
-                while (authInstance.findUser(username, password) == null && !authInstance.validatePassword(password)){
+                while (!authInstance.validatePassword(password)){
                     System.out.print("Set a username: ");
                     username = scanner.next();
-                    System.out.print("Set a password: ");
-                    password = scanner.next();
-                    if (!authInstance.validatePassword(password))
-                        System.out.print("Password must not contain any spaces, and must contain at least one upper case letter, one lower case letter and a number.\n");
+                    if (!authInstance.findUsername(username)){
+                        System.out.print("Set a password: ");
+                        password = scanner.next();
+                            
+                        if (!authInstance.validatePassword(password))
+                            System.out.print("Password must not contain any spaces, and must contain at least one upper case letter, one lower case letter and a number.\n");
+                    }
+                    else 
+                        System.out.print("Account already exists!\n");
                 }
             }
             else if (response == 2){
-                System.out.print("Input your username: ");
-                username = scanner.next();
-                System.out.print("Input your password: ");
-                password = scanner.next();
+                while (authInstance.findUser(username, password) == null){
+                    System.out.print("Input your username: ");
+                    username = scanner.next();
+                    if (username.equals("/"))
+                        break;
+                    System.out.print("Input your password: ");
+                    password = scanner.next();
+                    Customer result = authInstance.findUser(username, password);
+                    if (result == null) {
+                        System.out.print("Account does not exist.\n");
+                    }
+                }
             }
             else if (response == 0){
                 System.out.print("Thank you for using our system.\n");
