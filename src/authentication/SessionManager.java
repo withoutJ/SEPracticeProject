@@ -3,7 +3,7 @@ import user.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class SessionManager {
+public class SessionManager {
     private List<Session> sessionMappingList;
 
     SessionManager() {
