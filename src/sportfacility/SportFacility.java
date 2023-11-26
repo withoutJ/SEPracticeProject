@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import exceptions.ExWrongDate;
 
 public abstract class SportFacility {
 	private int bookingFee;
@@ -96,7 +99,11 @@ public abstract class SportFacility {
 		return false;
 	}
 
-	public void showAvailableSlots(String date) {
+	public void showAvailableSlots(String date) throws ExWrongDate {
+		//check if date is in correct format else throw exception Wrong Date
+		isDateFormatCorrect(date);
+
+		//if not show available time slots
 		System.out.print("Available time slots for " + date + ":\n");
 	
 		for (int hour = openingHours; hour < closingHours; hour++) {
@@ -105,6 +112,20 @@ public abstract class SportFacility {
 				System.out.print("Time slot " + hour + ":00 is available.\n");
 			}
 		}
+	}
+
+	public void isDateFormatCorrect(String date) throws ExWrongDate{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+		dateFormat.setLenient(false);
+
+		try {
+			dateFormat.parse(date);
+		} catch (ParseException e) {
+			throw new ExWrongDate();
+		}
+
+
+
 	}
 	
 	

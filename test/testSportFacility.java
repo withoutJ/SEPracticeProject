@@ -3,6 +3,9 @@ package test;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import exceptions.ExWrongDate;
+
 import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -76,6 +79,19 @@ public class testSportFacility {
 
         assertEquals(expected, getOutput());
     }
+
+    @Test(expected = ExWrongDate.class)
+    public void testSportFacility_10() throws Exception {
+        SportFacility facility = new TennisCourt(9, 23, 10);
+        try {
+            facility.showAvailableSlots("invalid-date-format");
+        } catch (ExWrongDate e) {
+            // Assert the exception message
+            assertEquals("Please Input Correct Date!\n", e.getMessage());
+            throw e; // Re-throw to satisfy the 'expected' condition
+        }
+    }
+
     @Test
     public void testSportFacility_06() throws Exception {
         setOutput();
