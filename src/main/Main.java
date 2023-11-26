@@ -18,7 +18,6 @@ public class Main {
     private static Customer customer;
     private static AuthenticationService authInstance = AuthenticationService.getInstance();
     private static List<SportFacility> facilities = new ArrayList<>();
-
     public static void main(String args[]) {
         // AS.registerAdmin(cred, cred);
         Scanner scanner = new Scanner(System.in);
@@ -64,7 +63,8 @@ public class Main {
                             if (!authInstance.findUsername(username)) {
                                 System.out.print("Set a password: ");
                                 password = scanner.next();
-
+                                if (username.equals("/"))
+                                    break;
                                 if (!authInstance.validatePassword(password))
                                     throw new ExPasswordInvalid();
                             } else
@@ -90,6 +90,8 @@ public class Main {
                                 break;
                             System.out.print("Input your password: ");
                             password = scanner.next();
+                            if (username.equals("/"))
+                                break;
                             if (authInstance.findUser(username, password)==null) {
                                 throw new ExPasswordIncorrect();
                             }
@@ -133,6 +135,7 @@ public class Main {
                 System.out.print("Press 0 to log out.\n");
                 System.out.print("Input: ");
                 String strUserInput = scanner.next(); // handle exception where input is not a number
+                
                 userInput = Integer.parseInt(strUserInput);
                 switch (userInput) {
                     case 1:
@@ -168,29 +171,38 @@ public class Main {
     }
 
     private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod{
-        int facility = -1;
+        int facilityNo = -1;
         boolean bookSuccessful = false;
-        while (facility != 0 && !bookSuccessful) {
+        while (facilityNo != 0 && !bookSuccessful) {
             System.out.print("Choose a facility (Enter 0 to go to the main menu).\n");
             System.out.print("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis\n");
             System.out.print("Input: ");
             String strFacility = scanner.next();
-            facility = Integer.parseInt(strFacility);
-            switch (facility) {
+            if (strFacility.equals("/"))
+                break;
+            facilityNo = Integer.parseInt(strFacility);
+            switch (facilityNo) {
                 case 1:
                 case 2:
                 case 3:
                 case 4:
                     System.out.print("Enter date of booking (DD-MM-YYYY): ");
                     String date = scanner.next();
-                    SportFacility chosenFacility = facilities.get(facility - 1);
+                    if (date.equals("/"))
+                        break;
+                    SportFacility chosenFacility = facilities.get(facilityNo - 1);
                     chosenFacility.showAvailableSlots(date);
                     System.out.print("Enter preferred time slot (e.g. if you want to book at 20:00, type 20): ");
-                    int time = scanner.nextInt(); // need some method to display available time slots
+                    String strTime = scanner.next();
+                    if (strTime.equals("/"))
+                        break;
+                    int time = Integer.parseInt(strTime);
                     System.out.print("Select a payment method:\n");
                     System.out.print("1. Credit Card (Enter CC)\n2. PayPal (Enter PL)\n");
                     System.out.print("Input: ");
                     String payment = scanner.next();
+                    if (payment.equals("/"))
+                        break;
                     if (!payment.equals("CC") && !payment.equals("PL"))
                         throw new ExWrongPayMethod();
                     bookSuccessful = customer.createBooking(chosenFacility, date, time, payment);
@@ -222,7 +234,7 @@ public class Main {
         }
     }
 
-    private static void cancelBooking(Scanner scanner) {
+    private static void cancelBooking(Scanner scanner) { // have to make it run in infinite loop
         boolean cancelled = true;
         System.out.print("Enter Booking ID to cancel a booking.\n");
         customer.viewBookings();
