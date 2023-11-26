@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SportFacility {
+public abstract class SportFacility {
 	private int bookingFee;
 	private Map<String, Boolean> timeTable;
 	private int closingHours;
