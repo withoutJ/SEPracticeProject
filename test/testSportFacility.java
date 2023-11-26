@@ -84,7 +84,7 @@ public class testSportFacility {
     public void testSportFacility_10() throws Exception {
         SportFacility facility = new TennisCourt(9, 23, 10);
         try {
-            facility.showAvailableSlots("invalid-date-format");
+            facility.showAvailableSlots("01-0f2-2023");
         } catch (ExWrongDate e) {
             // Assert the exception message
             assertEquals("Please Input Correct Date!\n", e.getMessage());

@@ -115,15 +115,17 @@ public abstract class SportFacility {
 	}
 
 	public void isDateFormatCorrect(String date) throws ExWrongDate{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
-		dateFormat.setLenient(false);
-
-		try {
-			dateFormat.parse(date);
-		} catch (ParseException e) {
-			throw new ExWrongDate();
+		if (date.length() != 10) {
+			throw new ExWrongDate(); // Throw exception if the length is not as expected
 		}
-
+	
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		dateFormat.setLenient(false);
+		try {
+			dateFormat.parse(date); // Attempt to parse the date
+		} catch (ParseException e) {
+			throw new ExWrongDate(); // Throw your custom exception
+		}
 
 
 	}
