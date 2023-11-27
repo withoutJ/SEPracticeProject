@@ -31,7 +31,7 @@ public void testReview_02() {
 
 @Test
 public void testReview_03() {
-   [] Review review = new Review("Test comment", 3); // Initialize with a valid rate
+   Review review = new Review("Test comment", 3); // Initialize with a valid rate
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
