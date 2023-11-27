@@ -124,7 +124,7 @@ public class textCustomerClass {
 		setOutput();
 		admin.receiveCancelRequest(customer, 1); // how pass random bookingID
 		
-		assertEquals("Booking cancelled for \n22-11-2023 16", getOutput());
+		assertEquals("Booking cancelled for 22-11-2023 16\nVisa processed the refund with amount of 40.00.\n", getOutput());
 	}
 
 
