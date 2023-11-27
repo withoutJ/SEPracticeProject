@@ -56,7 +56,7 @@ public class Main {
                 if (response == 1) {
                     while (!authInstance.validatePassword(password)) {
                         try {
-                            System.out.print("Set a username: ");
+                            System.out.print("\nSet a username: ");
                             username = scanner.next();
                             if (username.equals("/"))
                                 break;
@@ -128,7 +128,7 @@ public class Main {
         System.out.print(dateNtime + "\n");
         while (userInput != 0) {
             try{
-                System.out.print("Press 1 to make a booking.\n");
+                System.out.print("\nPress 1 to make a booking.\n");
                 System.out.print("Press 2 to view bookings.\n");
                 System.out.print("Press 3 to cancel bookings.\n");
                 System.out.print("Press 4 to show available facilities.\n");
@@ -167,14 +167,17 @@ public class Main {
             catch (ExWrongPayMethod e){
                 System.out.print(e.getMessage());
             }
+            catch (ExWrongDate e){
+                System.out.print(e.getMessage());
+            }
         }
     }
 
-    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod{
+    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod, ExWrongDate{
         int facilityNo = -1;
         boolean bookSuccessful = false;
         while (facilityNo != 0 && !bookSuccessful) {
-            System.out.print("Choose a facility (Enter 0 to go to the main menu).\n");
+            System.out.print("\nChoose a facility (Enter 0 to go to the main menu).\n");
             System.out.print("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis\n");
             System.out.print("Input: ");
             String strFacility = scanner.next();
@@ -186,7 +189,7 @@ public class Main {
                 case 2:
                 case 3:
                 case 4:
-                    System.out.print("Enter date of booking (DD-MM-YYYY): ");
+                    System.out.print("\nEnter date of booking (DD-MM-YYYY): ");
                     String date = scanner.next();
                     if (date.equals("/"))
                         break;

@@ -95,7 +95,6 @@ public class Customer extends User {
 				bookingsList.remove(booking); // will remove booking from own bookinglist
 				break;
 			}
-
 		}
 		// throw exception if bookingid invalid inside else block
 	}
