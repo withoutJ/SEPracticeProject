@@ -5,11 +5,12 @@ import java.util.*;
 import sportfacility.*;
 import transaction.*;
 
-public class Customer extends User {
+public class Customer extends User implements Observer {
 
 	private List<Bookings> bookingsList = new ArrayList<>();
 	private Member memberType;
 	private int loyaltyPoints;
+	private ArrayList<AbstractMap.SimpleEntry<SportFacility, String>> notifications;
 
 	public Customer(String username, String password) {
 		super(username, password);
@@ -135,6 +136,17 @@ public class Customer extends User {
 
 		}
 		return "";
+	}
+
+	public void update(SportFacility sportFacility, String dateHour){
+		notifications.add(new AbstractMap.SimpleEntry<>(sportFacility, dateHour));
+	}
+
+	public void checkNotifications(){
+		for(Map.Entry<SportFacility, String> notification: notifications) {
+			System.out.println(notification.getKey() + " can be booked for time " + notification.getValue() +" on first come first served basis!");
+		}
+		notifications.clear();
 	}
 
 }

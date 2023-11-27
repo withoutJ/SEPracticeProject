@@ -6,6 +6,7 @@ import java.util.Map;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import exceptions.ExWrongDate;
+import user.*;
 
 public abstract class SportFacility {
 	private int bookingFee;
@@ -14,16 +15,19 @@ public abstract class SportFacility {
 	private int openingHours;
 	// private DatabaseController DBController;
 	private List<Review> allReviews;
+	private Map<String, ArrayList<Observer>> waitlist;
+	private String name;
 
-	public SportFacility(int openingHours, int closingHours, int bookingFee){
+	public SportFacility(String name, int openingHours, int closingHours, int bookingFee){
 		this.openingHours = openingHours;
 		this.closingHours = closingHours;
 		this.timeTable = new HashMap<>();
 		this.allReviews = new ArrayList<>();
 		this.bookingFee = bookingFee;
+		this.name = name;
 	}
 
-	public void book(String dateHour) {
+	public void book(Customer customer, String dateHour) {
 		//13-02-2000 13
 		//13-15 
 		String[] parts = dateHour.split(" ");
@@ -31,6 +35,7 @@ public abstract class SportFacility {
 	
 		if (hour < 0 || hour > 23) {
 			System.out.print("Please put time in hours only (0-23).\n");
+			attach(customer, dateHour);
 			return;
 		}
 	
@@ -69,6 +74,18 @@ public abstract class SportFacility {
 	
 		timeTable.put(dateHour, false);
 		System.out.print("Booking cancelled for " + dateHour +"\n");
+
+		notify(dateHour);
+	}
+
+	public void attach(Observer observer, String dateHour) {
+		waitlist.get(dateHour).add(observer);
+	}
+
+	public void notify(String dateHour){
+		for(Observer observer: waitlist.get(dateHour)){
+			observer.update(this, dateHour);
+		}
 	}
 
 	public void addReview(Review review) {
@@ -128,6 +145,10 @@ public abstract class SportFacility {
 		}
 
 
+	}
+
+	public String toString(){
+		return name;
 	}
 	
 	
