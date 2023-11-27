@@ -72,7 +72,7 @@ public class TestTransaction {
 
         System.setOut(System.out);
 
-        String result = String.format("Visa processed the payment with amount of %.2f.\n" + "\n" +
+        String result = String.format("Visa processed the payment with amount of %.2f." + "\n" +
                                         "Visa processed the refund with amount of %.2f.\n", 
                                         amount, amount);
 
