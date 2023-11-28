@@ -18,13 +18,14 @@ public class Main {
     private static Customer customer;
     private static AuthenticationService authInstance = AuthenticationService.getInstance();
     private static List<SportFacility> facilities = new ArrayList<>();
+
     public static void main(String args[]) {
         // AS.registerAdmin(cred, cred);
         Scanner scanner = new Scanner(System.in);
-        facilities.add(new SwimmingPool(9, 20, 10));
-        facilities.add(new BadmintonCourt(9, 23, 20));
-        facilities.add(new BasketballCourt(9, 22, 120));
-        facilities.add(new TennisCourt(9, 22, 50));
+        facilities.add(new SwimmingPool("Swimming", 9, 20, 10));
+        facilities.add(new BadmintonCourt("Badminton", 9, 23, 20));
+        facilities.add(new BasketballCourt("Basketball", 9, 22, 120));
+        facilities.add(new TennisCourt("Tennis", 9, 22, 50));
         isRunning = true;
 
         while (isRunning) {
@@ -50,7 +51,7 @@ public class Main {
         System.out.print("Input: ");
         int response = -1;
         while (response != 1 && response != 2 && response != 0) {
-            try{
+            try {
                 String strResponse = scanner.next();
                 response = Integer.parseInt(strResponse);
                 if (response == 1) {
@@ -69,17 +70,15 @@ public class Main {
                                     throw new ExPasswordInvalid();
                             } else
                                 throw new ExAccountExists();
-                        }
-                        catch (ExAccountExists e){
+                        } catch (ExAccountExists e) {
                             System.out.print(e.getMessage());
-                        }
-                        catch (ExPasswordInvalid e){
+                        } catch (ExPasswordInvalid e) {
                             System.out.print(e.getMessage());
                         }
                     }
                 } else if (response == 2) {
                     while (authInstance.findUser(username, password) == null) {
-                        try{
+                        try {
                             System.out.print("Input your username: ");
                             username = scanner.next();
 
@@ -92,14 +91,12 @@ public class Main {
                             password = scanner.next();
                             if (username.equals("/"))
                                 break;
-                            if (authInstance.findUser(username, password)==null) {
+                            if (authInstance.findUser(username, password) == null) {
                                 throw new ExPasswordIncorrect();
                             }
-                        }
-                        catch (ExNoAccount e){
+                        } catch (ExNoAccount e) {
                             System.out.print(e.getMessage());
-                        }
-                        catch (ExPasswordIncorrect e){
+                        } catch (ExPasswordIncorrect e) {
                             System.out.print(e.getMessage());
                         }
                     }
@@ -109,11 +106,9 @@ public class Main {
                 } else {
                     throw new ExInvalidToken();
                 }
-            }
-            catch (ExInvalidToken e){
+            } catch (ExInvalidToken e) {
                 System.out.print(e.getMessage());
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.print("Input is not a number. Try again.\nInput: ");
             }
         }
@@ -127,15 +122,15 @@ public class Main {
         String dateNtime = now.format(formatter);
         System.out.print(dateNtime + "\n");
         while (userInput != 0) {
-            try{
+            try {
                 System.out.print("Press 1 to make a booking.\n");
                 System.out.print("Press 2 to view bookings.\n");
                 System.out.print("Press 3 to cancel bookings.\n");
-                System.out.print("Press 4 to show available facilities.\n");
+                System.out.print("Press 4 to check for any cancelled bookings.\n");
                 System.out.print("Press 0 to log out.\n");
                 System.out.print("Input: ");
                 String strUserInput = scanner.next(); // handle exception where input is not a number
-                
+
                 userInput = Integer.parseInt(strUserInput);
                 switch (userInput) {
                     case 1:
@@ -148,29 +143,27 @@ public class Main {
                         cancelBooking(scanner);
                         break;
                     case 4:
-                        // some logic to print the facilities available
+                        customer.checkNotifications();
                         break;
                     case 0:
                         authInstance.logout(customer);
                         break;
                     default:
                         throw new ExInvalidToken();
-
                 }
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.print("Input is not a number. Try again.\nInput: ");
-            }
-            catch (ExInvalidToken e){
+            } catch (ExInvalidToken e) {
                 System.out.print(e.getMessage());
-            }
-            catch (ExWrongPayMethod e){
+            } catch (ExWrongPayMethod e) {
+                System.out.print(e.getMessage());
+            } catch (ExWrongDate e) {
                 System.out.print(e.getMessage());
             }
         }
     }
 
-    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod{
+    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod, ExWrongDate {
         int facilityNo = -1;
         boolean bookSuccessful = false;
         while (facilityNo != 0 && !bookSuccessful) {
@@ -221,7 +214,7 @@ public class Main {
         }
     }
 
-    private static void viewBooking(Scanner scanner) throws ExInvalidToken{
+    private static void viewBooking(Scanner scanner) throws ExInvalidToken {
         customer.viewBookings();
         System.out.print("Enter 0 to go to the main menu.\n");
         int input = -1;

@@ -16,7 +16,7 @@ public class Customer extends User implements Observer {
 		super(username, password);
 		this.loyaltyPoints = 0;
 		this.memberType = new StandardMember();
-
+		this.notifications = new ArrayList<>();
 	}
 
 	// convert date and time to string
@@ -44,16 +44,15 @@ public class Customer extends User implements Observer {
 		PaymentStrategy paymentStrategy = paymentStrat(paymentString);
 		RefundStrategy refundStrategy=refundStrat(paymentString);
 		if (facility.isBooked(concatenateStringAndInt(bookingDate, startTime))) {
-			facility.book(concatenateStringAndInt(bookingDate, startTime));
+			facility.book(this, concatenateStringAndInt(bookingDate, startTime));
 			return false;
 		} else {
-			// Booking is added, even though transaction might fail later on
-
+			
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
 			System.out.println("Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy, refundStrategy);
 			if (NewBooking.paymentProcessFlag()) {
-				facility.book(concatenateStringAndInt(bookingDate, startTime));
+				facility.book(this, concatenateStringAndInt(bookingDate, startTime));
 				bookingsList.add(NewBooking);
 				setMemberType();
 				loyaltyPoints += 10;
@@ -143,10 +142,15 @@ public class Customer extends User implements Observer {
 	}
 
 	public void checkNotifications(){
-		for(Map.Entry<SportFacility, String> notification: notifications) {
-			System.out.println(notification.getKey() + " can be booked for time " + notification.getValue() +" on first come first served basis!");
+		if (notifications == null)
+			System.out.print("Sorry, there is no record of any cancelled bookings.\n");
+		else{
+			for(Map.Entry<SportFacility, String> notification: notifications) {
+				System.out.println(notification.getKey() + " can be booked for time " + notification.getValue() +" on first come first served basis!");
+			}
+			notifications.clear();
 		}
-		notifications.clear();
+		
 	}
 
 }

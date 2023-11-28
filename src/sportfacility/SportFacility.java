@@ -1,4 +1,5 @@
 package sportfacility;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,36 +19,37 @@ public abstract class SportFacility {
 	private Map<String, ArrayList<Observer>> waitlist;
 	private String name;
 
-	public SportFacility(String name, int openingHours, int closingHours, int bookingFee){
+	public SportFacility(String name, int openingHours, int closingHours, int bookingFee) {
 		this.openingHours = openingHours;
 		this.closingHours = closingHours;
 		this.timeTable = new HashMap<>();
 		this.allReviews = new ArrayList<>();
 		this.bookingFee = bookingFee;
 		this.name = name;
+		this.waitlist = new HashMap<>();
 	}
 
 	public void book(Customer customer, String dateHour) {
-		//13-02-2000 13
-		//13-15 
+		// 13-02-2000 13
+		// 13-15
 		String[] parts = dateHour.split(" ");
 		int hour = Integer.parseInt(parts[1]);
-	
+
 		if (hour < 0 || hour > 23) {
 			System.out.print("Please put time in hours only (0-23).\n");
-			attach(customer, dateHour);
+
 			return;
 		}
-	
+
 		if (hour >= openingHours) {
 			if (hour < closingHours) {
 				if (timeTable.containsKey(dateHour) && timeTable.get(dateHour)) {
 					System.out.print("Sorry, this time slot is already booked.\n");
+					attach(customer, dateHour);
 					return;
-				}
-				else{
-				timeTable.put(dateHour, true);
-				System.out.print("Booking Successful for facility " + dateHour + "\n");
+				} else {
+					timeTable.put(dateHour, true);
+					System.out.print("Booking Successful for facility " + dateHour + "\n");
 				}
 
 			} else {
@@ -56,73 +58,77 @@ public abstract class SportFacility {
 		} else {
 			System.out.print("Sorry, the facility is not open at this time\n");
 		}
-		
-	}
-	
 
+	}
 
 	public void cancelBooking(String dateHour) {
 		if (!timeTable.containsKey(dateHour)) {
 			System.out.print("No booking found for " + dateHour + ". Unable to cancel.\n");
 			return;
 		}
-	
+
 		if (!timeTable.get(dateHour)) {
 			System.out.print("The time slot for " + dateHour + " is already free.\n");
 			return;
 		}
-	
+
 		timeTable.put(dateHour, false);
-		System.out.print("Booking cancelled for " + dateHour +"\n");
+		System.out.print("Booking cancelled for " + dateHour + "\n");
 
 		notify(dateHour);
 	}
 
 	public void attach(Observer observer, String dateHour) {
+		if (waitlist.get(dateHour) == null)
+			waitlist.put(dateHour, new ArrayList<>());
 		waitlist.get(dateHour).add(observer);
+		System.out.print(
+				"You have been added to the waitlist, if the booker cancels their booking, you would be notified. Thanks.\n");
 	}
 
-	public void notify(String dateHour){
-		for(Observer observer: waitlist.get(dateHour)){
-			observer.update(this, dateHour);
+	public void notify(String dateHour) {
+		if (waitlist.get(dateHour) != null) {
+			for (Observer observer : waitlist.get(dateHour)) {
+				observer.update(this, dateHour);
+			}
 		}
 	}
 
 	public void addReview(Review review) {
-        allReviews.add(review);
-    }
+		allReviews.add(review);
+	}
 
 	public List<Review> getAllReviews() {
-        return new ArrayList<>(allReviews); // Return a copy to prevent external modification
-    }
+		return new ArrayList<>(allReviews); // Return a copy to prevent external modification
+	}
 
-	public int getBookingFee(){
+	public int getBookingFee() {
 		return this.bookingFee;
 	}
 
-	public void writeReview(Review review){
+	public void writeReview(Review review) {
 		this.addReview(review);
 	}
 
-	public boolean isBooked(String dateHour){
-		//changes made by taswar
+	public boolean isBooked(String dateHour) {
+		// changes made by taswar
 		String[] parts = dateHour.split(" ");
 		int hour = Integer.parseInt(parts[1]);
 
-
-		if (timeTable.containsKey(dateHour) || hour >= closingHours ||hour < openingHours) {
+		if ((timeTable.containsKey(dateHour) && timeTable.get(dateHour) == true) || hour >= closingHours
+				|| hour < openingHours) {
 			return true;
 		}
 		return false;
 	}
 
 	public void showAvailableSlots(String date) throws ExWrongDate {
-		//check if date is in correct format else throw exception Wrong Date
+		// check if date is in correct format else throw exception Wrong Date
 		isDateFormatCorrect(date);
 
-		//if not show available time slots
+		// if not show available time slots
 		System.out.print("Available time slots for " + date + ":\n");
-	
+
 		for (int hour = openingHours; hour < closingHours; hour++) {
 			String dateHour = date + " " + hour;
 			if (!timeTable.containsKey(dateHour) || !timeTable.get(dateHour)) {
@@ -131,11 +137,11 @@ public abstract class SportFacility {
 		}
 	}
 
-	public void isDateFormatCorrect(String date) throws ExWrongDate{
+	public void isDateFormatCorrect(String date) throws ExWrongDate {
 		if (date.length() != 10) {
 			throw new ExWrongDate(); // Throw exception if the length is not as expected
 		}
-	
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		dateFormat.setLenient(false);
 		try {
@@ -144,12 +150,10 @@ public abstract class SportFacility {
 			throw new ExWrongDate(); // Throw your custom exception
 		}
 
-
 	}
 
-	public String toString(){
+	public String toString() {
 		return name;
 	}
-	
-	
+
 }
