@@ -31,6 +31,7 @@ public class Customer extends User implements Observer {
 			return new PayPalPayment();
 		}
 	}
+
 	private RefundStrategy refundStrat(String strat) {
 		if (strat.equals("CC")) {
 			return new CreditCardRefund();
@@ -40,14 +41,13 @@ public class Customer extends User implements Observer {
 	}
 
 	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, String paymentString) {
-
 		PaymentStrategy paymentStrategy = paymentStrat(paymentString);
-		RefundStrategy refundStrategy=refundStrat(paymentString);
+		RefundStrategy refundStrategy = refundStrat(paymentString);
 		if (facility.isBooked(concatenateStringAndInt(bookingDate, startTime))) {
 			facility.book(this, concatenateStringAndInt(bookingDate, startTime));
 			return false;
 		} else {
-			
+
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
 			System.out.println("Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy, refundStrategy);
@@ -73,7 +73,7 @@ public class Customer extends User implements Observer {
 	public void viewBookings() {
 		// Show Customer's Name(membershipttpe)
 		System.out.print("Membership Type: " + memberType.toString() + "\n");
-		if(bookingsList.size()==0){
+		if (bookingsList.size() == 0) {
 			System.out.print("You have no bookings currently. \n");
 			return;
 		}
@@ -137,20 +137,21 @@ public class Customer extends User implements Observer {
 		return "";
 	}
 
-	public void update(SportFacility sportFacility, String dateHour){
+	public void update(SportFacility sportFacility, String dateHour) {
 		notifications.add(new AbstractMap.SimpleEntry<>(sportFacility, dateHour));
 	}
 
-	public void checkNotifications(){
+	public void checkNotifications() {
 		if (notifications == null)
 			System.out.print("Sorry, there is no record of any cancelled bookings.\n");
-		else{
-			for(Map.Entry<SportFacility, String> notification: notifications) {
-				System.out.println(notification.getKey() + " can be booked for time " + notification.getValue() +" on first come first served basis!");
+		else {
+			for (Map.Entry<SportFacility, String> notification : notifications) {
+				System.out.println(notification.getKey() + " can be booked for time " + notification.getValue()
+						+ " on first come first served basis!");
 			}
 			notifications.clear();
 		}
-		
+
 	}
 
 }
