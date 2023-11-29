@@ -16,51 +16,56 @@ import sportfacility.FootBallField;
 import sportfacility.SportFacility;
 import sportfacility.SwimmingPool;
 import sportfacility.TennisCourt;
-
+import user.*;
 public class testSportFacility {
 
     @Test
     public void testSportFacility_01() throws Exception {
         setOutput();
-        SportFacility facility = new BadmintonCourt(9, 23,13);
-        facility.book("13-02-2000 10");
+        SportFacility facility = new BadmintonCourt("BadmintonCourt",9, 23,13);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer,"13-02-2000 10");
         assertEquals("Booking Successful for facility 13-02-2000 10\n", getOutput());
     }
 
     @Test
     public void testSportFacility_02() throws Exception {
         setOutput();
-        SportFacility facility = new BasketballCourt(9, 23,12);
-        facility.book("13-02-2000 10"); // First booking attempt
+        SportFacility facility = new BadmintonCourt("BadmintonCourt",9, 23,13);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer,"13-02-2000 10");
         getOutput(); // Discard the output of the first booking attempt
         setOutput(); // Reset output for capturing the second attempt
-        facility.book("13-02-2000 10"); // Second booking attempt
-        assertEquals("Sorry, this time slot is already booked.\n", getOutput());
+        facility.book(customer, "13-02-2000 10"); // Second booking attempt
+        assertEquals("Sorry, this time slot is already booked.\nYou have been added to the waitlist, if the booker cancels their booking, you would be notified. Thanks.\n", getOutput());
     }
 
     @Test
     public void testSportFacility_03() throws Exception {
         setOutput();
-        SportFacility facility = new FootBallField(9, 23,11);
-        facility.book("13-02-2000 8");
+        SportFacility facility = new FootBallField("FootBallField",9, 23,11);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer, "13-02-2000 8");
         assertEquals("Sorry, the facility is not open at this time\n", getOutput());
     }
 
     @Test
     public void testSportFacility_04() throws Exception {
         setOutput();
-        SportFacility facility = new SwimmingPool(9, 23,10);
-        facility.book("13-02-2000 23");
+        SportFacility facility = new SwimmingPool("SwimmingPool",9, 23,10);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer, "13-02-2000 23");
         assertEquals("Sorry, the facility is closed during this time\n", getOutput());
     }
 
         @Test
     public void testSportFacility_05() throws Exception {
         setOutput();
-        SportFacility facility = new TennisCourt(9, 23,12);
-        facility.book("13-02-2000 10");
-        facility.book("13-02-2000 11");
-        facility.book("13-02-2000 22"); // First booking attempt
+        SportFacility facility = new TennisCourt("TennisCourt",9, 23,12);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer,"13-02-2000 10");
+        facility.book(customer,"13-02-2000 11");
+        facility.book(customer,"13-02-2000 22"); // First booking attempt
         getOutput(); // Discard the output of the first booking attempt
         setOutput();
         facility.showAvailableSlots("13-02-2000");
@@ -82,7 +87,7 @@ public class testSportFacility {
 
     @Test(expected = ExWrongDate.class)
     public void testSportFacility_10() throws Exception {
-        SportFacility facility = new TennisCourt(9, 23, 10);
+        SportFacility facility = new TennisCourt("TennisCourt",9, 23, 10);
         try {
             facility.showAvailableSlots("01-0f2-2023");
         } catch (ExWrongDate e) {
@@ -95,15 +100,16 @@ public class testSportFacility {
     @Test
     public void testSportFacility_06() throws Exception {
         setOutput();
-        SportFacility facility = new TennisCourt(9, 23,13);
-        facility.book("13-02-2000 -1");
+        SportFacility facility = new TennisCourt("TennisCourt",9, 23,13);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer,"13-02-2000 -1");
         assertEquals("Please put time in hours only (0-23).\n", getOutput());
     }
     
     @Test
     public void testSportFacility_07() throws Exception {
         setOutput();
-        SportFacility facility = new FootBallField(9, 23, 10);
+        SportFacility facility = new FootBallField("FootBallField",9, 23, 10);
         facility.cancelBooking("13-02-2000 10");
         assertEquals("No booking found for 13-02-2000 10. Unable to cancel.\n", getOutput());
     }
@@ -111,8 +117,9 @@ public class testSportFacility {
     @Test
     public void testSportFacility_08() throws Exception {
         setOutput();
-        SportFacility facility = new SwimmingPool(9, 23, 10);
-        facility.book("13-02-2000 11"); // Make a booking
+        SportFacility facility = new SwimmingPool("SwimmingPool",9, 23, 10);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer,"13-02-2000 11"); // Make a booking
         facility.cancelBooking("13-02-2000 11"); // Cancel the booking
         setOutput(); // Reset output
         facility.cancelBooking("13-02-2000 11"); // Try to cancel again
@@ -122,8 +129,9 @@ public class testSportFacility {
     @Test
     public void testSportFacility_09() throws Exception {
         setOutput();
-        SportFacility facility = new TennisCourt(9, 23, 10);
-        facility.book("13-02-2000 12"); // Make a booking
+        SportFacility facility = new TennisCourt("TennisCourt",9, 23, 10);
+        Customer customer=new Customer("customer","customer");
+        facility.book(customer, "13-02-2000 12"); // Make a booking
         getOutput();
         setOutput();
         facility.cancelBooking("13-02-2000 12"); // Cancel the booking
