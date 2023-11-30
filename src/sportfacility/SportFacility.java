@@ -106,9 +106,9 @@ public abstract class SportFacility {
 		return this.bookingFee;
 	}
 
-	public void writeReview(Review review) {
-		this.addReview(review);
-	}
+	// public void writeReview(Review review) {
+	// this.addReview(review);
+	// }
 
 	public boolean isBooked(String dateHour) {
 		// changes made by taswar
@@ -152,8 +152,15 @@ public abstract class SportFacility {
 
 	}
 
+	@Override
 	public String toString() {
 		return name;
+	}
+
+	public void printReviews() {
+		for (Review review : allReviews) {
+			System.out.print(review + "\n");
+		}
 	}
 
 }

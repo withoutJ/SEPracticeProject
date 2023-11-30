@@ -1,9 +1,13 @@
 package user;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import sportfacility.*;
 import transaction.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Customer extends User implements Observer {
 
@@ -154,4 +158,27 @@ public class Customer extends User implements Observer {
 
 	}
 
+	public void addReview(int bookingID, String comment, int rating) {
+		for (Bookings booking : bookingsList) {
+			if ((booking.getBookingId() == bookingID)) {
+				booking.addReview(comment, rating);
+			}
+		}
+	}
+
+	public void viewCompletedBookings(LocalDateTime sysTime) {
+		System.out.print("Membership Type: " + memberType.toString() + "\n");
+
+		for (Bookings booking : bookingsList) {
+			String dateString = booking.getBookingInfo();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
+			LocalDateTime bookingTime = LocalDateTime.parse(dateString, formatter);
+			if (bookingTime.isBefore(sysTime)) {
+				System.out.print("Booking ID: " + booking.getBookingId() + "\n");
+				System.out.print("Booking Date: " + booking.getBookingDate() + "\n");
+				System.out.print("Booking Start Time: " + booking.getStartTime() + "\n");
+				System.out.print("\n");
+			}
+		}
+	}
 }

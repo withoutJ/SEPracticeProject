@@ -5,14 +5,17 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.List;
+
 import sportfacility.*;
 
 public class Admin extends User {
     private static Admin adminInstance = new Admin("admin", "AstralTrapez0idB0dy");
     private LocalDateTime clock;
+    private List<SportFacility> facilities;
+
     private Admin(String username, String password) {
         super(username, password);
+        facilities = new ArrayList<SportFacility>();
         clock = LocalDateTime.now();
     }
     // where do i add facility )):
@@ -36,48 +39,87 @@ public class Admin extends User {
             return false;
         }
     }
-    public boolean receiveBookingRequest(Customer customer, SportFacility facility, String bookingDate, int startTime, String paymentString){
-        
-        if(compareTime(concatenateStringAndInt(bookingDate, startTime))){ //this will solve cannot book in the past. only in future
-			return customer.createBooking(facility, bookingDate, startTime, paymentString);
-		}
-		else{
+
+    public boolean receiveBookingRequest(Customer customer, SportFacility facility, String bookingDate, int startTime,
+            String paymentString) {
+
+        if (compareTime(concatenateStringAndInt(bookingDate, startTime))) { // this will solve cannot book in the past.
+                                                                            // only in future
+            return customer.createBooking(facility, bookingDate, startTime, paymentString);
+        } else {
             System.out.print("Please choose a valid date. Cannot make a booking in the past.\n");
-			return false;
-		}
+            return false;
+        }
     }
-    public boolean compareTime(String dateHour){
+
+    public boolean compareTime(String dateHour) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
         LocalDateTime bookingStartTime = LocalDateTime.parse(dateHour, formatter);
 
-        if(bookingStartTime.isBefore(clock)){
+        if (bookingStartTime.isBefore(clock)) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
 
     }
 
-    public void changeTime(String date, String hour){
-        String[] sepDate = date.split("-");
-        clock = LocalDateTime.of(Integer.parseInt(sepDate[2]), Integer.parseInt(sepDate[1]), Integer.parseInt(sepDate[0]), Integer.parseInt(hour), 0, 0);
+    public LocalDateTime getClock() {
+        return clock;
     }
 
-    public void resetTime(){
+    public void changeTime(String date, String hour) {
+        String[] sepDate = date.split("-");
+        clock = LocalDateTime.of(Integer.parseInt(sepDate[2]), Integer.parseInt(sepDate[1]),
+                Integer.parseInt(sepDate[0]), Integer.parseInt(hour), 0, 0);
+    }
+
+    public void resetTime() {
         clock = LocalDateTime.now();
     }
 
-    public void printTime(){
+    public void printTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String dateNtime = clock.format(formatter);
         System.out.print(dateNtime + "\n");
     }
 
-    public static Admin getInstance(){
+    public static Admin getInstance() {
         return adminInstance;
     }
+
     public static String concatenateStringAndInt(String str, int number) {
-		return str + " " + number;
-	}
+        return str + " " + number;
+    }
+
+    public List<SportFacility> addFacility(String facName) {
+        if (facilities == null)
+            createFacility(facName);
+        else {
+            boolean exists = false;
+            for (SportFacility fac : facilities) {
+                if (fac.toString().equals(facName)) {
+                    System.out.print("The facility already exists!\n");
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists == false)
+                createFacility(facName);
+        }
+        return facilities;
+    }
+
+    public void createFacility(String facName) {
+        if (facName.equals("Swimming"))
+            facilities.add(new SwimmingPool("Swimming", 9, 20, 10));
+        else if (facName.equals("Badminton"))
+            facilities.add(new BadmintonCourt("Badminton", 9, 23, 20));
+        else if (facName.equals("Basketball"))
+            facilities.add(new BasketballCourt("Basketball", 9, 22, 120));
+        else if (facName.equals("Tennis"))
+            facilities.add(new TennisCourt("Tennis", 9, 22, 50));
+        else if (facName.equals("Football"))
+            facilities.add(new FootBallField("Football", 9, 23, 200));
+    }
 }
