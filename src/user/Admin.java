@@ -25,8 +25,7 @@ public class Admin extends User {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
 
         // Parsing booking start time to LocalDateTime
-        String bookingStartTimeString = customer.getBookingStartTime(bookingId);
-        LocalDateTime bookingStartTime = LocalDateTime.parse(bookingStartTimeString, formatter);
+        LocalDateTime bookingStartTime = LocalDateTime.parse(customer.getBookingStartTime(bookingId), formatter);
 
         long hoursBetween = ChronoUnit.HOURS.between(bookingStartTime, currentTime);
 
