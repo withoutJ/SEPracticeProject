@@ -11,12 +11,12 @@ import transaction.*;
 public class TestTransaction {
 
     @Test
-    public void testPayPal(){
+    public void testPayPal() {
         PaymentStrategy paymentStrategy = new PayPalPayment();
         RefundStrategy refundStrategy = new PayPalRefund();
         double amount = 10;
         Transaction transaction = new Transaction(paymentStrategy, refundStrategy, amount);
-        
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
@@ -27,20 +27,20 @@ public class TestTransaction {
 
         System.setOut(System.out);
 
-        String result = String.format("PayPal processed the payment with amount of %.2f.\n" +"\n" +
-                                        "PayPal processed the refund with amount of %.2f.\n", 
-                                        amount, amount);
+        String result = String.format("PayPal processed the payment with amount of %.2f.\n" + "\n" +
+                "PayPal processed the refund with amount of %.2f.\n",
+                amount, amount);
 
         assertEquals(result, consoleOutput);
     }
 
     @Test
-    public void testRefundPaymentNotProcessed(){
+    public void testRefundPaymentNotProcessed() {
         PaymentStrategy paymentStrategy = new PayPalPayment();
         RefundStrategy refundStrategy = new PayPalRefund();
         double amount = 10;
         Transaction transaction = new Transaction(paymentStrategy, refundStrategy, amount);
-        
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
@@ -56,12 +56,12 @@ public class TestTransaction {
     }
 
     @Test
-    public void testCreditCardPayment(){
+    public void testCreditCardPayment() {
         PaymentStrategy paymentStrategy = new CreditCardPayment();
         RefundStrategy refundStrategy = new CreditCardRefund();
         double amount = 10;
         Transaction transaction = new Transaction(paymentStrategy, refundStrategy, amount);
-        
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
@@ -72,9 +72,9 @@ public class TestTransaction {
 
         System.setOut(System.out);
 
-        String result = String.format("Visa processed the payment with amount of %.2f." + "\n" +
-                                        "Visa processed the refund with amount of %.2f.\n", 
-                                        amount, amount);
+        String result = String.format("Visa processed the payment with amount of %.2f.\n" +
+                "Visa processed the refund with amount of %.2f.\n",
+                amount, amount);
 
         assertEquals(result, consoleOutput);
     }

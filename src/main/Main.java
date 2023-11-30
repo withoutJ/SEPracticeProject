@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import sportfacility.*;
-import transaction.PayPalPayment;
+import transaction.*;
 import exceptions.*;
 import user.*;
 import java.time.LocalDateTime;
@@ -18,13 +18,11 @@ public class Main {
     private static Customer customer;
     private static AuthenticationService authInstance = AuthenticationService.getInstance();
     private static List<SportFacility> facilities = new ArrayList<>();
+    private static Admin admin; // = Admin.getInstance();
+
     public static void main(String args[]) {
         // AS.registerAdmin(cred, cred);
         Scanner scanner = new Scanner(System.in);
-        facilities.add(new SwimmingPool(9, 20, 10));
-        facilities.add(new BadmintonCourt(9, 23, 20));
-        facilities.add(new BasketballCourt(9, 22, 120));
-        facilities.add(new TennisCourt(9, 22, 50));
         isRunning = true;
 
         while (isRunning) {
@@ -32,10 +30,15 @@ public class Main {
             if (response == 1) {
                 customer = authInstance.register(username, password);
             } else if (response == 2) {
-                customer = authInstance.login(username, password); // guessing login will use FindUser()
+                if (!username.equals("admin"))
+                    customer = authInstance.login(username, password); // guessing login will use FindUser()
+                else
+                    admin = authInstance.adminLogin(password);
             }
             if (customer != null)
                 mainMenu(scanner);
+            else if (authInstance.adminLogin(password) != null)
+                adminMenu(scanner);
         }
         scanner.close(); // Close the scanner only once here
     }
@@ -50,56 +53,57 @@ public class Main {
         System.out.print("Input: ");
         int response = -1;
         while (response != 1 && response != 2 && response != 0) {
-            try{
+            try {
                 String strResponse = scanner.next();
                 response = Integer.parseInt(strResponse);
                 if (response == 1) {
-                    while (!authInstance.validatePassword(password)) {
-                        try {
-                            System.out.print("\nSet a username: ");
-                            username = scanner.next();
-                            if (username.equals("/"))
-                                break;
-                            if (!authInstance.findUsername(username)) {
-                                System.out.print("Set a password: ");
-                                password = scanner.next();
+                    if (admin == null)
+                        System.out.print("The system is not yet ready to use. Please try again later. Thank you.\n\n");
+                    else {
+                        while (!authInstance.validatePassword(password)) {
+                            try {
+                                System.out.print("Set a username: ");
+                                username = scanner.next();
                                 if (username.equals("/"))
                                     break;
-                                if (!authInstance.validatePassword(password))
-                                    throw new ExPasswordInvalid();
-                            } else
-                                throw new ExAccountExists();
-                        }
-                        catch (ExAccountExists e){
-                            System.out.print(e.getMessage());
-                        }
-                        catch (ExPasswordInvalid e){
-                            System.out.print(e.getMessage());
+                                if (!authInstance.findUsername(username)) {
+                                    System.out.print("Set a password: ");
+                                    password = scanner.next();
+                                    if (password.equals("/"))
+                                        break;
+                                    if (!authInstance.validatePassword(password))
+                                        throw new ExPasswordInvalid();
+                                } else
+                                    throw new ExAccountExists();
+                            } catch (ExAccountExists e) {
+                                System.out.print(e.getMessage());
+                            } catch (ExPasswordInvalid e) {
+                                System.out.print(e.getMessage());
+                            }
                         }
                     }
                 } else if (response == 2) {
-                    while (authInstance.findUser(username, password) == null) {
-                        try{
+                    while (authInstance.findUser(username, password) == null
+                            && authInstance.findAdmin(password) == null) {
+                        try {
                             System.out.print("Input your username: ");
                             username = scanner.next();
-
-                            if (!authInstance.findUsername(username)) {
+                            if (username.equals("/"))
+                                break;
+                            if (!authInstance.findUsername(username) && !username.equals("admin")) {
                                 throw new ExNoAccount();
                             }
-                            if (username.equals("/"))
-                                break;
                             System.out.print("Input your password: ");
                             password = scanner.next();
-                            if (username.equals("/"))
+                            if (password.equals("/"))
                                 break;
-                            if (authInstance.findUser(username, password)==null) {
+                            if (authInstance.findUser(username, password) == null
+                                    && authInstance.findAdmin(password) == null) {
                                 throw new ExPasswordIncorrect();
                             }
-                        }
-                        catch (ExNoAccount e){
+                        } catch (ExNoAccount e) {
                             System.out.print(e.getMessage());
-                        }
-                        catch (ExPasswordIncorrect e){
+                        } catch (ExPasswordIncorrect e) {
                             System.out.print(e.getMessage());
                         }
                     }
@@ -109,33 +113,62 @@ public class Main {
                 } else {
                     throw new ExInvalidToken();
                 }
-            }
-            catch (ExInvalidToken e){
+            } catch (ExInvalidToken e) {
                 System.out.print(e.getMessage());
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.print("Input is not a number. Try again.\nInput: ");
             }
         }
         return response;
     }
 
+    private static void adminMenu(Scanner scanner) {
+        int userInput = -1;
+        while (userInput != 0) {
+            System.out.print("Press 1 to add a facility.\n");
+            System.out.print("Press 2 to change system time\n");
+            System.out.print("Press 0 to log out.\n");
+            System.out.print("Input: ");
+
+            String strUserInput = scanner.next(); // handle exception where input is not a number
+            userInput = Integer.parseInt(strUserInput);
+
+            switch (userInput) {
+                case 1:
+                    addFacility(scanner);
+                    break;
+                case 2:
+                    changeTime(scanner);
+                    break;
+                case 0:
+                    // logout
+                    break;
+                default:
+                    System.out.print("Invalid token. Try again.\n");
+            }
+        }
+    }
+// this facility is shit someone destroy it
     private static void mainMenu(Scanner scanner) {
         int userInput = -1;
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String dateNtime = now.format(formatter);
-        System.out.print(dateNtime + "\n");
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd
+        // HH:mm:ss");
+        // String dateNtime = now.format(formatter);
+        // System.out.print(dateNtime + "\n");
+        admin.printTime();
         while (userInput != 0) {
-            try{
-                System.out.print("\nPress 1 to make a booking.\n");
+            try {
+                System.out.print("Press 1 to make a booking.\n");
                 System.out.print("Press 2 to view bookings.\n");
                 System.out.print("Press 3 to cancel bookings.\n");
-                System.out.print("Press 4 to show available facilities.\n");
+                System.out.print("Press 4 to check for any cancelled bookings.\n");
+                System.out.print("Press 5 to review any past bookings.\n");
+                System.out.print("Press 6 to check facility ratings.\n");
                 System.out.print("Press 0 to log out.\n");
                 System.out.print("Input: ");
                 String strUserInput = scanner.next(); // handle exception where input is not a number
-                
+
                 userInput = Integer.parseInt(strUserInput);
                 switch (userInput) {
                     case 1:
@@ -148,37 +181,51 @@ public class Main {
                         cancelBooking(scanner);
                         break;
                     case 4:
-                        // some logic to print the facilities available
+                        customer.checkNotifications();
                         break;
+                    case 5:
+                        customer.viewCompletedBookings(admin.getClock());
+                        System.out.print("Input booking ID to review a booking: ");
+                        String strID = scanner.next();
+                        int bookID = Integer.parseInt(strID);
+                        System.out.print("Enter comment: ");
+                        scanner.nextLine();
+                        String comment = scanner.nextLine();
+                        System.out.print("Enter rating (a number between 1-5): ");
+                        String strRate = scanner.next();
+                        int rate = Integer.parseInt(strRate);
+                        customer.addReview(bookID, comment, rate);
+                    case 6:
+                        for (int i = 0; i < facilities.size(); i++) {
+                            System.out.print(facilities.get(i) + ": \n");
+                            facilities.get(i).printReviews();
+                        }
                     case 0:
                         authInstance.logout(customer);
                         break;
                     default:
                         throw new ExInvalidToken();
-
                 }
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.print("Input is not a number. Try again.\nInput: ");
-            }
-            catch (ExInvalidToken e){
+            } catch (ExInvalidToken e) {
                 System.out.print(e.getMessage());
-            }
-            catch (ExWrongPayMethod e){
+            } catch (ExWrongPayMethod e) {
                 System.out.print(e.getMessage());
-            }
-            catch (ExWrongDate e){
+            } catch (ExWrongDate e) {
                 System.out.print(e.getMessage());
             }
         }
     }
 
-    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod, ExWrongDate{
+    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod, ExWrongDate {
         int facilityNo = -1;
         boolean bookSuccessful = false;
         while (facilityNo != 0 && !bookSuccessful) {
-            System.out.print("\nChoose a facility (Enter 0 to go to the main menu).\n");
-            System.out.print("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis\n");
+            System.out.print("Choose a facility (Enter 0 to go to the main menu).\n");
+            for (int i = 0; i < facilities.size(); i++) {
+                System.out.print(Integer.toString(i + 1) + ". " + facilities.get(i) + "\n");
+            }
             System.out.print("Input: ");
             String strFacility = scanner.next();
             if (strFacility.equals("/"))
@@ -208,7 +255,8 @@ public class Main {
                         break;
                     if (!payment.equals("CC") && !payment.equals("PL"))
                         throw new ExWrongPayMethod();
-                    bookSuccessful = customer.createBooking(chosenFacility, date, time, payment);
+                    // String bookingDate, int startTime, String paymentString
+                    bookSuccessful = admin.receiveBookingRequest(customer, chosenFacility, date, time, payment);
                     if (bookSuccessful) {
                         System.out.print("Booking successfully created for " + date + " from " +
                                 Integer.toString(time) + ":00 to " + Integer.toString(time + 1)
@@ -224,7 +272,7 @@ public class Main {
         }
     }
 
-    private static void viewBooking(Scanner scanner) throws ExInvalidToken{
+    private static void viewBooking(Scanner scanner) throws ExInvalidToken {
         customer.viewBookings();
         System.out.print("Enter 0 to go to the main menu.\n");
         int input = -1;
@@ -237,16 +285,43 @@ public class Main {
         }
     }
 
-    private static void cancelBooking(Scanner scanner) { // have to make it run in infinite loop
-        boolean cancelled = true;
+    private static void cancelBooking(Scanner scanner) {
         System.out.print("Enter Booking ID to cancel a booking.\n");
         customer.viewBookings();
         System.out.print("Input: ");
         String bookID = scanner.next();
-        customer.cancelBooking(Integer.parseInt(bookID));
+        boolean cancelled = admin.receiveCancelRequest(customer, Integer.parseInt(bookID));
         if (cancelled)
             System.out.print("Booking cancelled successfully.\n");
         else
             System.out.print("Booking does not exist, try again.\n");
+    }
+
+    private static void changeTime(Scanner scanner) {
+        String date = "";
+        String hour = "";
+
+        System.out.print("Enter the date you want to change to (DD-MM-YYYY): ");
+        date = scanner.next();
+        System.out.print("Enter the hour you want to change to (If you want to change hour to 13:00, enter 13): ");
+        hour = scanner.next();
+
+        admin.changeTime(date, hour); // taswar/labiba please change this method so that this runs in loop until date
+                                      // and time are given in the correct format
+    }
+
+    private static void resetTime(Scanner scanner) {
+        admin.resetTime();
+        System.out.print("The system time has been changed to the present time.\n");
+    }
+
+    private static void addFacility(Scanner scanner) {
+        System.out.print("Choose a facility to add.\n");
+        System.out.print("1. Swimming\n2. Badminton\n3. Basketball\n4. Tennis\n5. Football\n");
+        System.out.print("Input: ");
+        String strFac = scanner.next();
+        int fac = Integer.parseInt(strFac);
+        String[] facilityStr = { "Swimming", "Badminton", "Basketball", "Tennis", "Football" };
+        facilities = admin.addFacility(facilityStr[fac - 1]);
     }
 }

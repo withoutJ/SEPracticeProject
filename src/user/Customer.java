@@ -1,21 +1,26 @@
 package user;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import sportfacility.*;
 import transaction.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-public class Customer extends User {
+public class Customer extends User implements Observer {
 
 	private List<Bookings> bookingsList = new ArrayList<>();
 	private Member memberType;
 	private int loyaltyPoints;
+	private ArrayList<AbstractMap.SimpleEntry<SportFacility, String>> notifications;
 
 	public Customer(String username, String password) {
 		super(username, password);
 		this.loyaltyPoints = 0;
 		this.memberType = new StandardMember();
-
+		this.notifications = new ArrayList<>();
 	}
 
 	// convert date and time to string
@@ -30,6 +35,7 @@ public class Customer extends User {
 			return new PayPalPayment();
 		}
 	}
+
 	private RefundStrategy refundStrat(String strat) {
 		if (strat.equals("CC")) {
 			return new CreditCardRefund();
@@ -39,20 +45,18 @@ public class Customer extends User {
 	}
 
 	public boolean createBooking(SportFacility facility, String bookingDate, int startTime, String paymentString) {
-
 		PaymentStrategy paymentStrategy = paymentStrat(paymentString);
-		RefundStrategy refundStrategy=refundStrat(paymentString);
+		RefundStrategy refundStrategy = refundStrat(paymentString);
 		if (facility.isBooked(concatenateStringAndInt(bookingDate, startTime))) {
-			facility.book(concatenateStringAndInt(bookingDate, startTime));
+			facility.book(this, concatenateStringAndInt(bookingDate, startTime));
 			return false;
 		} else {
-			// Booking is added, even though transaction might fail later on
 
 			Bookings NewBooking = new Bookings(facility, bookingDate, startTime);
 			System.out.println("Redirecting you to transaction...");
 			NewBooking.calculatePrice(this, paymentStrategy, refundStrategy);
 			if (NewBooking.paymentProcessFlag()) {
-				facility.book(concatenateStringAndInt(bookingDate, startTime));
+				facility.book(this, concatenateStringAndInt(bookingDate, startTime));
 				bookingsList.add(NewBooking);
 				setMemberType();
 				loyaltyPoints += 10;
@@ -73,7 +77,7 @@ public class Customer extends User {
 	public void viewBookings() {
 		// Show Customer's Name(membershipttpe)
 		System.out.print("Membership Type: " + memberType.toString() + "\n");
-		if(bookingsList.size()==0){
+		if (bookingsList.size() == 0) {
 			System.out.print("You have no bookings currently. \n");
 			return;
 		}
@@ -136,4 +140,44 @@ public class Customer extends User {
 		return "";
 	}
 
+	public void update(SportFacility sportFacility, String dateHour) {
+		notifications.add(new AbstractMap.SimpleEntry<>(sportFacility, dateHour));
+	}
+
+	public void checkNotifications() {
+		if (notifications == null)
+			System.out.print("Sorry, there is no record of any cancelled bookings.\n");
+		else {
+			for (Map.Entry<SportFacility, String> notification : notifications) {
+				System.out.println(notification.getKey() + " can be booked for time " + notification.getValue()
+						+ " on first come first served basis!");
+			}
+			notifications.clear();
+		}
+
+	}
+
+	public void addReview(int bookingID, String comment, int rating) {
+		for (Bookings booking : bookingsList) {
+			if ((booking.getBookingId() == bookingID)) {
+				booking.addReview(comment, rating);
+			}
+		}
+	}
+
+	public void viewCompletedBookings(LocalDateTime sysTime) {
+		System.out.print("Membership Type: " + memberType.toString() + "\n");
+
+		for (Bookings booking : bookingsList) {
+			String dateString = booking.getBookingInfo();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
+			LocalDateTime bookingTime = LocalDateTime.parse(dateString, formatter);
+			if (bookingTime.isBefore(sysTime)) {
+				System.out.print("Booking ID: " + booking.getBookingId() + "\n");
+				System.out.print("Booking Date: " + booking.getBookingDate() + "\n");
+				System.out.print("Booking Start Time: " + booking.getStartTime() + "\n");
+				System.out.print("\n");
+			}
+		}
+	}
 }

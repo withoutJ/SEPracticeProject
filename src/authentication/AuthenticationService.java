@@ -6,6 +6,7 @@ import user.*;
 
 public class AuthenticationService {
     // Assuming Customer and SessionManager are defined in the user package or appropriately imported.
+    private Admin admin;
     private List<Customer> users;
     private SessionManager sessMgr;
     // private static Admin admin; // This line can be removed if Admin is not used.
@@ -14,6 +15,7 @@ public class AuthenticationService {
     private AuthenticationService() {
         sessMgr = new SessionManager();
         users = new ArrayList<>();
+        admin = (Admin.getInstance());
     }
 
     public void addUsers(Customer customer){
@@ -25,6 +27,12 @@ public class AuthenticationService {
             instance = new AuthenticationService();
         }
         return instance;
+    }
+
+    public Admin findAdmin(String password){
+        if (admin.getPassword().equals(password))
+            return admin;
+        return null;
     }
 
     public Customer findUser(String userName, String password) {
@@ -71,7 +79,7 @@ public class AuthenticationService {
         if(result!=null)sessMgr.createSession(result);
         
         return result;
-        }
+    }
 
     public boolean logout(Customer user) {
         return sessMgr.removeSession(user);
@@ -101,6 +109,10 @@ public class AuthenticationService {
             }
         }
         return false; // This line was outside the method due to an extra brace.
+    }
+
+    public Admin adminLogin(String password) {
+        return findAdmin(password);
     }
 
     // public static Admin registerAdmin(String username, String password){

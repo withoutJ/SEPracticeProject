@@ -14,11 +14,10 @@ public class Review {
         if (rate < 1 || rate > 5) {
             System.out.println("Rating must be between 1 and 5.");
             return;
-        }
-        else{
+        } else {
             this.rate = rate;
         }
-        
+
     }
 
     public String getComment() {
@@ -31,9 +30,6 @@ public class Review {
 
     @Override
     public String toString() {
-        return "Review{" +
-                "comment='" + comment + '\'' +
-                ", rate=" + rate +
-                '}';
+        return "Review{" + "comment='" + getComment() + '\'' + ", rate=" + getRate() + '}';
     }
 }
