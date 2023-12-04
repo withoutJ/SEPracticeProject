@@ -161,7 +161,6 @@ public class Main {
 // this facility is shit someone destroy it
     private static void mainMenu(Scanner scanner) {
         int userInput = -1;
-        LocalDateTime now = LocalDateTime.now();
         // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd
         // HH:mm:ss");
         // String dateNtime = now.format(formatter);
