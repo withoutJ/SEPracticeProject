@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.print.SimpleDoc;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import exceptions.ExWrongDate;
 import user.*;
+import java.util.Calendar;
 
 public abstract class SportFacility {
 	private int bookingFee;
@@ -126,15 +130,32 @@ public abstract class SportFacility {
 		// check if date is in correct format else throw exception Wrong Date
 		isDateFormatCorrect(date);
 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		
+		int startHour = openingHours;
+		//Get the current time from the system
+		Calendar now = Calendar.getInstance(); // it's a singleton
+		int currentHour = now.get(Calendar.HOUR_OF_DAY);
+		String today = dateFormat.format(now.getTime());
+
+		if(date.equals(today)){
+			startHour =  Math.max(currentHour+1, openingHours);
+			
+		}
+
+
 		// if not show available time slots
 		System.out.print("Available time slots for " + date + ":\n");
 
-		for (int hour = openingHours; hour < closingHours; hour++) {
+		for (int hour =startHour; hour < closingHours; hour++) {
 			String dateHour = date + " " + hour;
 			if (!timeTable.containsKey(dateHour) || !timeTable.get(dateHour)) {
 				System.out.print("Time slot " + hour + ":00 is available.\n");
 			}
 		}
+	}
+	public String getName(){
+		return name;
 	}
 
 	public void isDateFormatCorrect(String date) throws ExWrongDate {

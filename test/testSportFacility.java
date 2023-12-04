@@ -9,6 +9,7 @@ import exceptions.ExWrongDate;
 import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 
 import sportfacility.BadmintonCourt;
 import sportfacility.BasketballCourt;
@@ -17,6 +18,7 @@ import sportfacility.SportFacility;
 import sportfacility.SwimmingPool;
 import sportfacility.TennisCourt;
 import user.*;
+
 
 public class testSportFacility {
 
@@ -61,18 +63,19 @@ public class testSportFacility {
         assertEquals("Sorry, the facility is closed during this time\n", getOutput());
     }
 
-    @Test
+
+        @Test
     public void testSportFacility_05() throws Exception {
         setOutput();
         SportFacility facility = new TennisCourt("TennisCourt", 9, 23, 12);
         Customer customer = new Customer("customer", "customer");
-        facility.book(customer, "13-02-2000 10");
-        facility.book(customer, "13-02-2000 11");
-        facility.book(customer, "13-02-2000 22"); // First booking attempt
+        facility.book(customer, "13-02-2024 10");
+        facility.book(customer, "13-02-2024 11");
+        facility.book(customer, "13-02-2024 22"); // First booking attempt
         getOutput(); // Discard the output of the first booking attempt
         setOutput();
-        facility.showAvailableSlots("13-02-2000");
-        String expected = "Available time slots for 13-02-2000:\n" +
+        facility.showAvailableSlots("13-02-2024");
+        String expected = "Available time slots for 13-02-2024:\n" +
                 "Time slot 9:00 is available.\n" +
                 "Time slot 12:00 is available.\n" +
                 "Time slot 13:00 is available.\n" +
