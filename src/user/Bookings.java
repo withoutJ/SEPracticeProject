@@ -86,4 +86,7 @@ public class Bookings {
 		Review review = new Review(comment, rating);
 		facility.addReview(review);
 	}
+	public String getFacilityName(){
+		return facility.getName();
+	}
 }

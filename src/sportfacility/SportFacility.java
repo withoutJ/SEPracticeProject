@@ -136,6 +136,9 @@ public abstract class SportFacility {
 			}
 		}
 	}
+	public String getName(){
+		return name;
+	}
 
 	public void isDateFormatCorrect(String date) throws ExWrongDate {
 		if (date.length() != 10) {

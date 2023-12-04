@@ -86,6 +86,7 @@ public class Customer extends User implements Observer {
 			System.out.print("Booking ID: " + booking.getBookingId() + "\n");
 			System.out.print("Booking Date: " + booking.getBookingDate() + "\n");
 			System.out.print("Booking Start Time: " + booking.getStartTime() + "\n");
+			System.out.print("Facility: " + booking.getFacilityName() + "\n");
 		}
 	}
 
@@ -176,6 +177,7 @@ public class Customer extends User implements Observer {
 				System.out.print("Booking ID: " + booking.getBookingId() + "\n");
 				System.out.print("Booking Date: " + booking.getBookingDate() + "\n");
 				System.out.print("Booking Start Time: " + booking.getStartTime() + "\n");
+				System.out.print("Facility: " + booking.getFacilityName() + "\n");
 				System.out.print("\n");
 			}
 		}
