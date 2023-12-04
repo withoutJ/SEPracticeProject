@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import sportfacility.*;
-import transaction.*;
 import exceptions.*;
 import user.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Main {
     private static boolean isRunning;
@@ -161,7 +158,7 @@ public class Main {
 // this facility is shit someone destroy it
     private static void mainMenu(Scanner scanner) {
         int userInput = -1;
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern(yyyy-MM-dd)
         // HH:mm:ss");
         // String dateNtime = now.format(formatter);
         // System.out.print(dateNtime + "\n");
