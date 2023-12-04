@@ -21,23 +21,30 @@ public class Admin extends User {
     // where do i add facility )):
     // consider editing facility(booking fee change)
 
-    public boolean receiveCancelRequest(Customer customer, int bookingId) {
+    public int receiveCancelRequest(Customer customer, int bookingId) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H");
 
         // Parsing booking start time to LocalDateTime
         String bookingStartTimeString = customer.getBookingStartTime(bookingId);
+        if (bookingStartTimeString.equals(""))
+            return 1;
+
         LocalDateTime bookingStartTime = LocalDateTime.parse(bookingStartTimeString, formatter);
 
-        long hoursBetween = ChronoUnit.HOURS.between(bookingStartTime, clock);
-
-        if (hoursBetween >= 6) {
-            customer.cancelBooking(bookingId);
-            return true;
-        } else {
-            System.out.print("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
-                    "A booking can only be cancelled 6 hours or more in advance.\n");
-            return false;
+        if (bookingStartTime.isBefore(clock.plusHours(6))){
+            //customer.cancelBooking(bookingId);
+            return 2;
         }
+        customer.cancelBooking(bookingId);
+        return 3;
+        // long hoursBetween = ChronoUnit.HOURS.between(bookingStartTime, clock);
+
+        // if (hoursBetween >= 6) {
+        //     customer.cancelBooking(bookingId);
+        //     return true;
+        // } else {
+        //     return false;
+        // }
     }
 
     public boolean receiveBookingRequest(Customer customer, SportFacility facility, String bookingDate, int startTime,
@@ -61,7 +68,6 @@ public class Admin extends User {
         } else {
             return true;
         }
-
     }
 
     public LocalDateTime getClock() {
@@ -78,10 +84,10 @@ public class Admin extends User {
         clock = LocalDateTime.now();
     }
 
-    public void printTime() {
+    public String printTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String dateNtime = clock.format(formatter);
-        System.out.print(dateNtime + "\n");
+        return (dateNtime + "\n");
     }
 
     public static Admin getInstance() {
@@ -93,8 +99,10 @@ public class Admin extends User {
     }
 
     public List<SportFacility> addFacility(String facName) {
-        if (facilities == null)
+        if (facilities == null){
             createFacility(facName);
+            System.out.print("A " + facName + " has been added successfully.\n");
+        }
         else {
             boolean exists = false;
             for (SportFacility fac : facilities) {
@@ -104,22 +112,24 @@ public class Admin extends User {
                     break;
                 }
             }
-            if (exists == false)
+            if (exists == false){
                 createFacility(facName);
+                System.out.print("A facility " + facName + " has been added successfully.\n");
+            }
         }
         return facilities;
     }
 
     public void createFacility(String facName) {
         if (facName.equals("Swimming"))
-            facilities.add(new SwimmingPool("Swimming", 9, 20, 10));
+            facilities.add(new SwimmingPool("Swimming Pool", 9, 20, 10));
         else if (facName.equals("Badminton"))
-            facilities.add(new BadmintonCourt("Badminton", 9, 23, 20));
+            facilities.add(new BadmintonCourt("Badminton Court", 9, 23, 20));
         else if (facName.equals("Basketball"))
-            facilities.add(new BasketballCourt("Basketball", 9, 22, 120));
+            facilities.add(new BasketballCourt("Basketball Court", 9, 22, 120));
         else if (facName.equals("Tennis"))
-            facilities.add(new TennisCourt("Tennis", 9, 22, 50));
+            facilities.add(new TennisCourt("Tennis Court", 9, 22, 50));
         else if (facName.equals("Football"))
-            facilities.add(new FootBallField("Football", 9, 23, 200));
+            facilities.add(new FootBallField("Football Field", 9, 23, 200));
     }
 }

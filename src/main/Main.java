@@ -194,6 +194,15 @@ public class Main {
                         break;
                     case 4:
                         customer.checkNotifications();
+                        System.out.print("Enter 0 to go back to main menu.");
+                        int input = -1;
+                        while (input != 0){
+                            String strInput = scanner.next();
+                            input = Integer.parseInt(strInput);
+                            if (input != 0) {
+                                throw new ExInvalidToken();
+                            }
+                        } 
                         break;
                     case 5:
                         customer.viewCompletedBookings(admin.getClock());
@@ -313,8 +322,10 @@ public class Main {
             if (Integer.parseInt(bookID) == 0)
                 break;
             int cancelled = admin.receiveCancelRequest(customer, Integer.parseInt(bookID));
-            if (cancelled == 3)
+            if (cancelled == 3){
                 System.out.print("Booking cancelled successfully.\n");
+                break;
+            }
             else if (cancelled == 2)
                 System.out.print("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
                 "A booking can only be cancelled 6 hours or more in advance.\n");
