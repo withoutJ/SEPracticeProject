@@ -86,7 +86,6 @@ public class Customer extends User implements Observer {
 			System.out.print("Booking ID: " + booking.getBookingId() + "\n");
 			System.out.print("Booking Date: " + booking.getBookingDate() + "\n");
 			System.out.print("Booking Start Time: " + booking.getStartTime() + "\n");
-			System.out.print("\n");
 		}
 	}
 
@@ -146,7 +145,7 @@ public class Customer extends User implements Observer {
 	}
 
 	public void checkNotifications() {
-		if (notifications == null)
+		if (notifications.isEmpty())
 			System.out.print("Sorry, there is no record of any cancelled bookings.\n");
 		else {
 			for (Map.Entry<SportFacility, String> notification : notifications) {
