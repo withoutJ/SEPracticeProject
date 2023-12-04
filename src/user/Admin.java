@@ -1,5 +1,5 @@
 package user;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -131,5 +131,24 @@ public class Admin extends User {
             facilities.add(new TennisCourt("Tennis Court", 9, 22, 50));
         else if (facName.equals("Football"))
             facilities.add(new FootBallField("Football Field", 9, 23, 200));
+    }
+
+    public int setFacStartHour(int openingHours, String date) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate givenDate = LocalDate.parse(date, dateFormatter);
+        LocalDate clockDate = clock.toLocalDate();
+        int currHour = clock.getHour();
+        if (givenDate.equals(clockDate))
+            return Math.max(currHour, openingHours);
+        return openingHours;
+    }
+
+    public boolean isPast(String date) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate givenDate = LocalDate.parse(date, dateFormatter);
+        LocalDate clockDate = clock.toLocalDate();
+        if (givenDate.isBefore(clockDate))
+            return true;
+        return false;
     }
 }

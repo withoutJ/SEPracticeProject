@@ -194,7 +194,7 @@ public class Main {
                         break;
                     case 4:
                         customer.checkNotifications();
-                        System.out.print("Enter 0 to go back to main menu.");
+                        System.out.print("Enter 0 to go back to main menu.\n");
                         int input = -1;
                         while (input != 0){
                             String strInput = scanner.next();
@@ -239,11 +239,13 @@ public class Main {
                 System.out.print(e.getMessage());
             } catch (ExWrongDate e) {
                 System.out.print(e.getMessage());
-            }
+            } catch (ExPastDate e){
+                System.out.print(e.getMessage());
+            }            
         }
     }
 
-    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod, ExWrongDate {
+    private static void makeBooking(Scanner scanner) throws ExInvalidToken, ExWrongPayMethod, ExWrongDate, ExPastDate {
         int facilityNo = -1;
         boolean bookSuccessful = false;
         while (facilityNo != 0 && !bookSuccessful) {
@@ -323,7 +325,7 @@ public class Main {
                 break;
             int cancelled = admin.receiveCancelRequest(customer, Integer.parseInt(bookID));
             if (cancelled == 3){
-                System.out.print("Booking cancelled successfully.\n");
+                //System.out.print("Booking cancelled successfully.\n");
                 break;
             }
             else if (cancelled == 2)

@@ -9,6 +9,8 @@ import javax.print.SimpleDoc;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import exceptions.ExPastDate;
 import exceptions.ExWrongDate;
 import user.*;
 import java.util.Calendar;
@@ -126,10 +128,10 @@ public abstract class SportFacility {
 		return false;
 	}
 
-	public void showAvailableSlots(String date) throws ExWrongDate {
+	public void showAvailableSlots(String date) throws ExWrongDate, ExPastDate {
 		// check if date is in correct format else throw exception Wrong Date
 		isDateFormatCorrect(date);
-
+		isPastDate(date);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		
 		int startHour = openingHours;
@@ -137,6 +139,10 @@ public abstract class SportFacility {
 		Calendar now = Calendar.getInstance(); // it's a singleton
 		int currentHour = now.get(Calendar.HOUR_OF_DAY);
 		String today = dateFormat.format(now.getTime());
+
+		Admin admin = Admin.getInstance();
+
+		startHour = admin.setFacStartHour(openingHours, date);
 
 		if(date.equals(today)){
 			startHour =  Math.max(currentHour+1, openingHours);
@@ -154,6 +160,12 @@ public abstract class SportFacility {
 			}
 		}
 	}
+	private void isPastDate(String date) throws ExPastDate{
+		Admin admin = Admin.getInstance();
+		if (admin.isPast(date))
+			throw new ExPastDate();
+	}
+
 	public String getName(){
 		return name;
 	}
