@@ -21,7 +21,7 @@ public class testMain {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     String dateNtime = now.format(formatter);
 
-    Admin admin = Admin.getInstance();
+    Admin admin_test = Admin.getInstance();
 
     public void setOutput(ByteArrayInputStream testIn, ByteArrayOutputStream outContent) {
         // Set up the output stream to capture the output
@@ -92,7 +92,7 @@ public class testMain {
         		+ "Input: "
                 + "Input your username: "
                 + "Input your password: "
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -135,7 +135,7 @@ public class testMain {
                 + "Input: "
                 + "Input your username: "
                 + "Input your password: "
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -149,7 +149,7 @@ public class testMain {
                         "5. Football\r\n" + //
                         "Input: "
                 + "A facility Swimming has been added successfully.\n"
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -163,7 +163,7 @@ public class testMain {
                         "5. Football\r\n" + //
                         "Input: "
                 + "A facility Badminton has been added successfully.\n"
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -177,7 +177,7 @@ public class testMain {
                         "5. Football\r\n" + //
                         "Input: "
                 + "A facility Basketball has been added successfully.\n"
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -191,7 +191,7 @@ public class testMain {
                         "5. Football\r\n" + //
                         "Input: "
                 + "A facility Tennis has been added successfully.\n"
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -205,7 +205,7 @@ public class testMain {
                         "5. Football\r\n" + //
                         "Input: "
                 + "A facility Football has been added successfully.\n"
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to add a facility.\n"
                 + "Press 2 to change system time.\n"
@@ -217,7 +217,7 @@ public class testMain {
                 + "Input: "
                 + "Set a username: "
                 + "Set a password: "
-                + admin.printTime()
+                + admin_test.printTime()
                 + "\n"
                 + "Press 1 to make a booking.\r\n" + //
                     "Press 2 to view bookings.\r\n" + //
@@ -257,7 +257,7 @@ public class testMain {
                         "Processing transaction...\r\n" + //
                         "Visa processed the payment with amount of 10.00.\r\n" + //
                         "Booking Successful for facility 05-12-2023 15\r\n" + //
-                 admin.printTime() 
+                 admin_test.printTime() 
                 +
                         "\r\n" + //
                         "Press 1 to make a booking.\r\n" + //
@@ -355,7 +355,7 @@ public class testMain {
         		"Account does not exist.\n" + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -369,7 +369,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Swimming has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -383,7 +383,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Badminton has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -397,7 +397,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Basketball has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -411,7 +411,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Tennis has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -425,7 +425,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Football has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -440,7 +440,7 @@ public class testMain {
         		"Password must not contain any spaces, and must contain at least one upper case letter, one lower case letter and a number.\n" + 
         		"Set a username: " + 
         		"Set a password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -459,7 +459,7 @@ public class testMain {
         		"Password incorrect. Please try again.\n" + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -473,7 +473,7 @@ public class testMain {
         		"You have no bookings currently. \n" + 
         		"Enter 0 to go to the main menu.\n" + 
         		"" + /////////////
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -489,7 +489,7 @@ public class testMain {
         		"Membership Type: Standard Member\n" + 
         		"You have no bookings currently. \n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -502,7 +502,7 @@ public class testMain {
         		"Sorry, there is no record of any cancelled bookings.\n" + 
         		"Enter 0 to go back to main menu.\n" + 
         		"" +  ///////////////////
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -517,7 +517,7 @@ public class testMain {
         		"Enter comment: " + 
         		"Enter rating (a number between 1-5): " + 
         		"Thank you for your feedback.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -537,7 +537,7 @@ public class testMain {
         		"\n" + 
         		"Football Field: \n" + 
         		"\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -556,7 +556,7 @@ public class testMain {
         		"Input: " + 
         		"Enter date of booking (DD-MM-YYYY): " + 
         		"Date is in the past. Try again.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -568,7 +568,7 @@ public class testMain {
         		"Input: " + 
         		"Input is not a number. Try again.\n" + 
         		//"Input: 2023-12-06 11:42:10\n" + 
-        		"Input: "+admin.printTime()+"\n"
+        		"Input: "+admin_test.printTime()+"\n"
         		
         		+"\n" + 
         		"Press 1 to make a booking.\n" + 
@@ -605,7 +605,7 @@ public class testMain {
         		"2. PayPal (Enter PL)\n" + 
         		"Input: " + 
         		"Payment method does not exist. Enter CC for Credit Card payment, or PL for payment via PayPal.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -645,7 +645,7 @@ public class testMain {
         		"Processing transaction...\n" + 
         		"PayPal processed the payment with amount of 10.00.\n" + 
         		"Booking Successful for facility 10-12-2023 10\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -688,7 +688,7 @@ public class testMain {
         		"Processing transaction...\n" + 
         		"Visa processed the payment with amount of 19.80.\n" + 
         		"Booking Successful for facility 10-12-2024 21\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -709,7 +709,7 @@ public class testMain {
         		"Facility: Badminton Court\n" + 
         		"Enter 0 to go to the main menu.\n" + 
         		"" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -734,7 +734,7 @@ public class testMain {
         		"Input: " + 
         		"Booking cancelled for 10-12-2024 21\n" + 
         		"Visa processed the refund with amount of 19.80.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -762,7 +762,7 @@ public class testMain {
         		"Booking Start Time: 10\n" + 
         		"Facility: Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -794,7 +794,7 @@ public class testMain {
     @Test
     public void testMain_13() throws Exception {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        setOutput(new ByteArrayInputStream("2\nadmin\n1\n1\nadmin\nAstralTrapez0idB0dy\n1\n1\n1\n2\n1\n3\n1\n4\n1\n5\n0\n1\nalice\npassword\nalice\nPassword123\n0\n2\nalice\naa\nalice\nPassword123\n2\n0\n3\n0\n4\n0\n5\n0\ngood\n4\n6\n1\n1\n01-01-2022\n1\n1\n01-01-2024\n21\ncc\n1\n1\n10-12-2023\n10\nPL\n1\n2\n10-12-2024\n20\nCC\n1\n2\n10-12-2024\n20\nCC\n0\n3\n2\n3\n2\n0\n5\n1\ngood\n3\n0\n0\n".getBytes()), outContent);
+        setOutput(new ByteArrayInputStream("2\nadmin\n1\n2\nadmin\nAstralTrapez0idB0dy\n1\n1\n1\n2\n1\n3\n1\n4\n1\n5\n0\n1\nalice\npassword\nalice\nPassword123\n0\n2\nalice\naa\nalice\nPassword123\n2\n0\n3\n0\n4\n0\n5\n0\ngood\n4\n6\n1\n1\n01-01-2022\n1\n1\n01-01-2024\n21\ncc\n1\n1\n10-12-2023\n10\nPL\n1\n2\n10-12-2024\n20\nCC\n1\n2\n10-12-2024\n20\nCC\n0\n3\n2\n3\n2\n0\n5\n1\ngood\n3\n0\n0\n".getBytes()), outContent);
         Main.main(new String[] {}); // Run the main method which should now use the simulated input
 
         String expectedOutput = "Shahbagh Sports Complex\n" + 
@@ -803,12 +803,12 @@ public class testMain {
         		"Input: " + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		"Password incorrect. Please try again.\n" + 
+        	    "Password incorrect. Please try again.\n" + 
         		"Input your username: " + 
         		"Account does not exist.\n" + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -822,7 +822,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Swimming has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -836,7 +836,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Badminton has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -850,7 +850,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Basketball has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -864,7 +864,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Tennis has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -878,7 +878,7 @@ public class testMain {
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Football has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -893,7 +893,7 @@ public class testMain {
         		"Password must not contain any spaces, and must contain at least one upper case letter, one lower case letter and a number.\n" + 
         		"Set a username: " + 
         		"Set a password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -912,7 +912,7 @@ public class testMain {
         		"Password incorrect. Please try again.\n" + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -926,7 +926,7 @@ public class testMain {
         		"You have no bookings currently. \n" + 
         		"Enter 0 to go to the main menu.\n" + 
         		"" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -942,7 +942,7 @@ public class testMain {
         		"Membership Type: Standard Member\n" + 
         		"You have no bookings currently. \n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -955,7 +955,7 @@ public class testMain {
         		"Sorry, there is no record of any cancelled bookings.\n" + 
         		"Enter 0 to go back to main menu.\n" + 
         		"" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -970,7 +970,7 @@ public class testMain {
         		"Enter comment: " + 
         		"Enter rating (a number between 1-5): " + 
         		"Thank you for your feedback.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -990,7 +990,7 @@ public class testMain {
         		"\n" + 
         		"Football Field: \n" + 
         		"\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1009,7 +1009,7 @@ public class testMain {
         		"Input: " + 
         		"Enter date of booking (DD-MM-YYYY): " + 
         		"Date is in the past. Try again.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1045,7 +1045,7 @@ public class testMain {
         		"2. PayPal (Enter PL)\n" + 
         		"Input: " + 
         		"Payment method does not exist. Enter CC for Credit Card payment, or PL for payment via PayPal.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1085,7 +1085,7 @@ public class testMain {
         		"Processing transaction...\n" + 
         		"PayPal processed the payment with amount of 10.00.\n" + 
         		"Booking Successful for facility 10-12-2023 10\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1128,7 +1128,7 @@ public class testMain {
         		"Processing transaction...\n" + 
         		"Visa processed the payment with amount of 19.80.\n" + 
         		"Booking Successful for facility 10-12-2024 21\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1174,7 +1174,7 @@ public class testMain {
         		"4. Tennis Court\n" + 
         		"5. Football Field\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1199,7 +1199,7 @@ public class testMain {
         		"Input: " + 
         		"Booking cancelled for 10-12-2024 21\n" + 
         		"Visa processed the refund with amount of 19.80.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1227,7 +1227,7 @@ public class testMain {
         		"Booking Start Time: 10\n" + 
         		"Facility: Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1242,7 +1242,7 @@ public class testMain {
         		"Enter comment: " + 
         		"Enter rating (a number between 1-5): " + 
         		"Thank you for your feedback.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1349,7 +1349,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.    \n" + 
         		"Press 2 to change system time.\n" + 
@@ -1363,7 +1363,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Swimming has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1377,7 +1377,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Badminton has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1385,7 +1385,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Enter the date you want to change to (DD-MM-YYYY): 06-12-2023\n" + 
         		"Enter the hour you want to change to (If you want to change hour to 13:00, enter 13): 15\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1427,7 +1427,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1441,7 +1441,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Swimming has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1453,7 +1453,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Set a username: " + 
         		"Set a password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1482,7 +1482,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Processing transaction...\n" + 
         		"Visa processed the payment with amount of 10.00.\n" + 
         		"Booking Successful for facility 06-12-2023 16\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1512,7 +1512,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Booking Start Time: 16\n" + 
         		"Facility: Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1525,7 +1525,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Choose a facility (Enter 0 to go to the main menu).\n" + 
         		"1. Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1561,7 +1561,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"1. Swimming Pool\n" + 
         		"Input: " + 
         		"Input is not a number. Try again.\n" + 
-        		"Input: "+admin.printTime() + 
+        		"Input: "+admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1575,7 +1575,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"1. Swimming Pool\n" + 
         		"Input: " + 
         		"Invalid Token. Try again.\n" + 
-        		"Input: "+admin.printTime() + 
+        		"Input: "+admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1586,7 +1586,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Press 0 to log out.\n" + 
         		"Input: " + 
         		"Invalid Token. Try again.\n" + 
-        		"Input: "+admin.printTime() + 
+        		"Input: "+admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1604,7 +1604,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Enter 0 to go to the main menu.\n" + 
         		"" + 
         		"Invalid Token. Try again.\n" + 
-        		"Input: "+admin.printTime() + 
+        		"Input: "+admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1642,7 +1642,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1656,7 +1656,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Swimming has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1668,7 +1668,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Set a username: " + 
         		"Set a password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1696,7 +1696,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Processing transaction...\n" + 
         		"Visa processed the payment with amount of 10.00.\n" + 
         		"Booking Successful for facility 06-12-2023 19\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1726,7 +1726,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Booking Start Time: 19\n" + 
         		"Facility: Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime()+ 
+        		admin_test.printTime()+ 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1765,7 +1765,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Input your username: " + 
         		"Input your password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1779,7 +1779,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"5. Football\n" + 
         		"Input: " + 
         		"A facility Swimming has been added successfully.\n" + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to add a facility.\n" + 
         		"Press 2 to change system time.\n" + 
@@ -1791,7 +1791,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Input: " + 
         		"Set a username: " + 
         		"Set a password: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1804,7 +1804,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Choose a facility (Enter 0 to go to the main menu).\n" + 
         		"1. Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 
@@ -1839,7 +1839,7 @@ actualOutput = actualOutput.replaceAll("\\s+", " ").trim();
         		"Choose a facility (Enter 0 to go to the main menu).\n" + 
         		"1. Swimming Pool\n" + 
         		"Input: " + 
-        		admin.printTime() + 
+        		admin_test.printTime() + 
         		"\n" + 
         		"Press 1 to make a booking.\n" + 
         		"Press 2 to view bookings.\n" + 

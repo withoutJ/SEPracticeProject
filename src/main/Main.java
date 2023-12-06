@@ -18,6 +18,7 @@ public class Main {
     private static Admin admin; // = Admin.getInstance();
 
     public static void main(String args[]) {
+        admin = null;
         // AS.registerAdmin(cred, cred);
         Scanner scanner = new Scanner(System.in);
         isRunning = true;
