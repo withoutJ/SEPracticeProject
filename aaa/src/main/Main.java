@@ -21,7 +21,7 @@ public class Main {
         // AS.registerAdmin(cred, cred);
         Scanner scanner = new Scanner(System.in);
         isRunning = true;
-        admin=null;
+
         while (isRunning) {
             int response = openScreen(scanner);
             if (response == 1) {
@@ -122,7 +122,7 @@ public class Main {
     private static void adminMenu(Scanner scanner) {
         int userInput = -1;
         while (userInput != 0) {
-            try{
+            try {
                 System.out.print(admin.printTime());
                 System.out.print("\n");
                 System.out.print("Press 1 to add a facility.\n");
@@ -146,23 +146,22 @@ public class Main {
                     default:
                         throw new ExInvalidToken();
                 }
-            }
-            catch (ExInvalidToken e){
+            } catch (ExInvalidToken e) {
                 System.out.print(e.getMessage());
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.print(e.getMessage());
             }
         }
     }
-// this facility is shit someone destroy it
+
+    // this facility is shit someone destroy it
     private static void mainMenu(Scanner scanner) {
         int userInput = -1;
         // DateTimeFormatter formatter = DateTimeFormatter.ofPattern(yyyy-MM-dd)
         // HH:mm:ss");
         // String dateNtime = now.format(formatter);
         // System.out.print(dateNtime + "\n");
-        
+
         while (userInput != 0) {
             try {
                 System.out.print(admin.printTime());
@@ -192,13 +191,13 @@ public class Main {
                         customer.checkNotifications();
                         System.out.print("Enter 0 to go back to main menu.\n");
                         int input = -1;
-                        while (input != 0){
+                        while (input != 0) {
                             String strInput = scanner.next();
                             input = Integer.parseInt(strInput);
                             if (input != 0) {
                                 throw new ExInvalidToken();
                             }
-                        } 
+                        }
                         break;
                     case 5:
                         customer.viewCompletedBookings(admin.getClock());
@@ -235,9 +234,9 @@ public class Main {
                 System.out.print(e.getMessage());
             } catch (ExWrongDate e) {
                 System.out.print(e.getMessage());
-            } catch (ExPastDate e){
+            } catch (ExPastDate e) {
                 System.out.print(e.getMessage());
-            }            
+            }
         }
     }
 
@@ -280,11 +279,11 @@ public class Main {
                     // String bookingDate, int startTime, String paymentString
                     bookSuccessful = admin.receiveBookingRequest(customer, chosenFacility, date, time, payment);
                     // if (bookSuccessful) {
-                    //     System.out.print("Booking successfully created for " + date + " from " +
-                    //             Integer.toString(time) + ":00 to " + Integer.toString(time + 1)
-                    //             + ":00. Go to main menu to manage your bookings.\n");
-                    //     System.out.print(
-                    //             "------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    // System.out.print("Booking successfully created for " + date + " from " +
+                    // Integer.toString(time) + ":00 to " + Integer.toString(time + 1)
+                    // + ":00. Go to main menu to manage your bookings.\n");
+                    // System.out.print(
+                    // "------------------------------------------------------------------------------------------------------------------------------------------\n");
                     // }
                     break;
                 case 0:
@@ -311,7 +310,7 @@ public class Main {
 
     private static void cancelBooking(Scanner scanner) {
         String bookID = "";
-        while (bookID.equals("") || Integer.parseInt(bookID) != 0){
+        while (bookID.equals("") || Integer.parseInt(bookID) != 0) {
             System.out.print("\nEnter Booking ID to cancel a booking.\n");
             System.out.print("Enter 0 to go to the main menu.\n");
             customer.viewBookings();
@@ -320,13 +319,12 @@ public class Main {
             if (Integer.parseInt(bookID) == 0)
                 break;
             int cancelled = admin.receiveCancelRequest(customer, Integer.parseInt(bookID));
-            if (cancelled == 3){
-                //System.out.print("Booking cancelled successfully.\n");
+            if (cancelled == 3) {
+                // System.out.print("Booking cancelled successfully.\n");
                 break;
-            }
-            else if (cancelled == 2)
+            } else if (cancelled == 2)
                 System.out.print("Sorry, this booking cannot be cancelled and is therefore non-refundable.\n" +
-                "A booking can only be cancelled 6 hours or more in advance.\n");
+                        "A booking can only be cancelled 6 hours or more in advance.\n");
             else if (cancelled == 1)
                 System.out.print("Booking does not exist. Try again.");
         }
@@ -345,11 +343,10 @@ public class Main {
                                       // and time are given in the correct format
     }
 
-	/*
-	 * private static void resetTime(Scanner scanner) { admin.resetTime();
-	 * System.out.print("The system time has been changed to the present time.\n");
-	 * }
-	 */
+    private static void resetTime(Scanner scanner) {
+        admin.resetTime();
+        System.out.print("The system time has been changed to the present time.\n");
+    }
 
     private static void addFacility(Scanner scanner) {
         System.out.print("Choose a facility to add.\n");

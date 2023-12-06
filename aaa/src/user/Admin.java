@@ -50,13 +50,13 @@ public class Admin extends User {
     public boolean receiveBookingRequest(Customer customer, SportFacility facility, String bookingDate, int startTime,
             String paymentString) {
 
-        //if (compareTime(concatenateStringAndInt(bookingDate, startTime))) { // this will solve cannot book in the past.
+        if (compareTime(concatenateStringAndInt(bookingDate, startTime))) { // this will solve cannot book in the past.
                                                                             // only in future
             return customer.createBooking(facility, bookingDate, startTime, paymentString);
-//        } else {
-//            System.out.print("Please choose a valid date. Cannot make a booking in the past.\n");
-//            return false;
-//        }
+        } else {
+            System.out.print("Please choose a valid date. Cannot make a booking in the past.\n");
+            return false;
+        }
     }
 
     public boolean compareTime(String dateHour) {

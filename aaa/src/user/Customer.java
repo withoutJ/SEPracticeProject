@@ -150,22 +150,20 @@ public class Customer extends User implements Observer {
 			System.out.print("Sorry, there is no record of any cancelled bookings.\n");
 		else {
 			for (Map.Entry<SportFacility, String> notification : notifications) {
-				System.out.print(notification.getKey() + " can be booked for time " + notification.getValue()
-						+ " on first come first served basis!\n");
+				System.out.println(notification.getKey() + " can be booked for time " + notification.getValue()
+						+ " on first come first served basis!");
 			}
 			notifications.clear();
 		}
 
 	}
 
-	public boolean addReview(int bookingID, String comment, int rating) {
+	public void addReview(int bookingID, String comment, int rating) {
 		for (Bookings booking : bookingsList) {
 			if ((booking.getBookingId() == bookingID)) {
 				booking.addReview(comment, rating);
-				return true;
 			}
 		}
-		return false;
 	}
 
 	public void viewCompletedBookings(LocalDateTime sysTime) {
