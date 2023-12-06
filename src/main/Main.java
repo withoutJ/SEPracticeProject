@@ -54,8 +54,9 @@ public class Main {
                 String strResponse = scanner.next();
                 response = Integer.parseInt(strResponse);
                 if (response == 1) {
-                    if (admin == null)
+                    if (admin == null){
                         System.out.print("The system is not yet ready to use. Please try again later. Thank you.\n\n");
+                    }
                     else {
                         while (!authInstance.validatePassword(password)) {
                             try {
