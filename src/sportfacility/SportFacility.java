@@ -136,18 +136,18 @@ public abstract class SportFacility {
 		
 		int startHour = openingHours;
 		//Get the current time from the system
-		Calendar now = Calendar.getInstance(); // it's a singleton
-		int currentHour = now.get(Calendar.HOUR_OF_DAY);
-		String today = dateFormat.format(now.getTime());
+		// Calendar now = Calendar.getInstance(); // it's a singleton
+		// int currentHour = now.get(Calendar.HOUR_OF_DAY);
+		// String today = dateFormat.format(now.getTime());
 
 		Admin admin = Admin.getInstance();
 
 		startHour = admin.setFacStartHour(openingHours, date);
 
-		if(date.equals(today)){
-			startHour =  Math.max(currentHour+1, openingHours);
+		// if(date.equals(today)){
+		// 	startHour =  Math.max(currentHour+1, openingHours);
 			
-		}
+		// }
 
 
 		// if not show available time slots
