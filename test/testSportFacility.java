@@ -91,6 +91,32 @@ public class testSportFacility {
         assertEquals(expected, getOutput());
     }
 
+    //         @Test
+    // public void testSportFacility_11() throws Exception {
+    //     setOutput();
+    //     SportFacility facility = new TennisCourt("TennisCourt", 9, 23, 12);
+    //     Customer customer = new Customer("customer", "customer");
+    //     facility.book(customer, "09-12-2023 21");
+    //  // First booking attempt
+    //     getOutput(); // Discard the output of the first booking attempt
+    //     setOutput();
+    //     facility.showAvailableSlots("09-12-2023");
+    //     String expected = "Available time slots for 13-02-2024:\n" +
+    //             "Time slot 9:00 is available.\n" +
+    //             "Time slot 12:00 is available.\n" +
+    //             "Time slot 13:00 is available.\n" +
+    //             "Time slot 14:00 is available.\n" +
+    //             "Time slot 15:00 is available.\n" +
+    //             "Time slot 16:00 is available.\n" +
+    //             "Time slot 17:00 is available.\n" +
+    //             "Time slot 18:00 is available.\n" +
+    //             "Time slot 19:00 is available.\n" +
+    //             "Time slot 20:00 is available.\n" +
+    //             "Time slot 21:00 is available.\n";
+
+    //     assertEquals(expected, getOutput());
+    // }
+
     @Test(expected = ExWrongDate.class)
     public void testSportFacility_10() throws Exception {
         SportFacility facility = new TennisCourt("TennisCourt", 9, 23, 10);
